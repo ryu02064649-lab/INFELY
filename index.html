@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAVE｜心と体を癒す、あなたのための美容サロン</title>
+    <meta name="description" content="HAVEは、体の疲れだけでなく心の疲れも癒す美容サロン。あなたがすでに持っている魅力（have）を、最大限に引き出します。">
+
+    <!-- Googleフォント（英字：Cormorant / 和文：明朝・ゴシック） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== ヘッダー ===== -->
+    <header class="site-header">
+        <a href="index.html" class="brand">
+            <span class="brand-logo serif">HAVE</span>
+            <span class="brand-sub">TOTAL BEAUTY SPA</span>
+        </a>
+
+        <!-- PC用ナビ -->
+        <nav class="header-nav">
+            <ul>
+                <li><a href="concept.html">Concept</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="price.html">Price</a></li>
+                <li><a href="staff.html">Staff</a></li>
+                <li><a href="access.html">Access</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html" class="nav-reserve">Reserve</a></li>
+            </ul>
+        </nav>
+
+        <!-- スマホ用ハンバーガー -->
+        <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- ===== ドロワー（スマホメニュー） ===== -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="drawer" id="drawer" aria-hidden="true">
+        <button class="drawer-close" id="drawerClose" aria-label="メニューを閉じる">&times;</button>
+        <nav class="drawer-nav">
+            <ul>
+                <li><a href="concept.html">Concept<span class="jp">コンセプト</span></a></li>
+                <li><a href="menu.html">Menu<span class="jp">メニュー</span></a></li>
+                <li><a href="price.html">Price<span class="jp">料金</span></a></li>
+                <li><a href="staff.html">Staff<span class="jp">スタッフ紹介</span></a></li>
+                <li><a href="access.html">Access<span class="jp">アクセス</span></a></li>
+                <li><a href="blog.html">Blog<span class="jp">ブログ</span></a></li>
+                <li><a href="contact.html">Reserve<span class="jp">ご予約・お問い合わせ</span></a></li>
+            </ul>
+            <div class="drawer-reserve">
+                <a href="contact.html" class="btn btn--fill">ご予約はこちら</a>
+            </div>
+        </nav>
+    </aside>
+
+
+    <!-- ===== ヒーロー ===== -->
+    <section class="hero">
+        <div class="hero-inner">
+            <!-- ブランドロゴマーク：images/logo.png に透過画像を入れてください -->
+            <!-- 画像が無い間は自動で非表示になります（onerror） -->
+            <div class="hero-logo-wrap">
+                <img class="hero-logo" src="images/logo.png" alt="HAVE"
+                     onerror="this.closest('.hero-logo-wrap').style.display='none'">
+            </div>
+            <h1 class="hero-title">
+                <span class="line"><span class="line-inner">疲れをほどき、</span></span>
+                <span class="line"><span class="line-inner">あなたの魅力に還る場所。</span></span>
+            </h1>
+            <p class="hero-sub">
+                体の疲れだけでなく、心の疲れも。<br>
+                あなたがすでに持っている美しさを、そっと引き出します。
+            </p>
+            <a href="contact.html" class="btn btn--fill">ご予約・お問い合わせ</a>
+        </div>
+        <span class="scroll-cue">Scroll</span>
+    </section>
+
+
+    <!-- ===== コンセプト抜粋 ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="split">
+                <div class="split-body reveal">
+                    <span class="eyebrow">Concept</span>
+                    <h2 class="section-title">“have” ―― <br>あなたは、すでに持っている。</h2>
+                    <p class="lead">
+                        美しさは、外から足すものだと思われがちです。
+                        けれど HAVE は、あなたが生まれながらに持っている魅力を
+                        「引き出す」ことを大切にしています。<br><br>
+                        深い呼吸とともに体をゆるめ、張りつめた心をほどく。
+                        施術を終えたあと、鏡の前で少し背筋が伸びる。
+                        そんな時間を、あなたのために。
+                    </p>
+                    <a href="concept.html" class="btn">コンセプトを見る</a>
+                </div>
+                <div class="split-media split-media--frame reveal">
+                    <img src="images/salon.jpg" alt="Total Beauty Spa HAVE の店内" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== メニュー抜粋 ===== -->
+    <section class="section section--alt">
+        <div class="container">
+            <div class="text-center reveal">
+                <span class="eyebrow">Menu</span>
+                <h2 class="section-title">HAVE の5つの Menu</h2>
+                <hr class="divider divider--center">
+            </div>
+
+            <div class="cat-grid reveal-stagger" style="margin-top:50px;">
+                <article class="m-card">
+                    <span class="num">01</span>
+                    <h3>痩身</h3>
+                    <p>全身からパーツまで、理想のラインへ導きます。</p>
+                </article>
+                <article class="m-card">
+                    <span class="num">02</span>
+                    <h3>フェイシャル</h3>
+                    <p>毛穴・ハリ・透明感まで。素肌本来の美しさへ。</p>
+                </article>
+                <article class="m-card">
+                    <span class="num">03</span>
+                    <h3>ヘッドスパ</h3>
+                    <p>頭皮と髪を整え、深いやすらぎへ導きます。</p>
+                </article>
+                <article class="m-card">
+                    <span class="num">04</span>
+                    <h3>リラクゼーション</h3>
+                    <p>もみほぐし・アロマで、心身をゆるめる時間。</p>
+                </article>
+                <article class="m-card">
+                    <span class="num">05</span>
+                    <h3>よもぎ蒸し</h3>
+                    <p>体の内側から温め、めぐりを整えます。</p>
+                </article>
+            </div>
+
+            <div class="text-center" style="margin-top:50px;">
+                <a href="menu.html" class="btn">メニュー一覧を見る</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== サロンの魅力（画像＋テキスト・逆並び） ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="split split--reverse">
+                <div class="split-media split-media--frame reveal">
+                    <img src="images/space.jpg" alt="キャンドルが灯る HAVE の落ち着いた空間" loading="lazy">
+                </div>
+                <div class="split-body reveal">
+                    <span class="eyebrow">Our Space</span>
+                    <h2 class="section-title">日常を忘れる、<br>静けさに包まれて。</h2>
+                    <p class="lead">
+                        やわらかな灯りと、心地よい香り。
+                        扉を開けた瞬間から、時間の流れがゆっくりと変わっていきます。<br><br>
+                        完全予約制のプライベートな空間で、
+                        あなただけのための時間をお過ごしください。
+                    </p>
+                    <a href="access.html" class="btn">サロン情報・アクセス</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== 予約を促す帯（CTA） ===== -->
+    <section class="section cta-band">
+        <div class="container reveal">
+            <span class="eyebrow">Reservation</span>
+            <h2 class="section-title">あなたのための時間を、<br>ご予約ください。</h2>
+            <p>ご予約・ご相談は Instagram・LINE より承っております。</p>
+            <a href="contact.html" class="btn btn--fill">ご予約・お問い合わせ</a>
+        </div>
+    </section>
+
+
+    <!-- ===== フッター ===== -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo serif">HAVE</span><span class="brand-sub">TOTAL BEAUTY SPA</span>
+                <p>
+                    体の疲れも、心の疲れも癒すサロン。<br>
+                    あなたがすでに持っている魅力を、最大限に。
+                </p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/salon__have/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="https://line.me/R/ti/p/%40759sukhu" target="_blank" rel="noopener" aria-label="LINE"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3.2c-5.4 0-9.8 3.4-9.8 7.6 0 3.8 3.5 7 8.2 7.6.3.1.8.2.9.5.1.3.1.7 0 1 l-.1.9c-.1.3-.4 1.1 1 .6 1.4-.6 7.3-4.3 10-7.4 1.7-1.9 2.6-3.9 2.6-6.2 0-4.2-4.4-7.6-9.8-7.6z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Menu</h4>
+                <ul>
+                    <li><a href="concept.html">コンセプト</a></li>
+                    <li><a href="menu.html">メニュー</a></li>
+                    <li><a href="price.html">料金</a></li>
+                    <li><a href="staff.html">スタッフ紹介</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Information</h4>
+                <ul>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="blog.html">ブログ</a></li>
+                    <li><a href="contact.html">ご予約・お問い合わせ</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year">2026</span> HAVE. All Rights Reserved.</p>
+    </footer>
+
+    <!-- スマホ用 固定予約ボタン -->
+    <!-- スマホ用 固定アクションバー（LINE / Instagram） -->
+    <div class="mobile-cta-bar">
+        <a href="https://line.me/R/ti/p/%40759sukhu" class="mcta mcta--line" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3.2c-5.4 0-9.8 3.4-9.8 7.6 0 3.8 3.5 7 8.2 7.6.3.1.8.2.9.5.1.3.1.7 0 1 l-.1.9c-.1.3-.4 1.1 1 .6 1.4-.6 7.3-4.3 10-7.4 1.7-1.9 2.6-3.9 2.6-6.2 0-4.2-4.4-7.6-9.8-7.6z"/></svg>ご予約（LINE）</a>
+        <a href="https://www.instagram.com/salon__have/" class="mcta mcta--ig" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

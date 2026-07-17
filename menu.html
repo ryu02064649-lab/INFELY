@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メニュー｜HAVE</title>
+    <meta name="description" content="HAVEのメニュー。痩身・ハイドラフェイシャル・ヘッドスパ・リラクゼーション・よもぎ蒸しなど、トータルビューティのコースをご用意しています。">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== ヘッダー ===== -->
+    <header class="site-header">
+        <a href="index.html" class="brand">
+            <span class="brand-logo serif">HAVE</span>
+            <span class="brand-sub">TOTAL BEAUTY SPA</span>
+        </a>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="concept.html">Concept</a></li>
+                <li><a href="menu.html" class="is-current">Menu</a></li>
+                <li><a href="price.html">Price</a></li>
+                <li><a href="staff.html">Staff</a></li>
+                <li><a href="access.html">Access</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html" class="nav-reserve">Reserve</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- ===== ドロワー ===== -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="drawer" id="drawer" aria-hidden="true">
+        <button class="drawer-close" id="drawerClose" aria-label="メニューを閉じる">&times;</button>
+        <nav class="drawer-nav">
+            <ul>
+                <li><a href="concept.html">Concept<span class="jp">コンセプト</span></a></li>
+                <li><a href="menu.html">Menu<span class="jp">メニュー</span></a></li>
+                <li><a href="price.html">Price<span class="jp">料金</span></a></li>
+                <li><a href="staff.html">Staff<span class="jp">スタッフ紹介</span></a></li>
+                <li><a href="access.html">Access<span class="jp">アクセス</span></a></li>
+                <li><a href="blog.html">Blog<span class="jp">ブログ</span></a></li>
+                <li><a href="contact.html">Reserve<span class="jp">ご予約・お問い合わせ</span></a></li>
+            </ul>
+            <div class="drawer-reserve">
+                <a href="contact.html" class="btn btn--fill">ご予約はこちら</a>
+            </div>
+        </nav>
+    </aside>
+
+
+    <!-- ===== ページ見出し ===== -->
+    <section class="page-hero">
+        <div class="page-hero-en serif">Menu</div>
+        <p class="page-hero-jp">メニュー</p>
+    </section>
+
+
+    <!-- ===== メニュー本体 ===== -->
+    <section class="section">
+        <div class="container" style="max-width:900px;">
+
+            <!-- 01 痩身 -->
+            <div class="menu-block reveal">
+                <div class="menu-block-head">
+                    <span class="en serif">01</span>
+                    <span class="jp">DIET｜痩身</span>
+                    <svg class="menu-deco" viewBox="0 0 140 44" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 36 C 45 34, 80 30, 116 18"/><path d="M34 34 C 28 27, 33 22, 42 25 C 37 31, 34 34, 34 34 Z"/><path d="M60 29 C 55 22, 61 18, 69 22 C 63 27, 60 29, 60 29 Z"/><g transform="translate(120 16)"><ellipse cx="0" cy="-8" rx="3" ry="6"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(288)"/><circle r="1.8"/></g></svg>
+                </div>
+
+                <div class="menu-item">
+                    <h4>全身＆顔フルセット</h4>
+                    <p class="desc">全身痩身＋毛穴洗浄など、すべて揃った一番人気のお得なフルセット。</p>
+                    <span class="price">¥10,000</span>
+                </div>
+                <div class="menu-item">
+                    <h4>全身（お顔なし）</h4>
+                    <span class="price">¥7,000</span>
+                </div>
+                <div class="menu-item">
+                    <h4>上半身 or 下半身</h4>
+                    <span class="price">¥3,500</span>
+                </div>
+
+                <div class="menu-item menu-item--tiers">
+                    <h4>オーダーメイド痩身</h4>
+                    <p class="desc">気になる部分だけを集中ケア。組み合わせも自由です。</p>
+                    <ul class="menu-tiers">
+                        <li><span class="t">L パーツ（お腹 / 背中 / 太もも＆ヒップ）</span><span class="p">¥2,800</span></li>
+                        <li><span class="t">M パーツ（ふくらはぎ / 二の腕）</span><span class="p">¥2,000</span></li>
+                        <li><span class="t">S パーツ（首＆お顔）</span><span class="p">¥1,900</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 02 フェイシャル -->
+            <div class="menu-block reveal">
+                <div class="menu-block-head">
+                    <span class="en serif">02</span>
+                    <span class="jp">FACIAL｜ハイドラフェイシャル</span>
+                    <svg class="menu-deco" viewBox="0 0 140 44" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22 C 45 22, 92 22, 132 22"/><path d="M30 22 C 26 14, 34 10, 44 14 C 38 20, 30 22, 30 22 Z"/><path d="M64 22 C 60 30, 68 34, 78 30 C 72 24, 64 22, 64 22 Z"/><path d="M98 22 C 94 14, 102 10, 112 14 C 106 20, 98 22, 98 22 Z"/><circle cx="132" cy="22" r="1.8"/></svg>
+                </div>
+
+                <div class="menu-item">
+                    <h4>毛穴水素洗浄＋RF波＋導入（ポレーション）</h4>
+                    <p class="desc">水素水の洗浄で毛穴の詰まりを解消し美容成分を導入。RF波／EMSでリフトアップ＆むくみケア。毛穴・シワ・くすみ・乾燥・ニキビ等にトータルで徹底アプローチ。</p>
+                    <span class="price">¥4,500</span>
+                </div>
+                <div class="menu-item">
+                    <h4>毛穴水素洗浄＋導入（ポレーション）</h4>
+                    <p class="desc">水素水の洗浄で毛穴の詰まりを解消し美容成分を導入。毛穴・シワ・くすみ・乾燥・ニキビ等、お肌のお悩みにアプローチ。</p>
+                    <span class="price">¥4,000</span>
+                </div>
+            </div>
+
+            <!-- 03 ヘッドケア -->
+            <div class="menu-block reveal">
+                <div class="menu-block-head">
+                    <span class="en serif">03</span>
+                    <span class="jp">HEAD CARE｜ヘッドスパ</span>
+                    <svg class="menu-deco" viewBox="0 0 140 44" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 36 C 45 34, 80 30, 116 18"/><path d="M34 34 C 28 27, 33 22, 42 25 C 37 31, 34 34, 34 34 Z"/><path d="M60 29 C 55 22, 61 18, 69 22 C 63 27, 60 29, 60 29 Z"/><g transform="translate(120 16)"><ellipse cx="0" cy="-8" rx="3" ry="6"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(288)"/><circle r="1.8"/></g></svg>
+                </div>
+
+                <div class="menu-item">
+                    <h4>頭皮毛穴洗浄＆炭酸ヘッドスパ</h4>
+                    <p class="desc">吸引洗浄＋美容成分導入。炭酸ヘッドスパで血行を促進します。</p>
+                    <span class="price">¥5,500</span>
+                </div>
+                <div class="menu-item">
+                    <h4>頭皮毛穴洗浄（30分）</h4>
+                    <p class="desc">吸引洗浄＋美容成分導入。頭皮環境と髪質を改善します。</p>
+                    <span class="price">¥4,500</span>
+                </div>
+                <div class="menu-item menu-item--tiers">
+                    <h4>ドライヘッドスパ</h4>
+                    <ul class="menu-tiers">
+                        <li><span class="t">30分</span><span class="p">¥2,500</span></li>
+                        <li><span class="t">20分</span><span class="p">¥2,000</span></li>
+                        <li><span class="t">延長 +10分</span><span class="p">¥1,100</span></li>
+                    </ul>
+                    <p class="menu-subnote">オプション：炭酸美容液／アロマオイル 各種 ¥500　｜　ハイドラヘッド 延長+10分 ¥1,000</p>
+                </div>
+            </div>
+
+            <!-- 04 リラクゼーション -->
+            <div class="menu-block reveal">
+                <div class="menu-block-head">
+                    <span class="en serif">04</span>
+                    <span class="jp">RELAXATION｜リラクゼーション</span>
+                    <svg class="menu-deco" viewBox="0 0 140 44" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22 C 45 22, 92 22, 132 22"/><path d="M30 22 C 26 14, 34 10, 44 14 C 38 20, 30 22, 30 22 Z"/><path d="M64 22 C 60 30, 68 34, 78 30 C 72 24, 64 22, 64 22 Z"/><path d="M98 22 C 94 14, 102 10, 112 14 C 106 20, 98 22, 98 22 Z"/><circle cx="132" cy="22" r="1.8"/></svg>
+                </div>
+
+                <div class="menu-item menu-item--tiers">
+                    <h4>もみほぐし</h4>
+                    <ul class="menu-tiers">
+                        <li><span class="t">90分</span><span class="p">¥6,000</span></li>
+                        <li><span class="t">60分</span><span class="p">¥3,800</span></li>
+                        <li><span class="t">40分</span><span class="p">¥2,900</span></li>
+                        <li><span class="t">30分</span><span class="p">¥2,000</span></li>
+                        <li><span class="t">延長 +10分</span><span class="p">¥1,100</span></li>
+                    </ul>
+                </div>
+                <div class="menu-item menu-item--tiers">
+                    <h4>アロマボディー</h4>
+                    <ul class="menu-tiers">
+                        <li><span class="t">90分</span><span class="p">¥8,000</span></li>
+                        <li><span class="t">60分</span><span class="p">¥5,000</span></li>
+                        <li><span class="t">40分</span><span class="p">¥4,500</span></li>
+                        <li><span class="t">30分</span><span class="p">¥3,800</span></li>
+                        <li><span class="t">延長 +10分</span><span class="p">¥1,100</span></li>
+                    </ul>
+                </div>
+                <div class="menu-item menu-item--tiers">
+                    <h4>リフレ／ハンドリフレ</h4>
+                    <ul class="menu-tiers">
+                        <li><span class="t">60分</span><span class="p">¥3,800</span></li>
+                        <li><span class="t">40分</span><span class="p">¥2,900</span></li>
+                        <li><span class="t">30分</span><span class="p">¥2,000</span></li>
+                        <li><span class="t">延長 +10分</span><span class="p">¥1,100</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 05 よもぎ蒸し -->
+            <div class="menu-block reveal">
+                <div class="menu-block-head">
+                    <span class="en serif">05</span>
+                    <span class="jp">よもぎ蒸し｜YOMOGI</span>
+                    <svg class="menu-deco" viewBox="0 0 140 44" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 36 C 45 34, 80 30, 116 18"/><path d="M34 34 C 28 27, 33 22, 42 25 C 37 31, 34 34, 34 34 Z"/><path d="M60 29 C 55 22, 61 18, 69 22 C 63 27, 60 29, 60 29 Z"/><g transform="translate(120 16)"><ellipse cx="0" cy="-8" rx="3" ry="6"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="3" ry="6" transform="rotate(288)"/><circle r="1.8"/></g></svg>
+                </div>
+                <p class="menu-block-lead">〜体内からも美しく〜　膣からの吸収率は体のどの部分よりも高いと言われ、腕の内側を1とすると、その吸収力はなんと約42倍とも。</p>
+
+                <ul class="effect-tags">
+                    <li>美肌・アンチエイジング</li>
+                    <li>デトックス・新陳代謝UP</li>
+                    <li>冷え・むくみ・血行促進</li>
+                    <li>リラックス・自律神経</li>
+                    <li>妊活・生理痛</li>
+                </ul>
+
+                <div class="menu-item menu-item--tiers">
+                    <h4>よもぎむし（スタンダードコース）</h4>
+                    <ul class="menu-tiers">
+                        <li><span class="t">30分</span><span class="p">¥3,500</span></li>
+                        <li><span class="t">延長 +10分</span><span class="p">¥500</span></li>
+                    </ul>
+                    <p class="menu-subnote">オプション：フットバス（選べる香り）¥500</p>
+                </div>
+                <div class="menu-item menu-item--tiers">
+                    <h4>よもぎむし ボディセット</h4>
+                    <p class="desc">「ほぐす・流す」のセットで血行を促進し、効果アップ。</p>
+                    <ul class="menu-tiers">
+                        <li><span class="t">よもぎ30分 ＋ ドライボディ40分</span><span class="p">¥5,000</span></li>
+                        <li><span class="t">よもぎ30分 ＋ オイルボディ40分</span><span class="p">¥6,500</span></li>
+                    </ul>
+                </div>
+
+                <p class="menu-highlight">※ よもぎむしは、他メニューとの組み合わせで ¥1,000 OFF</p>
+            </div>
+
+            <p class="price-note" style="margin-top:44px;">
+                <span style="display:block;color:var(--ink-soft);font-size:13px;">
+                    ※ 表示はすべて税込価格です。メニューの組み合わせやご相談はお気軽にどうぞ。
+                </span>
+            </p>
+
+            <div class="text-center" style="margin-top:40px;">
+                <a href="contact.html" class="btn btn--fill">ご予約・お問い合わせ</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== フッター ===== -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo serif">HAVE</span><span class="brand-sub">TOTAL BEAUTY SPA</span>
+                <p>体の疲れも、心の疲れも癒すサロン。<br>あなたがすでに持っている魅力を、最大限に。</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/salon__have/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="https://line.me/R/ti/p/%40759sukhu" target="_blank" rel="noopener" aria-label="LINE"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3.2c-5.4 0-9.8 3.4-9.8 7.6 0 3.8 3.5 7 8.2 7.6.3.1.8.2.9.5.1.3.1.7 0 1 l-.1.9c-.1.3-.4 1.1 1 .6 1.4-.6 7.3-4.3 10-7.4 1.7-1.9 2.6-3.9 2.6-6.2 0-4.2-4.4-7.6-9.8-7.6z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Menu</h4>
+                <ul>
+                    <li><a href="concept.html">コンセプト</a></li>
+                    <li><a href="menu.html">メニュー</a></li>
+                    <li><a href="price.html">料金</a></li>
+                    <li><a href="staff.html">スタッフ紹介</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Information</h4>
+                <ul>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="blog.html">ブログ</a></li>
+                    <li><a href="contact.html">ご予約・お問い合わせ</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year">2026</span> HAVE. All Rights Reserved.</p>
+    </footer>
+
+    <!-- スマホ用 固定アクションバー（LINE / Instagram） -->
+    <div class="mobile-cta-bar">
+        <a href="https://line.me/R/ti/p/%40759sukhu" class="mcta mcta--line" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3.2c-5.4 0-9.8 3.4-9.8 7.6 0 3.8 3.5 7 8.2 7.6.3.1.8.2.9.5.1.3.1.7 0 1 l-.1.9c-.1.3-.4 1.1 1 .6 1.4-.6 7.3-4.3 10-7.4 1.7-1.9 2.6-3.9 2.6-6.2 0-4.2-4.4-7.6-9.8-7.6z"/></svg>ご予約（LINE）</a>
+        <a href="https://www.instagram.com/salon__have/" class="mcta mcta--ig" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

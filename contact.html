@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ご予約・お問い合わせ｜HAVE</title>
+    <meta name="description" content="HAVEのご予約・お問い合わせ。Instagram・LINEより承っております。">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== ヘッダー ===== -->
+    <header class="site-header">
+        <a href="index.html" class="brand">
+            <span class="brand-logo serif">HAVE</span>
+            <span class="brand-sub">TOTAL BEAUTY SPA</span>
+        </a>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="concept.html">Concept</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="price.html">Price</a></li>
+                <li><a href="staff.html">Staff</a></li>
+                <li><a href="access.html">Access</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html" class="nav-reserve">Reserve</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- ===== ドロワー ===== -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="drawer" id="drawer" aria-hidden="true">
+        <button class="drawer-close" id="drawerClose" aria-label="メニューを閉じる">&times;</button>
+        <nav class="drawer-nav">
+            <ul>
+                <li><a href="concept.html">Concept<span class="jp">コンセプト</span></a></li>
+                <li><a href="menu.html">Menu<span class="jp">メニュー</span></a></li>
+                <li><a href="price.html">Price<span class="jp">料金</span></a></li>
+                <li><a href="staff.html">Staff<span class="jp">スタッフ紹介</span></a></li>
+                <li><a href="access.html">Access<span class="jp">アクセス</span></a></li>
+                <li><a href="blog.html">Blog<span class="jp">ブログ</span></a></li>
+                <li><a href="contact.html">Reserve<span class="jp">ご予約・お問い合わせ</span></a></li>
+            </ul>
+            <div class="drawer-reserve">
+                <a href="contact.html" class="btn btn--fill">ご予約はこちら</a>
+            </div>
+        </nav>
+    </aside>
+
+
+    <!-- ===== ページ見出し ===== -->
+    <section class="page-hero">
+        <div class="page-hero-en serif">Reserve</div>
+        <p class="page-hero-jp">ご予約・お問い合わせ</p>
+    </section>
+
+
+    <!-- ===== ご予約・お問い合わせ（Instagram / LINE への導線） ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="reserve-intro reveal">
+                <p>
+                    HAVE は完全予約制です。<br>
+                    ご予約・お問い合わせは、<strong style="color:var(--gold-deep);font-weight:500;">Instagram</strong> または
+                    <strong style="color:var(--gold-deep);font-weight:500;">LINE</strong> より承っております。<br>
+                    下記のボタンから、お気軽にご連絡ください。
+                </p>
+            </div>
+
+            <!-- ▼ LINEのURLは実際の公式アカウントURL（https://lin.ee/～）に差し替えてください -->
+            <div class="reserve-actions reveal">
+                <a href="https://line.me/R/ti/p/%40759sukhu" class="btn btn-line" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 3.2c-5.4 0-9.8 3.4-9.8 7.6 0 3.8 3.5 7 8.2 7.6.3.1.8.2.9.5.1.3.1.7 0 1 l-.1.9c-.1.3-.4 1.1 1 .6 1.4-.6 7.3-4.3 10-7.4 1.7-1.9 2.6-3.9 2.6-6.2 0-4.2-4.4-7.6-9.8-7.6z"/></svg>
+                    <span>LINEでご予約・お問い合わせ<small>LINE公式アカウント</small></span>
+                </a>
+
+                <a href="https://www.instagram.com/salon__have/" class="btn btn-ig" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>
+                    <span>Instagramでご予約・お問い合わせ<small>@salon__have</small></span>
+                </a>
+            </div>
+
+            <p class="reserve-hours">
+                営業時間　10:00 – 22:00（不定休）<br>
+                〒903-0115　沖縄県中頭郡西原町字池田371-21　池田ハイツA-24 1階
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ===== フッター ===== -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo serif">HAVE</span><span class="brand-sub">TOTAL BEAUTY SPA</span>
+                <p>体の疲れも、心の疲れも癒すサロン。<br>あなたがすでに持っている魅力を、最大限に。</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/salon__have/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+                    <a href="https://line.me/R/ti/p/%40759sukhu" target="_blank" rel="noopener" aria-label="LINE"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3.2c-5.4 0-9.8 3.4-9.8 7.6 0 3.8 3.5 7 8.2 7.6.3.1.8.2.9.5.1.3.1.7 0 1 l-.1.9c-.1.3-.4 1.1 1 .6 1.4-.6 7.3-4.3 10-7.4 1.7-1.9 2.6-3.9 2.6-6.2 0-4.2-4.4-7.6-9.8-7.6z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Menu</h4>
+                <ul>
+                    <li><a href="concept.html">コンセプト</a></li>
+                    <li><a href="menu.html">メニュー</a></li>
+                    <li><a href="price.html">料金</a></li>
+                    <li><a href="staff.html">スタッフ紹介</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Information</h4>
+                <ul>
+                    <li><a href="access.html">アクセス</a></li>
+                    <li><a href="blog.html">ブログ</a></li>
+                    <li><a href="contact.html">ご予約・お問い合わせ</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-bottom">© <span id="year">2026</span> HAVE. All Rights Reserved.</p>
+    </footer>
+
+    <!-- スマホ用 固定アクションバー（LINE / Instagram） -->
+    <div class="mobile-cta-bar">
+        <a href="https://line.me/R/ti/p/%40759sukhu" class="mcta mcta--line" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 3.2c-5.4 0-9.8 3.4-9.8 7.6 0 3.8 3.5 7 8.2 7.6.3.1.8.2.9.5.1.3.1.7 0 1 l-.1.9c-.1.3-.4 1.1 1 .6 1.4-.6 7.3-4.3 10-7.4 1.7-1.9 2.6-3.9 2.6-6.2 0-4.2-4.4-7.6-9.8-7.6z"/></svg>ご予約（LINE）</a>
+        <a href="https://www.instagram.com/salon__have/" class="mcta mcta--ig" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

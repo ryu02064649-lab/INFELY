@@ -1,0 +1,1504 @@
+/* =========================================================
+   HAVE｜美容サロン 共通スタイルシート
+   コンセプト：体の疲れだけでなく、心の疲れも癒す。
+   あなたが すでに持っている魅力（have）を引き出す。
+   配色イメージ：アイボリー × ゴールド（上品・高級・余白）
+   ========================================================= */
+
+
+/* ===== ① 色やサイズの「設定値」をまとめる場所（CSS変数） =====
+   ここの数値を変えるだけで、サイト全体の雰囲気を調整できます。 */
+:root {
+    --bg:        #FBF8F2;   /* 背景：温かみのあるアイボリー */
+    --bg-alt:    #F1E9DA;   /* 少し濃いベージュ（セクションの切り替え用） */
+    --white:     #FFFFFF;   /* カードなどの白 */
+
+    --ink:       #33302B;   /* 文字：深い炭色（真っ黒より上品） */
+    --ink-soft:  #6E675C;   /* 補足の文字：やわらかいグレージュ */
+
+    --gold:      #B0925B;   /* 差し色のゴールド */
+    --gold-deep: #8C7440;   /* 濃いめゴールド（ホバー時など） */
+    --line:      #E3D8C4;   /* 罫線・区切り線のベージュ */
+
+    --max:       1120px;    /* コンテンツの最大幅 */
+    --ease:      cubic-bezier(0.22, 1, 0.36, 1); /* 上質でなめらかな動き */
+}
+
+
+/* ===== ② 全体の初期化（ブラウザごとの差をそろえる） ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;   /* ページ内リンクをなめらかにスクロール */
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--ink);
+    /* 本文はやわらかいゴシック体で読みやすく */
+    font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ===== ③ 見出しの書体（明朝＋Cormorantで高級感） ===== */
+.serif {
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
+}
+
+/* 英字の飾り見出し（セクションの上に小さく置く） */
+.eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-block;
+    margin-bottom: 18px;
+}
+
+/* セクションの大見出し（日本語・明朝） */
+.section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: clamp(26px, 4vw, 40px);
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    margin-bottom: 28px;
+}
+
+
+/* ===== ④ 共通レイアウト部品 ===== */
+.container {
+    width: 100%;
+    max-width: var(--max);
+    margin-inline: auto;
+    padding-inline: 24px;
+}
+
+/* 上下にゆったり余白をとったセクション */
+.section {
+    padding-block: clamp(72px, 12vw, 140px);
+}
+
+.section--alt {
+    background-color: var(--bg-alt);
+}
+
+.text-center { text-align: center; }
+
+/* 細い区切り線（ゴールドの短い線） */
+.divider {
+    width: 48px;
+    height: 1px;
+    background-color: var(--gold);
+    border: none;
+    margin: 22px 0;
+}
+.divider--center { margin-inline: auto; }
+
+
+/* ===== ⑤ ボタン ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 40px;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    border: 1px solid var(--gold);
+    color: var(--gold-deep);
+    background: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.5s var(--ease),
+                color 0.5s var(--ease),
+                transform 0.5s var(--ease);
+}
+.btn:hover {
+    background-color: var(--gold);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* 塗りつぶしの主役ボタン */
+.btn--fill {
+    background-color: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+}
+.btn--fill:hover {
+    background-color: var(--gold-deep);
+    border-color: var(--gold-deep);
+}
+
+
+/* =========================================================
+   ⑥ ヘッダー（サイト上部の固定バー）
+   ========================================================= */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 40px;
+    transition: background-color 0.5s var(--ease),
+                box-shadow 0.5s var(--ease),
+                padding 0.5s var(--ease);
+}
+
+/* スクロールしたら背景を出す（main.jsでクラスを付ける） */
+.site-header.is-scrolled {
+    background-color: rgba(251, 248, 242, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 var(--line);
+    padding-block: 14px;
+}
+
+.brand-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    color: var(--ink);
+    line-height: 1;
+    /* HAVEのHだけ意味を持たせるため、間隔を広めに */
+    padding-left: 0.32em; /* letter-spacingの右寄りを視覚的に補正 */
+}
+
+/* PC用ナビゲーション */
+.header-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 34px;
+}
+.header-nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    position: relative;
+    padding-bottom: 4px;
+}
+/* ホバーで下線がすーっと伸びる */
+.header-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--gold);
+    transition: width 0.4s var(--ease);
+}
+.header-nav a:hover::after,
+.header-nav a.is-current::after { width: 100%; }
+
+/* ヘッダー内の予約ボタン */
+.header-nav .nav-reserve {
+    padding: 10px 22px;
+    border: 1px solid var(--gold);
+    color: var(--gold-deep);
+    border-radius: 2px;
+    transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+.header-nav .nav-reserve::after { display: none; }
+.header-nav .nav-reserve:hover {
+    background-color: var(--gold);
+    color: #fff;
+}
+
+
+/* ===== ハンバーガーボタン（スマホ用・三本線） ===== */
+.menu-toggle {
+    display: none;   /* PCでは隠す */
+    position: relative;
+    width: 30px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+}
+.menu-toggle span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--ink);
+    transition: transform 0.4s var(--ease), opacity 0.3s var(--ease), top 0.3s var(--ease);
+}
+.menu-toggle span:nth-child(1) { top: 0; }
+.menu-toggle span:nth-child(2) { top: 9px; }
+.menu-toggle span:nth-child(3) { top: 18px; }
+
+/* 開いているとき：三本線を × に変形 */
+body.menu-open .menu-toggle span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+body.menu-open .menu-toggle span:nth-child(2) { opacity: 0; }
+body.menu-open .menu-toggle span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+
+
+/* ===== 背景の暗幕（ドロワーの後ろ） ===== */
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(40, 35, 28, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s var(--ease), visibility 0.6s var(--ease);
+    z-index: 1000;
+}
+body.menu-open .drawer-overlay { opacity: 1; visibility: visible; }
+
+
+/* ===== スライドで出てくるメニュー（ドロワー） ===== */
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    max-width: 82vw;
+    height: 100vh;
+    background-color: var(--bg);
+    box-shadow: -10px 0 40px rgba(0,0,0,0.08);
+    transform: translateX(100%);
+    transition: transform 0.6s var(--ease);
+    z-index: 1050;
+    padding: 90px 40px 40px;
+    overflow-y: auto;
+}
+body.menu-open .drawer { transform: translateX(0); }
+
+.drawer-close {
+    position: absolute;
+    top: 26px;
+    right: 30px;
+    font-size: 30px;
+    line-height: 1;
+    background: none;
+    border: none;
+    color: var(--ink);
+    cursor: pointer;
+}
+.drawer-nav ul { list-style: none; }
+.drawer-nav > ul > li { border-bottom: 1px solid var(--line); }
+.drawer-nav a {
+    display: block;
+    padding: 18px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+}
+.drawer-nav a .jp {
+    display: block;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    margin-top: 2px;
+}
+.drawer-reserve {
+    margin-top: 32px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   ⑦ ヒーロー（各ページ上部の大きな見せ場）
+   ========================================================= */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* 写真が入るまではベージュのグラデーションで上品に */
+    background:
+        radial-gradient(120% 120% at 50% 0%, #FDFBF6 0%, #F3EADB 55%, #EADFC9 100%);
+    overflow: hidden;
+}
+/* 実際の写真を入れるときは、下のコメントを外して画像を指定してください
+.hero {
+    background-image: linear-gradient(rgba(30,25,18,0.25), rgba(30,25,18,0.25)), url("images/hero.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.hero .hero-inner { color: #fff; }
+*/
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+    padding: 120px 24px;
+    max-width: 760px;
+}
+
+/* ===== ヒーローのロゴマーク（フェードイン＋浮上＋わずかな拡大） ===== */
+.hero-logo-wrap {
+    will-change: transform, opacity;   /* スクロール視差用（main.js） */
+}
+.hero-logo {
+    display: block;
+    width: clamp(190px, 27vw, 320px);
+    height: auto;
+    margin: 0 auto 24px;
+    /* 開始状態：少し下・少し大きめ・透明 */
+    opacity: 0;
+    transform: translateY(32px) scale(1.05);
+    /* ゆっくり上質に登場（少し遅れて開始） */
+    animation: heroLogoIn 1.9s var(--ease) 0.25s forwards;
+}
+@keyframes heroLogoIn {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* 動きを控えたい設定の端末では演出を無効化 */
+@media (prefers-reduced-motion: reduce) {
+    .hero-logo { animation: none; opacity: 1; transform: none; }
+}
+.hero-lead {
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: var(--gold-deep);
+    margin-bottom: 26px;
+}
+.hero-title {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: clamp(30px, 5.2vw, 56px);
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    margin-bottom: 30px;
+}
+/* 見出しを「行ごとに下から立ち上がる」演出（マスク付き） */
+.hero-title .line {
+    display: block;
+    overflow: hidden;          /* この枠から下の文字を隠す（マスク） */
+}
+.hero-title .line-inner {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(110%);   /* 最初は枠の下に隠れている */
+    animation: heroLineRise 1.1s var(--ease) forwards;
+}
+.hero-title .line:nth-child(1) .line-inner { animation-delay: 0.65s; }
+.hero-title .line:nth-child(2) .line-inner { animation-delay: 0.88s; }
+@keyframes heroLineRise {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-sub {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 2.2;
+    margin-bottom: 44px;
+    /* 脇役なので“動かさず”静かにフェードのみ（主役の見出しを引き立てる） */
+    opacity: 0;
+    animation: heroFadeSoft 1.4s var(--ease) 1.25s forwards;
+}
+/* ヒーロー内の予約ボタンも、動かさず静かにフェード */
+.hero-inner > .btn {
+    opacity: 0;
+    animation: heroFadeSoft 1.4s var(--ease) 1.6s forwards;
+}
+@keyframes heroFadeSoft {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+/* 動きを控えたい設定では、順番演出をオフにして最初から表示 */
+@media (prefers-reduced-motion: reduce) {
+    .hero-title .line-inner,
+    .hero-sub,
+    .hero-inner > .btn {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* 下スクロールを促す縦線 */
+.scroll-cue {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--ink-soft);
+    writing-mode: vertical-rl;
+}
+.scroll-cue::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 50px;
+    margin: 12px auto 0;
+    background: linear-gradient(var(--gold), transparent);
+    animation: cueMove 2.4s var(--ease) infinite;
+}
+@keyframes cueMove {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    45%  { transform: scaleY(1); transform-origin: top; }
+    55%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+
+/* 下層ページ用の小さめヒーロー（帯） */
+.page-hero {
+    position: relative;
+    padding: 200px 24px 90px;
+    text-align: center;
+    background: radial-gradient(120% 140% at 50% 0%, #FDFBF6 0%, #F1E7D6 100%);
+}
+.page-hero .page-hero-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 8vw, 76px);
+    letter-spacing: 0.14em;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 14px;
+}
+.page-hero .page-hero-jp {
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--gold-deep);
+}
+
+
+/* =========================================================
+   ⑧ トップページ用の各セクション
+   ========================================================= */
+
+/* --- コンセプト抜粋（左テキスト＋右イメージの2カラム） --- */
+.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+}
+.split--reverse .split-media { order: -1; }
+
+.split-media {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(135deg, #EEE3CF, #E2D3B6);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+/* 画像プレースホルダーの中央ラベル（写真を入れたら消えます） */
+.split-media::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.3em;
+    font-size: 13px;
+    color: rgba(140, 116, 64, 0.6);
+}
+/* 実写真を入れたとき（プレースホルダーではなく画像を表示） */
+.split-media--photo {
+    aspect-ratio: auto;              /* 画像本来の比率で表示 */
+    background: none;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.split-media--photo::after { content: none; }   /* ラベルを消す */
+.split-media--photo img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 480px;               /* 文章と同じくらいの高さに抑える */
+    border-radius: 3px;
+    box-shadow: 0 16px 40px rgba(140, 116, 64, 0.14);
+}
+
+/* 1枚写真をフレームに収めて表示（ズームイン演出付き） */
+.split-media--frame {
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    max-width: 380px;
+    max-height: 500px;
+    margin-inline: auto;             /* 列の中央に配置 */
+    background: none;
+    overflow: hidden;                /* ズームのはみ出しを隠す（マスク） */
+    border-radius: 3px;
+    box-shadow: 0 18px 44px rgba(140, 116, 64, 0.16);
+}
+.split-media--frame::after { content: none; }
+.split-media--frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;               /* フレームいっぱいに */
+    object-position: center;
+    transform: scale(1.18);          /* 最初は少し寄った状態 */
+    transition: transform 2.8s var(--ease);   /* ゆっくり引いていく */
+}
+/* 画面に入ったら、ゆっくり引いて“ピントが合う”ように */
+.split-media--frame.is-visible img { transform: scale(1); }
+@media (prefers-reduced-motion: reduce) {
+    .split-media--frame img { transform: none; transition: none; }
+}
+
+.split-body .lead {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 30px;
+}
+
+
+/* --- メニュー抜粋（3枚のカード） --- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* --- トップのカテゴリ紹介（5枚のカード） --- */
+.cat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+.cat-grid .m-card { padding: 34px 20px; }
+.cat-grid .m-card h3 { font-size: 19px; }
+.cat-grid .m-card p { font-size: 13px; }
+@media (max-width: 900px) {
+    .cat-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .cat-grid .m-card { padding: 26px 16px; }
+}
+/* カテゴリカードは、ゆっくり順番に現れる */
+.cat-grid.reveal-stagger > * {
+    transition: opacity 1.6s var(--ease), transform 1.6s var(--ease);
+}
+.cat-grid.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.22s; }
+.cat-grid.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.44s; }
+.cat-grid.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.66s; }
+.cat-grid.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.88s; }
+
+.m-card {
+    background-color: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 44px 30px;
+    text-align: center;
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.m-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(140, 116, 64, 0.12);
+}
+.m-card .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 16px;
+}
+.m-card h3 {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: 21px;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+}
+.m-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+
+/* =========================================================
+   ⑨ コンセプトページ
+   ========================================================= */
+.concept-statement {
+    max-width: 720px;
+    margin-inline: auto;
+    text-align: center;
+}
+.concept-statement .big {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: clamp(22px, 3.4vw, 32px);
+    line-height: 2.2;
+    letter-spacing: 0.08em;
+    margin-bottom: 34px;
+}
+.concept-statement p {
+    color: var(--ink-soft);
+    font-size: 15px;
+}
+
+/* 「have」の意味を伝える3つの柱 */
+.pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 20px;
+}
+.pillar {
+    text-align: center;
+    padding: 0 10px;
+}
+.pillar .pillar-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 18px;
+}
+.pillar h3 {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: 19px;
+    margin-bottom: 12px;
+}
+.pillar p { font-size: 14px; color: var(--ink-soft); }
+
+
+/* =========================================================
+   ⑩ メニューページ
+   ========================================================= */
+.menu-block { margin-bottom: 70px; }
+.menu-block:last-child { margin-bottom: 0; }
+.menu-block-head {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    padding-bottom: 18px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--line);
+}
+.menu-block-head .en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+}
+.menu-block-head .jp {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    min-width: 0;        /* 長い名前は折り返せるように（線画で見切れ防止） */
+}
+/* カテゴリ見出しのボタニカル線画（ロゴと同じ世界観） */
+.menu-deco {
+    margin-left: auto;      /* 右端に寄せる */
+    align-self: center;
+    width: clamp(96px, 13vw, 140px);
+    height: auto;
+    color: var(--gold);
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+@media (max-width: 600px) {
+    .menu-deco { width: 62px; opacity: 0.6; }
+    .menu-block-head .jp { font-size: 18px; }
+}
+
+.menu-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px 24px;
+    padding: 22px 0;
+    border-bottom: 1px dashed var(--line);
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item h4 {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+}
+.menu-item .desc {
+    grid-column: 1 / 2;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+}
+.menu-item .price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--ink);
+    white-space: nowrap;
+    align-self: start;
+}
+.menu-item .price small {
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+}
+
+/* --- カテゴリの導入文（キャッチ） --- */
+.menu-block-lead {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: -8px 0 26px;
+    line-height: 2;
+}
+
+/* --- 時間別など、複数の料金を段組みで見せる項目 --- */
+.menu-item--tiers {
+    display: block;   /* グリッドを解除して縦に積む */
+}
+.menu-item--tiers h4 { margin-bottom: 4px; }
+.menu-tiers {
+    list-style: none;
+    margin: 14px 0 0;
+    display: grid;
+    gap: 9px;
+}
+.menu-tiers li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px dotted var(--line);
+}
+.menu-tiers li:last-child { border-bottom: none; padding-bottom: 0; }
+.menu-tiers .t { font-size: 14.5px; color: var(--ink); }
+.menu-tiers .p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    color: var(--ink);
+    white-space: nowrap;
+}
+/* 項目内の補足・オプション行 */
+.menu-subnote {
+    grid-column: 1 / -1;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+}
+
+/* --- よもぎ蒸しの効果タグ --- */
+.effect-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 4px 0 30px;
+}
+.effect-tags li {
+    list-style: none;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--gold-deep);
+    border: 1px solid var(--line);
+    background: var(--white);
+    padding: 7px 16px;
+    border-radius: 40px;
+}
+
+/* --- お得情報の強調バー --- */
+.menu-highlight {
+    text-align: center;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin-top: 30px;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--gold-deep);
+}
+
+
+/* =========================================================
+   ⑪ 料金ページ
+   ========================================================= */
+/* 料金表を2カラムで並べる（スマホでは1カラム） */
+.price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
+    border: 1px solid var(--line);
+}
+.price-table caption {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    text-align: left;
+    padding: 24px 26px;
+    background-color: var(--bg-alt);
+    letter-spacing: 0.08em;
+}
+.price-table th,
+.price-table td {
+    text-align: left;
+    padding: 20px 26px;
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+}
+.price-table th {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: 16px;
+    width: 55%;
+}
+.price-table td.p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    text-align: right;
+    white-space: nowrap;
+}
+.price-table td.p small { font-size: 12px; color: var(--ink-soft); }
+.price-table .row-note {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    letter-spacing: 0.03em;
+}
+.price-note {
+    margin-top: 26px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 2;
+}
+.price-note li { list-style: none; padding-left: 1.2em; position: relative; }
+.price-note li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   ⑫ スタッフページ
+   ========================================================= */
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 44px 30px;
+}
+/* スタッフ2名のとき：中央寄せの2カラム */
+.staff-grid--two {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
+    margin-inline: auto;
+    gap: 44px 50px;
+}
+.staff-card { text-align: center; }
+.staff-photo {
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(135deg, #EEE3CF, #E2D3B6);
+    border-radius: 3px;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+}
+.staff-photo::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    color: rgba(140, 116, 64, 0.55);
+}
+/* 実際のスタッフ写真を表示するとき */
+.staff-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+.staff-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+.staff-name {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+.staff-name small {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    margin-top: 4px;
+}
+.staff-msg {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    text-align: left;
+}
+
+/* スタッフが1名のときのプロフィール表示（写真＋紹介文の2カラム） */
+.staff-profile {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: clamp(30px, 5vw, 60px);
+    align-items: center;
+    max-width: 900px;
+    margin-inline: auto;
+}
+.staff-profile-photo {
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(135deg, #EEE3CF, #E2D3B6);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+.staff-profile-photo::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    color: rgba(140, 116, 64, 0.55);
+}
+.staff-profile-body .staff-role { margin-bottom: 10px; }
+.staff-profile-body .staff-name { font-size: 26px; }
+.staff-profile-body .staff-msg { margin-top: 0; font-size: 15px; }
+
+
+/* =========================================================
+   ⑬ アクセスページ
+   ========================================================= */
+.access-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 6vw, 70px);
+    align-items: start;
+}
+.access-map {
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: var(--bg-alt);
+}
+.access-map iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.info-list dt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+}
+.info-list dd {
+    font-size: 15px;
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+}
+.info-list dd:last-child { border-bottom: none; }
+
+
+/* =========================================================
+   ⑭ ご予約・お問い合わせページ（フォーム）
+   ========================================================= */
+.reserve-intro {
+    max-width: 680px;
+    margin-inline: auto;
+    text-align: center;
+    margin-bottom: 56px;
+}
+.reserve-intro p { color: var(--ink-soft); font-size: 15px; }
+
+.contact-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+}
+.contact-card {
+    text-align: center;
+    padding: 34px 22px;
+    background-color: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+}
+.contact-card .en {
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+.contact-card .big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+.contact-card .note { font-size: 12.5px; color: var(--ink-soft); }
+
+.form {
+    max-width: 720px;
+    margin-inline: auto;
+}
+.form-row { margin-bottom: 26px; }
+.form-row label {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    color: var(--ink);
+}
+.form-row .req {
+    font-size: 11px;
+    color: #fff;
+    background-color: var(--gold);
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 8px;
+    letter-spacing: 0.08em;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(176, 146, 91, 0.15);
+}
+.form-row textarea { resize: vertical; min-height: 140px; }
+.form-actions { text-align: center; margin-top: 40px; }
+.form-privacy {
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 20px;
+}
+
+
+/* ===== 準備中（Coming Soon）表示 ===== */
+.coming-soon {
+    max-width: 640px;
+    margin-inline: auto;
+    text-align: center;
+    padding: clamp(40px, 8vw, 80px) 0;
+}
+.coming-soon .cs-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 6vw, 56px);
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    line-height: 1.2;
+    margin-bottom: 22px;
+}
+.coming-soon h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    font-size: clamp(20px, 3vw, 26px);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+}
+.coming-soon p { color: var(--ink-soft); font-size: 15px; }
+
+
+/* =========================================================
+   ⑮ 予約を促す共通の帯（CTA）
+   ========================================================= */
+.cta-band {
+    text-align: center;
+    background:
+        radial-gradient(120% 160% at 50% 0%, #F6EEDD 0%, #EADFC9 100%);
+}
+.cta-band .section-title { margin-bottom: 16px; }
+.cta-band p { color: var(--ink-soft); margin-bottom: 34px; }
+
+
+/* =========================================================
+   ⑯ フッター
+   ========================================================= */
+.site-footer {
+    background-color: #2B2823;
+    color: #E8E1D4;
+    padding: 70px 24px 34px;
+}
+.footer-inner {
+    max-width: var(--max);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 44px;
+    border-bottom: 1px solid rgba(232, 225, 212, 0.15);
+}
+.footer-brand .brand-logo {
+    color: #fff;
+    padding-left: 0.32em;
+    display: inline-block;
+    margin-bottom: 18px;
+}
+.footer-brand p { font-size: 13px; color: #B7AF9F; line-height: 2; }
+.footer-col h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a { font-size: 13.5px; color: #D8D0C0; transition: color 0.3s var(--ease); }
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+    max-width: var(--max);
+    margin: 24px auto 0;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: #9C947F;
+}
+
+
+/* =========================================================
+   ⑰ スクロールで浮かび上がる動き（reveal）
+   main.js が画面に入った要素へ is-visible を付けます
+   ========================================================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* 子要素を少しずつ遅らせて出す（カードの連なりなど） */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.reveal-stagger.is-visible > * { opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.24s; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.36s; }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.48s; }
+.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.6s; }
+
+
+/* =========================================================
+   ⑱ スマホ用の固定「予約」ボタン（画面右下）
+   ========================================================= */
+.floating-reserve {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 800;
+    display: none;   /* PCでは隠す。スマホで表示 */
+    padding: 14px 26px;
+    background-color: var(--gold);
+    color: #fff;
+    border-radius: 40px;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 10px 24px rgba(140, 116, 64, 0.35);
+}
+
+
+/* =========================================================
+   追加：ブランドロックアップ（HAVE + TOTAL BEAUTY SPA）
+   ========================================================= */
+.brand {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1;
+}
+.brand .brand-logo {
+    padding-left: 0;   /* ロックアップでは左揃えにする */
+    margin: 0;
+}
+.brand-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-top: 8px;
+    padding-left: 0.15em;
+}
+
+/* フッターのロックアップ */
+.footer-brand .brand-logo { margin-bottom: 8px; }
+.footer-brand .brand-sub {
+    display: block;
+    color: var(--gold);
+    margin-bottom: 18px;
+    padding-left: 0.32em;
+}
+
+
+/* =========================================================
+   追加：コンセプト本文（オーナーメッセージ）
+   ========================================================= */
+.concept-statement p { margin-bottom: 26px; }
+.concept-statement p:last-child { margin-bottom: 0; }
+.concept-statement .big { margin-bottom: 26px; }
+.concept-statement strong {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 500;
+    color: var(--gold-deep);
+}
+.concept-quote {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(18px, 2.6vw, 24px);
+    letter-spacing: 0.06em;
+    color: var(--gold-deep);
+    line-height: 1.9;
+}
+.concept-signoff {
+    font-size: 24px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   追加：LINE / Instagram 予約ボタン
+   ========================================================= */
+/* LINEボタン（LINEブランドカラー #06C755） */
+.btn-line {
+    background-color: #06C755;
+    border-color: #06C755;
+    color: #fff;
+}
+.btn-line:hover {
+    background-color: #05b64c;
+    border-color: #05b64c;
+    color: #fff;
+    transform: translateY(-2px);
+}
+/* Instagramボタン（ブランドのグラデーション） */
+.btn-ig {
+    background-image: linear-gradient(45deg, #feda75 0%, #fa7e1e 27%, #d62976 55%, #962fbf 78%, #4f5bd5 100%);
+    border: none;
+    color: #fff;
+}
+.btn-ig:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+}
+.btn-line svg,
+.btn-ig svg { flex-shrink: 0; }
+
+/* 予約ページの大きなアクションボタン（縦並び） */
+.reserve-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    max-width: 460px;
+    margin: 0 auto;
+}
+.reserve-actions .btn {
+    width: 100%;
+    padding: 20px 28px;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+}
+.reserve-actions .btn small {
+    display: block;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+.reserve-hours {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 2;
+}
+
+
+/* =========================================================
+   追加：スマホ用 固定アクションバー（LINE / Instagram）
+   ========================================================= */
+.mobile-cta-bar { display: none; }   /* PCでは非表示 */
+
+
+/* =========================================================
+   追加：フッターのSNSリンク
+   ========================================================= */
+.footer-social {
+    display: flex;
+    gap: 14px;
+    margin-top: 22px;
+}
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(232, 225, 212, 0.28);
+    color: #E8E1D4;
+    transition: background-color 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.footer-social a:hover {
+    background-color: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+}
+.footer-social svg { width: 18px; height: 18px; }
+
+
+/* =========================================================
+   ⑲ レスポンシブ（スマホ・タブレット対応）
+   ========================================================= */
+
+/* タブレット以下 */
+@media (max-width: 900px) {
+    .card-grid,
+    .pillars,
+    .staff-grid,
+    .contact-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .footer-brand { grid-column: 1 / -1; }
+}
+
+/* スマホ */
+@media (max-width: 720px) {
+    .site-header { padding: 18px 22px; }
+    .header-nav { display: none; }      /* PCメニューは隠す */
+    .menu-toggle { display: block; }    /* ハンバーガーを出す */
+
+    .split,
+    .access-grid,
+    .staff-profile {
+        grid-template-columns: 1fr;
+    }
+    .staff-profile-photo { max-width: 300px; margin-inline: auto; }
+    .staff-profile-body { text-align: center; }
+    .staff-profile-body .divider { margin-inline: auto; }
+    .staff-profile-body .staff-msg { text-align: left; }
+    .split--reverse .split-media { order: 0; }
+
+    .card-grid,
+    .pillars,
+    .staff-grid,
+    .contact-cards {
+        grid-template-columns: 1fr;
+    }
+    .footer-inner { grid-template-columns: 1fr; }
+
+    .menu-item { grid-template-columns: 1fr; }
+    .menu-item .price { justify-self: start; }
+
+    .price-table th { width: auto; }
+    .price-grid { grid-template-columns: 1fr; }
+
+    /* スマホ用 固定アクションバー（画面下・LINE / Instagram） */
+    .mobile-cta-bar {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 850;
+        box-shadow: 0 -4px 20px rgba(40, 35, 28, 0.16);
+    }
+    .mobile-cta-bar .mcta {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 15px 6px;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        color: #fff;
+    }
+    .mcta--line { background-color: #06C755; }
+    .mcta--ig { background-image: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5); }
+    .mcta svg { flex-shrink: 0; }
+
+    /* バーの高さぶん、本文の下に余白を足す */
+    body { padding-bottom: 54px; }
+}
