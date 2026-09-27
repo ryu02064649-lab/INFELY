@@ -69,7 +69,7 @@ export const services: Service[] = [
     note: "目的や予算、希望条件から候補を選定します。",
     image: {
       src: "/images/stay.webp",
-      alt: "夜景を望む客室。ベッドサイドのランプが静かに灯る",
+      alt: "石とウッドに包まれた、夜のホテルロビー。レザーのベンチと柔らかな間接照明",
     },
   },
   {
