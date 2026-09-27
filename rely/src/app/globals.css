@@ -1,0 +1,380 @@
+@import "tailwindcss";
+
+@custom-variant pointer-fine (@media (hover: hover) and (pointer: fine));
+
+@theme {
+  --color-ink: #0b0b0b;
+  --color-ink-soft: #141413;
+  --color-ink-line: #2a2a29;
+  --color-ivory: #f4f1ea;
+  --color-ivory-deep: #ebe7dd;
+  --color-ivory-line: #d9d4c8;
+  --color-silver: #b8b8b8;
+  /* muted text: stone on ivory (≈6:1), mist on ink (≈7:1) */
+  --color-stone: #5c5953;
+  --color-mist: #9d9c98;
+
+  --font-display: "Didot", "Didot LT STD", "GFS Didot", var(--font-bodoni),
+    "Bodoni 72", var(--font-mincho-jp), serif;
+  --font-mincho: var(--font-bodoni), var(--font-mincho-jp), "Hiragino Mincho ProN",
+    "Yu Mincho", serif;
+  --font-sans: var(--font-jost), var(--font-gothic-jp), "Hiragino Sans",
+    "Yu Gothic", sans-serif;
+
+  --ease-quiet: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --tracking-label: 0.28em;
+  --tracking-wide-2: 0.18em;
+}
+
+/* ─── Base ───────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--color-ink);
+    color: var(--color-ivory);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    font-feature-settings: "palt" 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* keep Japanese phrases together when wrapping (Chromium); others fall back */
+    word-break: auto-phrase;
+    line-break: strict;
+  }
+  ::selection {
+    background: var(--color-silver);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ─── Type helpers ───────────────────────────────────── */
+@utility label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+@utility jp-heading {
+  font-family: var(--font-mincho);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.75;
+  font-feature-settings: "palt" 1;
+}
+
+@utility hairline {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.25;
+}
+
+/* ─── Buttons ────────────────────────────────────────── */
+@layer components {
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    min-height: 3.5rem;
+    padding: 0 2.25rem;
+    border: 1px solid currentColor;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      color 0.7s var(--ease-quiet),
+      border-color 0.7s var(--ease-quiet);
+  }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.8s var(--ease-quiet);
+  }
+  .btn-light {
+    color: var(--color-ivory);
+  }
+  .btn-light::before {
+    background: var(--color-ivory);
+  }
+  .btn-dark {
+    color: var(--color-ink);
+  }
+  .btn-dark::before {
+    background: var(--color-ink);
+  }
+  @media (hover: hover) {
+    .btn-light:hover {
+      color: var(--color-ink);
+    }
+    .btn-dark:hover {
+      color: var(--color-ivory);
+    }
+    .btn:hover::before {
+      transform: scaleX(1);
+    }
+  }
+  .btn-light:focus-visible {
+    color: var(--color-ink);
+  }
+  .btn-light:focus-visible::before,
+  .btn-dark:focus-visible::before {
+    transform: scaleX(1);
+  }
+  .btn-dark:focus-visible {
+    color: var(--color-ivory);
+  }
+
+  /* thin arrow that lengthens slightly on hover */
+  .arrow {
+    position: relative;
+    display: inline-block;
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.8s var(--ease-quiet);
+  }
+  .arrow::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 7px;
+    height: 7px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg);
+    transform-origin: center;
+  }
+  a:hover .arrow,
+  button:hover .arrow,
+  a:focus-visible .arrow {
+    width: 2.5rem;
+  }
+
+  .text-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.8s var(--ease-quiet);
+  }
+  .text-link:hover,
+  .text-link:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ─── Hero intro sequence (CSS only: runs before hydration) ─── */
+@keyframes quiet-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes quiet-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.intro {
+  opacity: 0;
+  animation: quiet-in 1.2s var(--ease-quiet) forwards;
+  animation-delay: var(--intro-delay, 0s);
+}
+.intro-fade {
+  opacity: 0;
+  animation: quiet-fade 1.2s var(--ease-soft) forwards;
+  animation-delay: var(--intro-delay, 0s);
+}
+.hero-media {
+  animation: settle 6s var(--ease-quiet) both;
+}
+
+/* ─── Scroll reveal (enabled only when JS is running) ─── */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 1.2s var(--ease-quiet),
+    transform 1.2s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js [data-reveal="fade"] {
+  transform: none;
+}
+.js [data-reveal][data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* image reveal: a curtain that slides away */
+.js [data-reveal="image"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.6s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js [data-reveal="image"][data-visible="true"] {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ─── Service cards ──────────────────────────────────── */
+.service-media img {
+  transition:
+    transform 2.4s var(--ease-quiet),
+    opacity 1.6s var(--ease-quiet);
+}
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .service-card .service-media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+    height: auto;
+    background: transparent;
+  }
+  .service-card .service-media img {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  .service-card:hover .service-media img,
+  .service-card:focus-within .service-media img {
+    opacity: 0.42;
+    transform: scale(1);
+  }
+}
+
+/* cards in the swipe rail are revealed together with the section, not one by one */
+@media (max-width: 767px) {
+  .js .service-card[data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* mobile rail: hide the scrollbar but keep it scrollable */
+.rail {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Form controls ─────────────────────────────────── */
+@layer components {
+  .field {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid var(--color-ivory-line);
+    background: transparent;
+    padding: 0.85rem 0;
+    font-size: 1rem; /* ≥16px avoids iOS zoom */
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    border-radius: 0;
+    transition: border-color 0.6s var(--ease-quiet);
+  }
+  .field::placeholder {
+    color: #8b8880;
+  }
+  .field:focus {
+    outline: none;
+    border-bottom-color: var(--color-ink);
+  }
+  .field:focus-visible {
+    outline: none;
+    box-shadow: 0 1px 0 0 var(--color-ink);
+  }
+  .field[aria-invalid="true"] {
+    border-bottom-color: #8a3b2e;
+  }
+  textarea.field {
+    resize: vertical;
+    min-height: 7.5rem;
+    line-height: 1.9;
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .intro-fade,
+  .hero-media {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .js [data-reveal],
+  .js [data-reveal="image"] {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
+  .service-media img,
+  .btn,
+  .btn::before,
+  .arrow {
+    transition: none;
+  }
+  .service-card .service-media img {
+    transform: none;
+  }
+}
