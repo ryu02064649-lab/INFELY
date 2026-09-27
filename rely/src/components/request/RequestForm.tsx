@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { requestFormConfig } from "@/config/form";
 import { serviceCategories } from "@/data/services";
@@ -189,6 +190,42 @@ export default function RequestForm() {
       >
         <textarea id={id("message")} name="message" rows={6} className="field" aria-describedby={`${id("message")}-hint`} />
       </Field>
+
+      <div>
+        <label htmlFor={id("consent")} className="flex cursor-pointer items-start gap-4">
+          <input
+            id={id("consent")}
+            name="consent"
+            type="checkbox"
+            value="yes"
+            required
+            aria-required="true"
+            aria-invalid={!!errors.consent}
+            aria-describedby={`${id("consent")}-note${errors.consent ? ` ${id("consent")}-error` : ""}`}
+            className="mt-[0.35em] size-4 shrink-0 accent-ink"
+          />
+          <span className="text-[0.875rem] leading-[2] tracking-[0.04em]">
+            <Link href="/privacy/" className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink" target="_blank">
+              プライバシーポリシー
+            </Link>
+            に同意します（予約・手配の際に、予約先へ必要な範囲でお名前などを伝えることを含みます）。
+            <RequiredMark />
+            <span className="sr-only">（必須）</span>
+          </span>
+        </label>
+        {errors.consent ? (
+          <p id={`${id("consent")}-error`} className="mt-3 text-[0.8125rem] text-[#8a3b2e]">
+            {errors.consent}
+          </p>
+        ) : null}
+        <p id={`${id("consent")}-note`} className="mt-5 text-[0.8125rem] leading-[2] tracking-[0.04em] text-stone">
+          このフォームは、ご相談・お見積もりの受付です。送信後、内容を確認してお見積もりをメールでお送りします。お見積もりにご同意いただいた時点で、正式なご依頼となります（
+          <Link href="/legal/" className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink" target="_blank">
+            特定商取引法に基づく表記
+          </Link>
+          ）。
+        </p>
+      </div>
 
       <div className="flex flex-col gap-6 border-t border-ivory-line pt-10 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[0.8125rem] leading-[2] tracking-[0.06em] text-stone">

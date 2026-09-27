@@ -1,3 +1,5 @@
+import { business } from "@/config/business";
+
 /**
  * Price list. Amounts are strings so formatting stays exactly as written.
  */
@@ -93,6 +95,10 @@ export const option: Plan = {
 };
 
 export const pricingNotes = [
+  business.taxStatus === "exempt"
+    ? "※ 表示価格がお支払いいただく総額です（消費税の別途請求はありません）。"
+    : "※ 表示価格はすべて税込です。",
+  "※ 最終的な料金は、ご依頼内容を伺ったうえで個別にお見積もりします。",
   "※ 実際の商品・飲食・宿泊・体験などの料金は別途。",
   "※ 予約・手配は、先方の空き状況や条件により承れない場合があります。",
 ];
