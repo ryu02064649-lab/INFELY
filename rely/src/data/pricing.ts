@@ -8,6 +8,10 @@ export type Plan = {
   /** Printed after the amount, e.g. "〜" or "〜 / MONTH". */
   suffix: string;
   lead: string;
+  /** The moment this plan is for — framed as time handed over, not searches bought. */
+  scene?: string;
+  /** Shown as an inverted (dark) panel to mark the continuing membership. */
+  emphasis?: boolean;
   items: string[];
   example?: { label: string; lines: string[] };
   note?: string;
@@ -17,9 +21,10 @@ export const plans: Plan[] = [
   {
     id: "one-request",
     name: "ONE REQUEST",
-    price: "¥5,000",
+    price: "¥10,000",
     suffix: "〜",
-    lead: "ひとつの「探してほしい」を、一度だけ。",
+    lead: "ひとつの依頼に、選ぶ理由まで。",
+    scene: "大切な会食、週末の手土産。ひとつの「探す」を、まるごと任せたいときに。",
     items: [
       "基本リサーチ",
       "条件ヒアリング",
@@ -33,9 +38,10 @@ export const plans: Plan[] = [
   {
     id: "deep-research",
     name: "DEEP RESEARCH",
-    price: "¥15,000",
+    price: "¥25,000",
     suffix: "〜",
-    lead: "条件が重なる依頼を、まとめて深く。",
+    lead: "重なる条件を、ひとつの計画に。",
+    scene: "滞在、食事、体験。いくつもの手配を、一度に考えたいときに。",
     items: [
       "複数条件のリサーチ",
       "詳細ヒアリング",
@@ -52,9 +58,11 @@ export const plans: Plan[] = [
   {
     id: "concierge",
     name: "RELY CONCIERGE",
-    price: "¥30,000",
+    price: "¥48,000",
     suffix: "〜 / MONTH",
-    lead: "継続的に、いつでも任せられる。",
+    lead: "探す時間を、毎月まとめて手放す。",
+    scene: "会食、出張、贈り物。繰り返し訪れる「探す」を、継続して任せたいときに。",
+    emphasis: true,
     items: ["レストラン", "ホテル", "ギフト", "体験", "各種リサーチ"],
   },
   {
@@ -62,7 +70,8 @@ export const plans: Plan[] = [
     name: "BUSINESS RESEARCH",
     price: "¥30,000",
     suffix: "〜",
-    lead: "事業の判断材料を、整理して届ける。",
+    lead: "判断の前にある調査を、整理して届ける。",
+    scene: "市場、競合、新規事業。意思決定に必要な材料を、任せたいときに。",
     items: [
       "市場調査",
       "競合調査",
@@ -86,4 +95,11 @@ export const option: Plan = {
 export const pricingNotes = [
   "※ 実際の商品・飲食・宿泊・体験などの料金は別途。",
   "※ 予約・手配は、先方の空き状況や条件により承れない場合があります。",
+];
+
+/** What the fee pays for — shown above the plans to set the frame. */
+export const pricingPrinciples = [
+  { en: "TIME", text: "対価は、情報ではなく時間に。" },
+  { en: "REASON", text: "候補の数ではなく、選ぶ理由を。" },
+  { en: "PRIVATE", text: "ひとりの依頼に、ひとつの調査を。" },
 ];

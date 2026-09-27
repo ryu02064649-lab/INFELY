@@ -39,9 +39,9 @@ describe("pricing", () => {
   it("lists the agreed prices", () => {
     const table = Object.fromEntries([...plans, option].map((p) => [p.name, `${p.price}${p.suffix}`]));
     expect(table).toEqual({
-      "ONE REQUEST": "¥5,000〜",
-      "DEEP RESEARCH": "¥15,000〜",
-      "RELY CONCIERGE": "¥30,000〜 / MONTH",
+      "ONE REQUEST": "¥10,000〜",
+      "DEEP RESEARCH": "¥25,000〜",
+      "RELY CONCIERGE": "¥48,000〜 / MONTH",
       "BUSINESS RESEARCH": "¥30,000〜",
       "RESERVATION / ARRANGEMENT SUPPORT": "¥2,000〜",
     });
