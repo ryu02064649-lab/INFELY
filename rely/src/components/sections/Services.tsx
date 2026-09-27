@@ -62,7 +62,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       style={{ "--reveal-delay": `${(index % 3) * 0.12}s` } as React.CSSProperties}
     >
       {image ? (
-        <div className="service-media relative aspect-[4/3] overflow-hidden bg-ink-soft">
+        <div
+          className="service-media relative aspect-[4/3] overflow-hidden bg-ink-soft"
+          style={{ "--reveal-delay": `${0.1 + index * 0.14}s` } as React.CSSProperties}
+        >
           <Image
             src={image.src}
             alt={image.alt}
@@ -84,6 +87,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <h3 className="display mt-8 text-[2.375rem] tracking-[0.1em] lg:mt-12 lg:text-[3rem]">
           {name}
         </h3>
+        <span aria-hidden="true" className="title-rule" />
         <p className="mt-5 text-[0.9375rem] tracking-[0.08em] text-ivory/90">{lead}</p>
 
         {keywords.length > 0 ? (

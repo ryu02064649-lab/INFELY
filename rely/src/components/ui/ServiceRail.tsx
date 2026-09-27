@@ -42,6 +42,7 @@ export default function ServiceRail({
       <ul
         ref={ref}
         aria-label="サービス一覧"
+        data-reveal="group"
         className="rail mt-16 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 sm:scroll-px-8 sm:px-8 md:mx-8 md:grid md:snap-none md:grid-cols-2 md:gap-0 md:overflow-visible md:border-l md:border-t md:border-white/10 md:px-0 lg:mx-12 lg:mt-24 lg:grid-cols-3"
       >
         {children}

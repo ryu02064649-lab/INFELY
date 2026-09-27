@@ -27,10 +27,16 @@ export default function HowItWorks() {
           {steps.map((step, i) => (
             <li
               key={step.number}
-              className="flex gap-8 border-t border-ink/15 py-9 md:block md:py-10 lg:pt-12"
+              className="relative flex gap-8 py-9 md:block md:py-10 lg:pt-12"
               data-reveal
               style={{ "--reveal-delay": `${i * 0.12}s` } as React.CSSProperties}
             >
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-ink/20"
+                data-reveal="line"
+                style={{ "--reveal-delay": `${0.2 + i * 0.15}s` } as React.CSSProperties}
+              />
               <span
                 className="display w-14 shrink-0 text-[2.5rem] text-stone md:block md:w-auto lg:text-[4rem]"
                 aria-hidden="true"

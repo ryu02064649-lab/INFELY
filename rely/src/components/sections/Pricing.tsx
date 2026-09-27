@@ -70,10 +70,16 @@ export default function Pricing() {
 function PlanRow({ plan, index }: { plan: Plan; index: number }) {
   return (
     <li
-      className="grid gap-8 border-b border-ink/20 py-12 lg:grid-cols-12 lg:gap-8 lg:py-16"
+      className="relative grid gap-8 py-12 lg:grid-cols-12 lg:gap-8 lg:py-16"
       data-reveal
       style={{ "--reveal-delay": `${index * 0.06}s` } as React.CSSProperties}
     >
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px bg-ink/20"
+        data-reveal="line"
+        style={{ "--reveal-delay": "0.3s" } as React.CSSProperties}
+      />
       <div className="lg:col-span-4">
         <p className="label text-stone" aria-hidden="true">
           {String(index + 1).padStart(2, "0")}
@@ -107,7 +113,13 @@ function PlanRow({ plan, index }: { plan: Plan; index: number }) {
       </div>
 
       <p className="flex items-baseline gap-2 lg:col-span-3 lg:flex-col lg:items-end lg:gap-1">
-        <span className="display text-[2.5rem] tracking-[0.04em] lg:text-[3.25rem]">{plan.price}</span>
+        <span
+          className="display inline-block text-[2.5rem] tracking-[0.04em] lg:text-[3.25rem]"
+          data-reveal="mask"
+          style={{ "--reveal-delay": "0.35s" } as React.CSSProperties}
+        >
+          <span>{plan.price}</span>
+        </span>
         <PriceSuffix suffix={plan.suffix} />
       </p>
     </li>

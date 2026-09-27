@@ -62,7 +62,7 @@ export default function RequestForm() {
       netlify-honeypot={requestFormConfig.honeypotField}
       onSubmit={onSubmit}
       noValidate
-      className="space-y-14"
+      className="form-stagger space-y-14"
     >
       <input type="hidden" name="form-name" value={requestFormConfig.name} />
       <p className="hidden" aria-hidden="true">

@@ -10,15 +10,17 @@ export default function Hero() {
       aria-labelledby="hero-title"
       className="relative flex h-[100svh] min-h-[600px] items-center justify-center overflow-hidden bg-ink text-ivory"
     >
-      <div className="hero-media absolute inset-0">
-        <Image
-          src="/images/hero.webp"
-          alt="夜のラウンジ。窓の向こうに街の灯りが滲んでいる"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+      <div className="absolute inset-0" data-parallax="0.35">
+        <div className="hero-media absolute inset-0">
+          <Image
+            src="/images/hero.webp"
+            alt="夜のラウンジ。窓の向こうに街の灯りが滲んでいる"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
       </div>
       {/* Overlay keeps type legible on any photo that replaces the default one. */}
       <div aria-hidden="true" className="absolute inset-0 bg-ink/45" />
@@ -27,13 +29,17 @@ export default function Hero() {
         className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/80 to-transparent"
       />
 
-      <div className="relative z-10 flex flex-col items-center px-6 pb-10 text-center md:pb-0">
+      <div className="relative z-10 flex flex-col items-center px-6 pb-10 text-center md:pb-0" data-scroll-fade>
         <h1
           id="hero-title"
-          className="intro display pl-[0.22em] text-[4.75rem] tracking-[0.22em] sm:text-[7rem] lg:text-[9.5rem]"
-          style={delay(0.2)}
+          aria-label={site.name}
+          className="display pl-[0.22em] text-[4.75rem] tracking-[0.22em] sm:text-[7rem] lg:text-[9.5rem]"
         >
-          {site.name}
+          {site.name.split("").map((letter, i) => (
+            <span key={i} aria-hidden="true" className="intro-letter" style={delay(0.2 + i * 0.14)}>
+              {letter}
+            </span>
+          ))}
         </h1>
         <p
           className="intro label mt-5 pl-[0.36em] tracking-[0.36em] text-silver sm:mt-7 sm:text-[0.75rem]"
@@ -78,7 +84,9 @@ export default function Hero() {
         style={delay(3)}
       >
         SCROLL
-        <span aria-hidden="true" className="block h-12 w-px bg-current opacity-60" />
+        <span aria-hidden="true" className="scroll-cue relative block h-12 w-px overflow-hidden bg-current/25">
+          <span className="absolute inset-x-0 top-0 block h-1/2 bg-current" />
+        </span>
       </a>
     </section>
   );

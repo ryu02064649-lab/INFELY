@@ -262,6 +262,162 @@
   transform: none;
 }
 
+
+/* text reveal: the line rises out of a mask. Put data-reveal="mask" on the
+   clipping wrapper (it stays measurable for the observer); its child moves. */
+.js [data-reveal="mask"] {
+  opacity: 1;
+  transform: none;
+  overflow: hidden;
+  /* room for descenders / Japanese glyphs so the mask never crops them */
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+}
+.js [data-reveal="mask"] > * {
+  display: block;
+  transform: translate3d(0, 108%, 0);
+  transition: transform 1.4s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js [data-reveal="mask"][data-visible="true"] > * {
+  transform: none;
+}
+
+/* hairline that draws itself from the left */
+.js [data-reveal="line"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.6s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js [data-reveal="line"][data-visible="true"] {
+  transform: scaleX(1);
+}
+
+/* a group that only orchestrates its children */
+.js [data-reveal="group"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* hero title: letters settle in one after another */
+.intro-letter {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translate3d(0, 0.12em, 0);
+  animation: letter-in 1.4s var(--ease-quiet) forwards;
+  animation-delay: var(--intro-delay, 0s);
+}
+@keyframes letter-in {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* scroll cue: a short light travels slowly down the line */
+@keyframes cue {
+  0% {
+    transform: translate3d(0, -100%, 0);
+  }
+  60%,
+  100% {
+    transform: translate3d(0, 200%, 0);
+  }
+}
+.scroll-cue > span {
+  animation: cue 2.8s var(--ease-soft) infinite;
+}
+
+/* request form: fields settle in one after another on arrival */
+.form-stagger > * {
+  opacity: 0;
+  animation: quiet-in 1.2s var(--ease-quiet) forwards;
+}
+.form-stagger > :nth-child(1) {
+  animation-delay: 0.44s;
+}
+.form-stagger > :nth-child(2) {
+  animation-delay: 0.53s;
+}
+.form-stagger > :nth-child(3) {
+  animation-delay: 0.62s;
+}
+.form-stagger > :nth-child(4) {
+  animation-delay: 0.71s;
+}
+.form-stagger > :nth-child(5) {
+  animation-delay: 0.80s;
+}
+.form-stagger > :nth-child(6) {
+  animation-delay: 0.89s;
+}
+.form-stagger > :nth-child(7) {
+  animation-delay: 0.98s;
+}
+.form-stagger > :nth-child(8) {
+  animation-delay: 1.07s;
+}
+.form-stagger > :nth-child(9) {
+  animation-delay: 1.16s;
+}
+.form-stagger > :nth-child(10) {
+  animation-delay: 1.25s;
+}
+
+/* scroll-linked layers */
+[data-parallax],
+[data-scroll-fade] {
+  will-change: transform;
+}
+
+/* mobile request bar rises in after the hero sequence */
+@keyframes bar-in {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+.mobile-request-bar {
+  animation: bar-in 1s var(--ease-quiet) 2.6s both;
+}
+
+/* tab panels cross-fade when switched */
+[role="tabpanel"]:not([hidden]) {
+  animation: quiet-in 0.9s var(--ease-quiet);
+}
+
+/* thin rule under the title that extends on hover */
+.title-rule {
+  display: block;
+  height: 1px;
+  width: 2rem;
+  margin-top: 1.25rem;
+  background: currentColor;
+  opacity: 0.35;
+  transition:
+    width 1.2s var(--ease-quiet),
+    opacity 1.2s var(--ease-quiet);
+}
+@media (hover: hover) and (pointer: fine) {
+  .service-card h3 {
+    transition: letter-spacing 1.4s var(--ease-quiet);
+  }
+  .service-card:hover h3 {
+    letter-spacing: 0.14em;
+  }
+  .service-card:hover .title-rule,
+  .service-card:focus-within .title-rule {
+    width: 5rem;
+    opacity: 0.7;
+  }
+}
+
 /* image reveal: a curtain that slides away */
 .js [data-reveal="image"] {
   opacity: 1;
@@ -304,6 +460,17 @@
   .js .service-card[data-reveal] {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (max-width: 1023px), (hover: none), (pointer: coarse) {
+  .js [data-reveal="group"] .service-media {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.6s var(--ease-quiet);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .js [data-reveal="group"][data-visible="true"] .service-media {
+    clip-path: inset(0 0 0 0);
   }
 }
 
@@ -362,10 +529,26 @@
     transform: none;
   }
   .js [data-reveal],
-  .js [data-reveal="image"] {
+  .js [data-reveal="image"],
+  .js [data-reveal="mask"] > *,
+  .js [data-reveal="group"] .service-media {
     opacity: 1;
     transform: none;
     clip-path: none;
+    transition: none;
+  }
+  .intro-letter,
+  .form-stagger > *,
+  .mobile-request-bar,
+  .scroll-cue > span,
+  [role="tabpanel"]:not([hidden]) {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+  .service-card h3,
+  .title-rule {
     transition: none;
   }
   .service-media img,
