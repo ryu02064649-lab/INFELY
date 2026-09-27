@@ -9,7 +9,7 @@ export const business = {
   /** 屋号 (or company name once incorporated). */
   tradeName: "RELY",
   /** 運営責任者の氏名 (or 代表者名 for a company). */
-  operatorName: "",
+  operatorName: "宮城龍優",
   /** Contact address shown on the legal pages. */
   email: "",
   /** "individual" (個人事業主) or "corporation" (法人). */
