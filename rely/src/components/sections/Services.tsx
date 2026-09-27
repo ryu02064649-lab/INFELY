@@ -63,7 +63,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
     >
       {image ? (
         <div
-          className="service-media relative aspect-[4/3] overflow-hidden bg-ink-soft"
+          className="service-media relative aspect-square overflow-hidden bg-ink-soft sm:aspect-[4/3]"
           style={{ "--reveal-delay": `${0.1 + index * 0.14}s` } as React.CSSProperties}
         >
           <Image
@@ -73,21 +73,32 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 80vw"
             className="object-cover"
           />
+          {/* shade + title set on the photo (phones / tablets / touch) */}
+          <div aria-hidden="true" className="service-shade absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/10" />
+          <div aria-hidden="true" className="service-cover absolute inset-0 flex flex-col justify-between p-7 sm:p-9">
+            <span className="label self-end text-ivory/70">{scope}</span>
+            <div>
+              <span className="display block text-[1.5rem] text-silver">{number}</span>
+              <span className="display mt-3 block text-[2.375rem] leading-none tracking-[0.1em] text-ivory">{name}</span>
+            </div>
+          </div>
         </div>
       ) : null}
 
       <div className="relative z-10 flex flex-1 flex-col p-7 sm:p-9 lg:p-11">
-        <div className="flex items-baseline justify-between">
+        <div className={`flex items-baseline justify-between ${image ? "service-head" : ""}`}>
           <span className="display text-[1.75rem] text-silver lg:text-[2rem]" aria-hidden="true">
             {number}
           </span>
           <span className="label text-mist">{scope}</span>
         </div>
 
-        <h3 className="display mt-8 text-[2.375rem] tracking-[0.1em] lg:mt-12 lg:text-[3rem]">
+        <h3
+          className={`display mt-8 text-[2.375rem] tracking-[0.1em] lg:mt-12 lg:text-[3rem] ${image ? "service-head" : ""}`}
+        >
           {name}
         </h3>
-        <span aria-hidden="true" className="title-rule" />
+        <span aria-hidden="true" className={`title-rule ${image ? "service-head" : ""}`} />
         <p className="mt-5 text-[0.9375rem] tracking-[0.08em] text-ivory/90">{lead}</p>
 
         {keywords.length > 0 ? (

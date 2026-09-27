@@ -450,8 +450,53 @@
   }
   .service-card:hover .service-media img,
   .service-card:focus-within .service-media img {
-    opacity: 0.42;
+    opacity: 0.6;
     transform: scale(1);
+  }
+}
+
+/* Where the photo sits above the text (phones, tablets, touch), the
+   number and name are set on the photo and the duplicate heading in the
+   text block is kept for screen readers only. With a fine pointer on
+   desktop the photo becomes a hover backdrop, so the reverse applies. */
+.service-card .service-head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  margin: 0;
+}
+.service-card span.service-head {
+  display: none;
+}
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .service-card .service-head {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+  .service-card span.service-head {
+    display: block;
+  }
+  .service-card h3.service-head {
+    margin-top: 3rem;
+  }
+  .service-cover {
+    display: none;
+  }
+  .service-shade {
+    opacity: 0;
+    transition: opacity 1.6s var(--ease-quiet);
+    background: linear-gradient(to top, rgb(11 11 11 / 0.9), rgb(11 11 11 / 0.55) 55%, rgb(11 11 11 / 0.35));
+  }
+  .service-card:hover .service-shade,
+  .service-card:focus-within .service-shade {
+    opacity: 1;
   }
 }
 
