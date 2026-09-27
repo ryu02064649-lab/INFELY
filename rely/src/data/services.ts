@@ -132,7 +132,7 @@ export const services: Service[] = [
     ],
     image: {
       src: "/images/research.webp",
-      alt: "ウォールナットのデスクに置かれたリサーチ資料、万年筆、ノートPC",
+      alt: "夕暮れの高層ビル群を望むデスク。ノートPCと革の手帳、ペン、眼鏡とコーヒー",
     },
   },
   {
