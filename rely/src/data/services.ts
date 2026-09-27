@@ -113,7 +113,7 @@ export const services: Service[] = [
     note: "相手の年齢、関係性、趣味、予算などから調査します。",
     image: {
       src: "/images/gift.webp",
-      alt: "リボンを掛けた黒いギフトボックスと香水瓶、腕時計",
+      alt: "夜の車内、黒いレザーシートに置かれた深紅のバラの花束。赤いサテンのリボン",
     },
   },
   {

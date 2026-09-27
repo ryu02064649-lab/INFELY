@@ -74,7 +74,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             className="object-cover"
           />
           {/* shade + title set on the photo (phones / tablets / touch) */}
-          <div aria-hidden="true" className="service-shade absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/10" />
+          <div aria-hidden="true" className="service-shade absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-ink/45" />
           <div aria-hidden="true" className="service-cover absolute inset-0 flex flex-col justify-between p-7 sm:p-9">
             <span className="label self-end text-ivory/70">{scope}</span>
             <div>
