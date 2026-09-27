@@ -93,7 +93,7 @@ export const services: Service[] = [
     note: "「何をするか」からではなく、「どんな時間を過ごしたいか」を基準に提案します。",
     image: {
       src: "/images/experience.webp",
-      alt: "夜の水面を望むスパ。積み上げた石と白いタオル、キャンドル",
+      alt: "夕暮れのゴルフコース。芝の上に停まるカートと、染まりはじめた空",
     },
   },
   {

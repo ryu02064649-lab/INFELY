@@ -79,7 +79,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             <span className="label self-end text-ivory/70">{scope}</span>
             <div>
               <span className="display block text-[1.5rem] text-silver">{number}</span>
-              <span className="display mt-3 block text-[2.375rem] leading-none tracking-[0.1em] text-ivory">{name}</span>
+              <span className="display mt-3 block text-[2rem] leading-none tracking-[0.1em] text-ivory sm:text-[2.375rem]">{name}</span>
             </div>
           </div>
         </div>
