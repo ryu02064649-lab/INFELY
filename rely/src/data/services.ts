@@ -48,7 +48,7 @@ export const services: Service[] = [
     },
     image: {
       src: "/images/dining.webp",
-      alt: "キャンドルの灯るプライベートダイニングのテーブル。ワイングラスと白い皿",
+      alt: "キャンドルとシャンデリアの灯るレストラン。白いクロスのテーブルに料理とワイングラス",
     },
   },
   {
