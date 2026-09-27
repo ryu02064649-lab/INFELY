@@ -9,7 +9,7 @@ export default function FinalCta() {
       className="relative overflow-hidden bg-ink text-ivory"
     >
       <div aria-hidden="true" className="absolute inset-x-0 -inset-y-[18%]" data-parallax="0.22">
-        <div className="absolute inset-0 opacity-70" data-reveal="fade">
+        <div className="cta-media absolute inset-0 opacity-70" data-reveal="fade">
           <Image src="/images/concept.webp" alt="" fill sizes="100vw" className="object-cover" />
         </div>
       </div>

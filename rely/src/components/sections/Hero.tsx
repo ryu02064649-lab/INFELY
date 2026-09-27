@@ -23,6 +23,8 @@ export default function Hero() {
         </div>
       </div>
       {/* Overlay keeps type legible on any photo that replaces the default one. */}
+      {/* a faint light that passes over the emblem now and then */}
+      <div aria-hidden="true" className="hero-sheen absolute inset-0" />
       <div
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink via-ink/60 to-transparent"

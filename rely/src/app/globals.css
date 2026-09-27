@@ -430,6 +430,85 @@
   clip-path: inset(0 0 0 0);
 }
 
+
+/* ─── Image motion ───────────────────────────────────────
+   Every photo moves, but never enough to be noticed as "animation":
+   a slow breath, a focus-in on arrival, a light that passes. */
+@keyframes breathe {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.06) translate3d(-1.2%, -0.8%, 0);
+  }
+}
+@keyframes breathe-hero {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.045);
+  }
+}
+@keyframes sheen {
+  0% {
+    background-position: 125% 0;
+  }
+  32%,
+  100% {
+    background-position: -25% 0;
+  }
+}
+
+/* Hero: slow breath anchored on the emblem, and a passing light */
+.hero-media img {
+  transform-origin: 50% 22%;
+  animation: breathe-hero 28s var(--ease-soft) 6s infinite alternate;
+}
+.hero-sheen {
+  pointer-events: none;
+  background-image: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgb(255 244 228 / 0.28) 50%,
+    transparent 58%
+  );
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: 125% 0;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 60%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 60%);
+  animation: sheen 11s var(--ease-soft) 3.4s infinite;
+}
+
+/* Service photos: parallax layer (driven by the swipe rail), breathing layer */
+.media-parallax {
+  transform: translate3d(calc(var(--px, 0) * -7%), 0, 0);
+  will-change: transform;
+}
+.media-breathe {
+  animation: breathe 24s var(--ease-soft) infinite alternate;
+  animation-play-state: paused;
+}
+html:not(.js) .media-breathe,
+.service-card[data-visible="true"] .media-breathe {
+  animation-play-state: running;
+}
+.service-card:nth-child(2n) .media-breathe {
+  animation-direction: alternate-reverse;
+  animation-duration: 28s;
+}
+.media-sheen {
+  display: none;
+  pointer-events: none;
+}
+
+/* Final CTA backdrop breathes too */
+.cta-media img {
+  animation: breathe 32s var(--ease-soft) infinite alternate;
+}
+
 /* ─── Service cards ──────────────────────────────────── */
 .service-media img {
   transition:
@@ -447,6 +526,28 @@
   .service-card .service-media img {
     opacity: 0;
     transform: scale(1.08);
+  }
+  .service-card .media-sheen {
+    display: block;
+    z-index: 1;
+    background-image: linear-gradient(
+      110deg,
+      transparent 38%,
+      rgb(255 246 232 / 0.12) 50%,
+      transparent 62%
+    );
+    background-size: 280% 100%;
+    background-repeat: no-repeat;
+    background-position: 130% 0;
+    opacity: 0;
+  }
+  .service-card:hover .media-sheen,
+  .service-card:focus-within .media-sheen {
+    opacity: 1;
+    background-position: -30% 0;
+    transition:
+      background-position 2.2s var(--ease-quiet) 0.15s,
+      opacity 0.6s var(--ease-quiet);
   }
   .service-card:hover .service-media img,
   .service-card:focus-within .service-media img {
@@ -517,6 +618,18 @@
   .js [data-reveal="group"][data-visible="true"] .service-media {
     clip-path: inset(0 0 0 0);
   }
+  .js [data-reveal="group"] .service-media img {
+    transform: scale(1.12);
+    filter: blur(10px) brightness(0.6);
+    transition:
+      transform 2.6s var(--ease-quiet),
+      filter 2s var(--ease-quiet);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .js [data-reveal="group"][data-visible="true"] .service-media img {
+    transform: none;
+    filter: none;
+  }
 }
 
 /* mobile rail: hide the scrollbar but keep it scrollable */
@@ -576,12 +689,19 @@
   .js [data-reveal],
   .js [data-reveal="image"],
   .js [data-reveal="mask"] > *,
+  .js [data-reveal="group"] .service-media img,
+  .media-parallax,
   .js [data-reveal="group"] .service-media {
     opacity: 1;
     transform: none;
     clip-path: none;
+    filter: none;
     transition: none;
   }
+  .hero-media img,
+  .hero-sheen,
+  .media-breathe,
+  .cta-media img,
   .intro-letter,
   .form-stagger > *,
   .mobile-request-bar,
@@ -597,6 +717,7 @@
     transition: none;
   }
   .service-media img,
+  .media-sheen,
   .btn,
   .btn::before,
   .arrow {

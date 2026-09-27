@@ -66,13 +66,19 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           className="service-media relative aspect-square overflow-hidden bg-ink-soft sm:aspect-[4/3]"
           style={{ "--reveal-delay": `${0.1 + index * 0.14}s` } as React.CSSProperties}
         >
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 80vw"
-            className="object-cover"
-          />
+          {/* layers: swipe parallax → slow breathing → the photo itself (focus-in / hover) */}
+          <div className="media-parallax absolute -inset-x-[8%] inset-y-0">
+            <div className="media-breathe absolute inset-0">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(min-width: 1024px) 40vw, (min-width: 768px) 60vw, 95vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <div aria-hidden="true" className="media-sheen absolute inset-0" />
           {/* shade + title set on the photo (phones / tablets / touch) */}
           <div aria-hidden="true" className="service-shade absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-ink/45" />
           <div aria-hidden="true" className="service-cover absolute inset-0 flex flex-col justify-between p-7 sm:p-9">
