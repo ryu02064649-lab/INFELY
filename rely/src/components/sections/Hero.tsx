@@ -8,32 +8,34 @@ export default function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative flex h-[100svh] min-h-[600px] items-center justify-center overflow-hidden bg-ink text-ivory"
+      className="relative flex h-[100svh] min-h-[640px] items-end justify-center overflow-hidden bg-ink text-ivory"
     >
       <div className="absolute inset-0" data-parallax="0.35">
         <div className="hero-media absolute inset-0">
           <Image
             src="/images/hero.webp"
-            alt="夜のラウンジ。窓の向こうに街の灯りが滲んでいる"
+            alt="黒い大理石のロビーに浮かぶ、RELYのシルバーのエンブレム"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-top"
           />
         </div>
       </div>
       {/* Overlay keeps type legible on any photo that replaces the default one. */}
-      <div aria-hidden="true" className="absolute inset-0 bg-ink/45" />
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/80 to-transparent"
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink via-ink/60 to-transparent"
       />
 
-      <div className="relative z-10 flex flex-col items-center px-6 pb-10 text-center md:pb-0" data-scroll-fade>
+      <div
+        className="relative z-10 flex flex-col items-center px-6 pb-[max(5.5rem,10svh)] text-center md:pb-[11svh]"
+        data-scroll-fade
+      >
         <h1
           id="hero-title"
           aria-label={site.name}
-          className="display pl-[0.22em] text-[4.75rem] tracking-[0.22em] sm:text-[7rem] lg:text-[9.5rem]"
+          className="display pl-[0.22em] text-[3.5rem] leading-none tracking-[0.22em] sm:text-[4.75rem] lg:text-[5.75rem]"
         >
           {site.name.split("").map((letter, i) => (
             <span key={i} aria-hidden="true" className="intro-letter" style={delay(0.2 + i * 0.14)}>
@@ -42,26 +44,20 @@ export default function Hero() {
           ))}
         </h1>
         <p
-          className="intro label mt-5 pl-[0.36em] tracking-[0.36em] text-silver sm:mt-7 sm:text-[0.75rem]"
+          className="intro label mt-5 pl-[0.36em] tracking-[0.36em] text-silver sm:mt-6 sm:text-[0.75rem]"
           style={delay(0.8)}
         >
           {site.category}
         </p>
 
-        <span
-          aria-hidden="true"
-          className="intro-fade mt-10 block h-px w-10 bg-ivory/40 sm:mt-12"
-          style={delay(1.2)}
-        />
-
         <p
-          className="intro jp-heading mt-10 text-[1.25rem] sm:mt-12 sm:text-[1.75rem] lg:text-[2rem]"
+          className="intro jp-heading mt-8 text-[1.125rem] sm:mt-10 sm:text-[1.5rem] lg:text-[1.75rem]"
           style={delay(1.4)}
         >
           {site.tagline}
         </p>
         <p
-          className="intro mt-6 text-[0.8125rem] leading-[2.2] tracking-[0.14em] text-ivory/75 sm:text-[0.9375rem]"
+          className="intro mt-4 text-[0.8125rem] leading-[2.1] tracking-[0.14em] text-ivory/75 sm:mt-5 sm:text-[0.9375rem]"
           style={delay(1.9)}
         >
           探す。比較する。選ぶ。
@@ -69,7 +65,7 @@ export default function Hero() {
           その時間を、RELYが引き受けます。
         </p>
 
-        <div className="intro mt-12 sm:mt-14" style={delay(2.4)}>
+        <div className="intro mt-8 sm:mt-10" style={delay(2.4)}>
           <Link href={REQUEST_PATH} className="btn btn-light">
             <span className="sm:hidden">REQUEST</span>
             <span className="hidden sm:inline">REQUEST A SERVICE</span>
@@ -80,7 +76,7 @@ export default function Hero() {
 
       <a
         href="#concept"
-        className="intro-fade label absolute bottom-10 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-4 text-ivory/60 transition-colors duration-500 hover:text-ivory md:flex"
+        className="intro-fade label absolute bottom-10 right-8 hidden flex-col items-center gap-4 text-ivory/60 transition-colors duration-500 hover:text-ivory md:flex lg:right-12"
         style={delay(3)}
       >
         SCROLL
