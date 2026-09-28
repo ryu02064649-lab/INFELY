@@ -10,10 +10,12 @@ import Pricing from "@/components/sections/Pricing";
 import About from "@/components/sections/About";
 import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
+import Opening from "@/components/ui/Opening";
 
 export default function Home() {
   return (
     <>
+      <Opening />
       <Header />
       <main id="main">
         <Hero />
