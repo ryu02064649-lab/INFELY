@@ -46,3 +46,12 @@ describe("filled()", () => {
     expect(filled("RELY")).toBe("RELY");
   });
 });
+
+describe("FAQ", () => {
+  it("does not promise that a reservation will succeed", async () => {
+    const { faqs } = await import("@/data/faq");
+    const all = JSON.stringify(faqs);
+    expect(all).not.toContain("必ず予約");
+    expect(all).toContain("保証するものではありません");
+  });
+});

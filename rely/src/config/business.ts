@@ -21,6 +21,16 @@ export const business = {
    */
   taxStatus: "exempt" as "exempt" | "taxable",
   paymentMethods: ["銀行振込", "クレジットカード"],
+  /** Typical first-reply time, shown in the FAQ. */
+  replyTime: "24時間以内",
+  /**
+   * Other ways to get in touch. Leave a URL empty until the account exists;
+   * the channel is still named in the FAQ, but no link is shown.
+   */
+  channels: {
+    line: "",
+    instagram: "",
+  },
   /** Date the legal pages take effect, e.g. "2026年10月1日". */
   legalEffectiveDate: "",
 };

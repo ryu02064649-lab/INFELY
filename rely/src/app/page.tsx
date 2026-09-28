@@ -7,6 +7,7 @@ import Services from "@/components/sections/Services";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Example from "@/components/sections/Example";
 import Pricing from "@/components/sections/Pricing";
+import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
         <HowItWorks />
         <Example />
         <Pricing />
+        <Faq />
         <FinalCta />
       </main>
       <Footer />

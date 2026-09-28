@@ -677,6 +677,26 @@ html:not(.js) .media-breathe,
   }
 }
 
+/* ─── FAQ accordion ─────────────────────────────────── */
+.faq summary:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+.faq-icon-v {
+  transition: transform 0.6s var(--ease-quiet);
+}
+.faq[open] .faq-icon-v {
+  transform: translateX(-50%) scaleY(0);
+}
+.faq[open] .faq-body {
+  animation: quiet-in 0.8s var(--ease-quiet);
+}
+@media (hover: hover) {
+  .faq summary:hover .faq-icon {
+    opacity: 0.6;
+  }
+}
+
 /* ─── Reduced motion ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .intro,
@@ -702,6 +722,7 @@ html:not(.js) .media-breathe,
   .hero-sheen,
   .media-breathe,
   .cta-media img,
+  .faq[open] .faq-body,
   .intro-letter,
   .form-stagger > *,
   .mobile-request-bar,
