@@ -5,7 +5,6 @@ const tasks = [
   "ホテルを比較する。",
   "ギフトを選ぶ。",
   "旅行先を調べる。",
-  "市場を調査する。",
 ];
 
 const d = (s: number) => ({ "--reveal-delay": `${s}s` }) as React.CSSProperties;
