@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { footerNav, legalNav } from "@/data/navigation";
 import { site } from "@/config/site";
+import { business } from "@/config/business";
 
 export default function Footer() {
   return (
@@ -10,6 +11,19 @@ export default function Footer() {
           <div className="lg:col-span-6">
             <p className="display text-[2.75rem] tracking-[0.3em] lg:text-[3.5rem]">{site.name}</p>
             <p className="label mt-5 text-mist">{site.category}</p>
+            {business.channels.instagram ? (
+              <p className="mt-10">
+                <a
+                  href={business.channels.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram @rely_1001（新しいタブで開きます）"
+                  className="label text-link text-ivory/75 hover:text-ivory"
+                >
+                  INSTAGRAM<span className="ml-4 normal-case tracking-[0.12em] text-mist">@rely_1001</span>
+                </a>
+              </p>
+            ) : null}
           </div>
           <p className="jp-heading text-lg text-ivory/85 lg:col-span-3 lg:text-xl">
             {site.philosophy[0]}

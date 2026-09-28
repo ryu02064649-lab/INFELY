@@ -29,7 +29,7 @@ export const business = {
    */
   channels: {
     line: "",
-    instagram: "",
+    instagram: "https://www.instagram.com/rely_1001/",
   },
   /** Date the legal pages take effect, e.g. "2026年10月1日". */
   legalEffectiveDate: "",

@@ -36,7 +36,8 @@
   - おすすめ：RELY 用の独自ドメインを取り、`info@〜` のアドレスにする（サイトの URL にも使える）
   - 急ぐ場合：RELY 専用の Gmail（個人のアドレスとは分ける）
   - 決まったら `business.ts` の `email` に入れる
-- [ ] **LINE・Instagram の URL**：FAQ で「LINE・Instagram から相談できる」と書いています。URL を `business.ts` の `channels` に入れると、FAQ にリンクが出ます
+- [x] **Instagram の URL**：https://www.instagram.com/rely_1001/ （2026年9月28日に開設。FAQ とフッターにリンクを表示）
+- [ ] **LINE の URL**：FAQ で「LINE から相談できる」と書いています。URL を `business.ts` の `channels.line` に入れると、FAQ にリンクが出ます
 - [ ] **制定日**（公開予定日でよい）→ `business.ts` の `legalEffectiveDate` に入れる（例：`"2026年10月1日"`）
 - [x] **振込手数料**：お客様負担
 - [x] **返金時の振込手数料**：お客様負担（お客様都合のキャンセル時）。当方の都合で提供できない場合は、手数料も含めて全額返金
