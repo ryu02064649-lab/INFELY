@@ -24,15 +24,15 @@ export default function SectionHeading({
     <div className={className}>
       <p className={`label flex items-center gap-4 ${muted}`} data-reveal="fade">
         <span>{index}</span>
-        <span aria-hidden="true" className="h-px w-10 bg-current opacity-60" />
+        <span aria-hidden="true" className="h-px w-10 bg-current opacity-60" data-reveal="line" />
         <span>{title}</span>
       </p>
       <h2
         id={id}
         className="display mt-8 text-[3.25rem] tracking-[0.08em] sm:text-[4.5rem] lg:text-[6.5rem]"
-        data-reveal
+        data-reveal="mask"
       >
-        {title}
+        <span>{title}</span>
       </h2>
       {lead ? (
         <p

@@ -59,6 +59,9 @@
     outline-offset: 4px;
   }
   @media (prefers-reduced-motion: reduce) {
+  .with-opening .opening {
+    display: none;
+  }
     html {
       scroll-behavior: auto;
     }
@@ -262,6 +265,162 @@
   transform: none;
 }
 
+
+/* text reveal: the line rises out of a mask. Put data-reveal="mask" on the
+   clipping wrapper (it stays measurable for the observer); its child moves. */
+.js [data-reveal="mask"] {
+  opacity: 1;
+  transform: none;
+  overflow: hidden;
+  /* room for descenders / Japanese glyphs so the mask never crops them */
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+}
+.js [data-reveal="mask"] > * {
+  display: block;
+  transform: translate3d(0, 108%, 0);
+  transition: transform 1.4s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js [data-reveal="mask"][data-visible="true"] > * {
+  transform: none;
+}
+
+/* hairline that draws itself from the left */
+.js [data-reveal="line"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.6s var(--ease-quiet);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js [data-reveal="line"][data-visible="true"] {
+  transform: scaleX(1);
+}
+
+/* a group that only orchestrates its children */
+.js [data-reveal="group"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* hero title: letters settle in one after another */
+.intro-letter {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translate3d(0, 0.12em, 0);
+  animation: letter-in 1.4s var(--ease-quiet) forwards;
+  animation-delay: var(--intro-delay, 0s);
+}
+@keyframes letter-in {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* scroll cue: a short light travels slowly down the line */
+@keyframes cue {
+  0% {
+    transform: translate3d(0, -100%, 0);
+  }
+  60%,
+  100% {
+    transform: translate3d(0, 200%, 0);
+  }
+}
+.scroll-cue > span {
+  animation: cue 2.8s var(--ease-soft) infinite;
+}
+
+/* request form: fields settle in one after another on arrival */
+.form-stagger > * {
+  opacity: 0;
+  animation: quiet-in 1.2s var(--ease-quiet) forwards;
+}
+.form-stagger > :nth-child(1) {
+  animation-delay: 0.44s;
+}
+.form-stagger > :nth-child(2) {
+  animation-delay: 0.53s;
+}
+.form-stagger > :nth-child(3) {
+  animation-delay: 0.62s;
+}
+.form-stagger > :nth-child(4) {
+  animation-delay: 0.71s;
+}
+.form-stagger > :nth-child(5) {
+  animation-delay: 0.80s;
+}
+.form-stagger > :nth-child(6) {
+  animation-delay: 0.89s;
+}
+.form-stagger > :nth-child(7) {
+  animation-delay: 0.98s;
+}
+.form-stagger > :nth-child(8) {
+  animation-delay: 1.07s;
+}
+.form-stagger > :nth-child(9) {
+  animation-delay: 1.16s;
+}
+.form-stagger > :nth-child(10) {
+  animation-delay: 1.25s;
+}
+
+/* scroll-linked layers */
+[data-parallax],
+[data-scroll-fade] {
+  will-change: transform;
+}
+
+/* mobile request bar rises in after the hero sequence */
+@keyframes bar-in {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+.mobile-request-bar {
+  animation: bar-in 1s var(--ease-quiet) 2.6s both;
+}
+
+/* tab panels cross-fade when switched */
+[role="tabpanel"]:not([hidden]) {
+  animation: quiet-in 0.9s var(--ease-quiet);
+}
+
+/* thin rule under the title that extends on hover */
+.title-rule {
+  display: block;
+  height: 1px;
+  width: 2rem;
+  margin-top: 1.25rem;
+  background: currentColor;
+  opacity: 0.35;
+  transition:
+    width 1.2s var(--ease-quiet),
+    opacity 1.2s var(--ease-quiet);
+}
+@media (hover: hover) and (pointer: fine) {
+  .service-card h3 {
+    transition: letter-spacing 1.4s var(--ease-quiet);
+  }
+  .service-card:hover h3 {
+    letter-spacing: 0.14em;
+  }
+  .service-card:hover .title-rule,
+  .service-card:focus-within .title-rule {
+    width: 5rem;
+    opacity: 0.7;
+  }
+}
+
 /* image reveal: a curtain that slides away */
 .js [data-reveal="image"] {
   opacity: 1;
@@ -272,6 +431,85 @@
 }
 .js [data-reveal="image"][data-visible="true"] {
   clip-path: inset(0 0 0 0);
+}
+
+
+/* ─── Image motion ───────────────────────────────────────
+   Every photo moves, but never enough to be noticed as "animation":
+   a slow breath, a focus-in on arrival, a light that passes. */
+@keyframes breathe {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.06) translate3d(-1.2%, -0.8%, 0);
+  }
+}
+@keyframes breathe-hero {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.045);
+  }
+}
+@keyframes sheen {
+  0% {
+    background-position: 125% 0;
+  }
+  32%,
+  100% {
+    background-position: -25% 0;
+  }
+}
+
+/* Hero: slow breath anchored on the emblem, and a passing light */
+.hero-media img {
+  transform-origin: 50% 22%;
+  animation: breathe-hero 28s var(--ease-soft) 6s infinite alternate;
+}
+.hero-sheen {
+  pointer-events: none;
+  background-image: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgb(255 244 228 / 0.28) 50%,
+    transparent 58%
+  );
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: 125% 0;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 60%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 60%);
+  animation: sheen 11s var(--ease-soft) 3.4s infinite;
+}
+
+/* Service photos: parallax layer (driven by the swipe rail), breathing layer */
+.media-parallax {
+  transform: translate3d(calc(var(--px, 0) * -7%), 0, 0);
+  will-change: transform;
+}
+.media-breathe {
+  animation: breathe 24s var(--ease-soft) infinite alternate;
+  animation-play-state: paused;
+}
+html:not(.js) .media-breathe,
+.service-card[data-visible="true"] .media-breathe {
+  animation-play-state: running;
+}
+.service-card:nth-child(2n) .media-breathe {
+  animation-direction: alternate-reverse;
+  animation-duration: 28s;
+}
+.media-sheen {
+  display: none;
+  pointer-events: none;
+}
+
+/* Final CTA backdrop breathes too */
+.cta-media img {
+  animation: breathe 32s var(--ease-soft) infinite alternate;
 }
 
 /* ─── Service cards ──────────────────────────────────── */
@@ -292,10 +530,77 @@
     opacity: 0;
     transform: scale(1.08);
   }
+  .service-card .media-sheen {
+    display: block;
+    z-index: 1;
+    background-image: linear-gradient(
+      110deg,
+      transparent 38%,
+      rgb(255 246 232 / 0.12) 50%,
+      transparent 62%
+    );
+    background-size: 280% 100%;
+    background-repeat: no-repeat;
+    background-position: 130% 0;
+    opacity: 0;
+  }
+  .service-card:hover .media-sheen,
+  .service-card:focus-within .media-sheen {
+    opacity: 1;
+    background-position: -30% 0;
+    transition:
+      background-position 2.2s var(--ease-quiet) 0.15s,
+      opacity 0.6s var(--ease-quiet);
+  }
   .service-card:hover .service-media img,
   .service-card:focus-within .service-media img {
-    opacity: 0.42;
+    opacity: 0.6;
     transform: scale(1);
+  }
+}
+
+/* Where the photo sits above the text (phones, tablets, touch), the
+   number and name are set on the photo and the duplicate heading in the
+   text block is kept for screen readers only. With a fine pointer on
+   desktop the photo becomes a hover backdrop, so the reverse applies. */
+.service-card .service-head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  margin: 0;
+}
+.service-card span.service-head {
+  display: none;
+}
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .service-card .service-head {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+  .service-card span.service-head {
+    display: block;
+  }
+  .service-card h3.service-head {
+    margin-top: 3rem;
+  }
+  .service-cover {
+    display: none;
+  }
+  .service-shade {
+    opacity: 0;
+    transition: opacity 1.6s var(--ease-quiet);
+    background: linear-gradient(to top, rgb(11 11 11 / 0.9), rgb(11 11 11 / 0.55) 55%, rgb(11 11 11 / 0.35));
+  }
+  .service-card:hover .service-shade,
+  .service-card:focus-within .service-shade {
+    opacity: 1;
   }
 }
 
@@ -304,6 +609,29 @@
   .js .service-card[data-reveal] {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (max-width: 1023px), (hover: none), (pointer: coarse) {
+  .js [data-reveal="group"] .service-media {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.6s var(--ease-quiet);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .js [data-reveal="group"][data-visible="true"] .service-media {
+    clip-path: inset(0 0 0 0);
+  }
+  .js [data-reveal="group"] .service-media img {
+    transform: scale(1.12);
+    filter: blur(10px) brightness(0.6);
+    transition:
+      transform 2.6s var(--ease-quiet),
+      filter 2s var(--ease-quiet);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .js [data-reveal="group"][data-visible="true"] .service-media img {
+    transform: none;
+    filter: none;
   }
 }
 
@@ -352,6 +680,147 @@
   }
 }
 
+/* ─── FAQ accordion ─────────────────────────────────── */
+.faq summary:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+.faq-icon-v {
+  transition: transform 0.6s var(--ease-quiet);
+}
+.faq[open] .faq-icon-v {
+  transform: translateX(-50%) scaleY(0);
+}
+.faq[open] .faq-body {
+  animation: quiet-in 0.8s var(--ease-quiet);
+}
+@media (hover: hover) {
+  .faq summary:hover .faq-icon {
+    opacity: 0.6;
+  }
+}
+
+
+/* ─── Opening (first visit) ─────────────────────────────
+   0.0s black → 0.3s emblem focuses in → 1.2s light passes →
+   0.8s hairline draws → 1.1s name → 2.5s the veil lifts.
+   The Hero's own entrance is pushed back so it plays right after. */
+.opening {
+  display: none;
+}
+.with-opening .opening {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ink);
+  pointer-events: none;
+  animation: opening-out 1.1s var(--ease-quiet) 2.5s forwards;
+}
+.opening-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.opening-emblem {
+  position: relative;
+  width: clamp(7.5rem, 22vw, 10rem);
+  aspect-ratio: 1;
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(1.06);
+  animation: opening-focus 1.6s var(--ease-quiet) 0.3s forwards;
+  -webkit-mask-image: radial-gradient(circle, #000 62%, transparent 72%);
+  mask-image: radial-gradient(circle, #000 62%, transparent 72%);
+}
+.opening-emblem img {
+  width: 100%;
+  height: 100%;
+}
+.opening-glint {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgb(255 246 232 / 0.55) 50%,
+    transparent 60%
+  );
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: 130% 0;
+  mix-blend-mode: overlay;
+  animation: opening-glint 1.3s var(--ease-soft) 1.2s forwards;
+}
+.opening-line {
+  display: block;
+  width: 3.5rem;
+  height: 1px;
+  margin-top: 2.25rem;
+  background: var(--color-silver);
+  opacity: 0.5;
+  transform: scaleX(0);
+  animation: opening-line 1.2s var(--ease-quiet) 0.8s forwards;
+}
+.opening-name {
+  margin-top: 1.5rem;
+  padding-left: 0.5em;
+  font-size: 1.125rem;
+  letter-spacing: 0.5em;
+  color: var(--color-ivory);
+  opacity: 0;
+  animation: quiet-fade 1.2s var(--ease-soft) 1.1s forwards;
+}
+@keyframes opening-focus {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+@keyframes opening-glint {
+  to {
+    background-position: -30% 0;
+  }
+}
+@keyframes opening-line {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes opening-out {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.with-opening .opening-inner {
+  animation: opening-rise 1.1s var(--ease-quiet) 2.5s forwards;
+}
+@keyframes opening-rise {
+  to {
+    transform: translate3d(0, -12px, 0) scale(1.03);
+  }
+}
+/* the Hero's entrance waits for the veil */
+.with-opening {
+  --opening-offset: 2.9s;
+}
+.with-opening .intro,
+.with-opening .intro-fade,
+.with-opening .intro-letter {
+  animation-delay: calc(var(--intro-delay, 0s) + var(--opening-offset));
+}
+.with-opening .mobile-request-bar {
+  animation-delay: calc(2.6s + var(--opening-offset));
+}
+
 /* ─── Reduced motion ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .intro,
@@ -362,13 +831,38 @@
     transform: none;
   }
   .js [data-reveal],
-  .js [data-reveal="image"] {
+  .js [data-reveal="image"],
+  .js [data-reveal="mask"] > *,
+  .js [data-reveal="group"] .service-media img,
+  .media-parallax,
+  .js [data-reveal="group"] .service-media {
     opacity: 1;
     transform: none;
     clip-path: none;
+    filter: none;
+    transition: none;
+  }
+  .hero-media img,
+  .hero-sheen,
+  .media-breathe,
+  .cta-media img,
+  .faq[open] .faq-body,
+  .intro-letter,
+  .form-stagger > *,
+  .mobile-request-bar,
+  .scroll-cue > span,
+  [role="tabpanel"]:not([hidden]) {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+  .service-card h3,
+  .title-rule {
     transition: none;
   }
   .service-media img,
+  .media-sheen,
   .btn,
   .btn::before,
   .arrow {

@@ -20,12 +20,12 @@ export default function ThanksPage() {
             THANK YOU
           </h1>
           <p className="jp-heading intro mt-10 text-[1.25rem] sm:text-[1.5rem]" style={{ "--intro-delay": "0.7s" } as React.CSSProperties}>
-            ご依頼を受け付けました。
+            ご相談を受け付けました。
           </p>
           <p className="intro mx-auto mt-6 max-w-lg text-[0.9375rem] leading-[2.1] tracking-[0.08em] text-stone" style={{ "--intro-delay": "1s" } as React.CSSProperties}>
             内容を確認のうえ、
             <br className="sm:hidden" />
-            ご入力いただいたメールアドレスへご連絡いたします。
+            ご入力いただいたメールアドレスへお見積もりをお送りします。
           </p>
           <div className="intro mt-14" style={{ "--intro-delay": "1.3s" } as React.CSSProperties}>
             <Link href="/" className="btn btn-dark">

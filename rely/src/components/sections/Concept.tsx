@@ -5,7 +5,6 @@ const tasks = [
   "ホテルを比較する。",
   "ギフトを選ぶ。",
   "旅行先を調べる。",
-  "市場を調査する。",
 ];
 
 const d = (s: number) => ({ "--reveal-delay": `${s}s` }) as React.CSSProperties;
@@ -21,7 +20,7 @@ export default function Concept() {
         <div className="lg:col-span-3">
           <p className="label flex items-center gap-4 text-stone lg:sticky lg:top-32" data-reveal="fade">
             <span>02</span>
-            <span aria-hidden="true" className="h-px w-10 bg-current opacity-60" />
+            <span aria-hidden="true" className="h-px w-10 bg-current opacity-60" data-reveal="line" />
             <span>CONCEPT</span>
           </p>
         </div>
@@ -30,11 +29,13 @@ export default function Concept() {
           <h2
             id="concept-title"
             className="jp-heading text-[2rem] leading-[1.6] sm:text-[3rem] lg:text-[4.25rem] lg:leading-[1.55]"
-            data-reveal
           >
-            {site.philosophy[0]}
-            <br />
-            {site.philosophy[1]}
+            <span className="block" data-reveal="mask">
+              <span>{site.philosophy[0]}</span>
+            </span>
+            <span className="block" data-reveal="mask" style={d(0.18)}>
+              <span>{site.philosophy[1]}</span>
+            </span>
           </h2>
 
           <div className="mt-20 text-[1.0625rem] leading-[2.3] tracking-[0.1em] sm:text-[1.1875rem] lg:mt-28 lg:text-[1.3125rem]">
@@ -61,10 +62,10 @@ export default function Concept() {
 
           <p
             className="display mt-24 text-[1.75rem] italic tracking-[0.04em] text-stone sm:text-[2.25rem] lg:mt-32"
-            data-reveal="fade"
+            data-reveal="mask"
             lang="en"
           >
-            Time is valuable.
+            <span className="pr-3">Time is valuable.</span>
           </p>
         </div>
       </div>

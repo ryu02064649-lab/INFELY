@@ -8,7 +8,6 @@ export type ServiceId =
   | "stay"
   | "experience"
   | "gift"
-  | "research"
   | "other";
 
 export type Service = {
@@ -48,7 +47,7 @@ export const services: Service[] = [
     },
     image: {
       src: "/images/dining.webp",
-      alt: "間接照明が滲む、夜のダイニングの静かなテーブル",
+      alt: "キャンドルとシャンデリアの灯るレストラン。白いクロスのテーブルに料理とワイングラス",
     },
   },
   {
@@ -69,7 +68,7 @@ export const services: Service[] = [
     note: "目的や予算、希望条件から候補を選定します。",
     image: {
       src: "/images/stay.webp",
-      alt: "客室の窓越しに広がる、夜の街の灯り",
+      alt: "石とウッドに包まれた、夜のホテルロビー。レザーのベンチと柔らかな間接照明",
     },
   },
   {
@@ -93,7 +92,7 @@ export const services: Service[] = [
     note: "「何をするか」からではなく、「どんな時間を過ごしたいか」を基準に提案します。",
     image: {
       src: "/images/experience.webp",
-      alt: "月明かりが細く伸びる、夜の静かな海",
+      alt: "夕暮れのゴルフコース。芝の上に停まるカートと、染まりはじめた空",
     },
   },
   {
@@ -113,36 +112,21 @@ export const services: Service[] = [
     note: "相手の年齢、関係性、趣味、予算などから調査します。",
     image: {
       src: "/images/gift.webp",
-      alt: "柔らかな光の中に置かれた、上質なギフトボックス",
-    },
-  },
-  {
-    id: "research",
-    number: "05",
-    name: "RESEARCH",
-    scope: "FOR BUSINESS",
-    lead: "企業・店舗・事業者のためのリサーチ。",
-    keywords: [
-      "市場調査",
-      "競合調査",
-      "商品調査",
-      "店舗調査",
-      "SNS調査",
-      "新規事業調査",
-    ],
-    image: {
-      src: "/images/research.webp",
-      alt: "デスクの上に置かれた調査資料とペン",
+      alt: "夜の車内、黒いレザーシートに置かれた深紅のバラの花束。赤いサテンのリボン",
     },
   },
   {
     id: "other",
-    number: "—",
+    number: "05",
     name: "OTHER",
     scope: "ANYTHING",
     lead: "「こんなことも調べられる？」",
     keywords: [],
     note: "「探してほしい」という依頼そのものを、引き受けます。何を探しているかが、まだはっきりしていなくても構いません。",
+    image: {
+      src: "/images/other.webp",
+      alt: "黒い大理石のカウンターに置かれたコンシェルジュベルと鍵",
+    },
   },
 ];
 
