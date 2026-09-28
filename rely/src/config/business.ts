@@ -12,7 +12,7 @@ export const business = {
   operatorName: "宮城龍優",
   /** Contact address shown on the legal pages. */
   email: "",
-  /** "individual" (個人事業主) or "corporation" (法人). */
+  /** "individual" (個人：フリーランス・個人事業主) or "corporation" (法人). */
   entity: "individual" as "individual" | "corporation",
   /**
    * Consumption tax status. "exempt" = 免税事業者: prices are shown as the
