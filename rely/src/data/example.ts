@@ -11,7 +11,7 @@ export const exampleRequest = {
   conditions: [
     { label: "人数", value: "4名" },
     { label: "席", value: "個室" },
-    { label: "予算", value: "1人 30,000円程度" },
+    { label: "予算", value: "1人 10,000円程度" },
     { label: "エリア", value: "那覇周辺" },
   ],
   process: [
