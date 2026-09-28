@@ -7,7 +7,7 @@ export const site = {
   category: "PRIVATE RESEARCH & CONCIERGE",
   title: "RELY｜PRIVATE RESEARCH & CONCIERGE",
   description:
-    "探す・調べる・比較する時間を、RELYが引き受ける。沖縄のレストラン・ホテル・体験から、ギフトやビジネスリサーチまで。",
+    "探す・調べる・比較する時間を、RELYが引き受ける。沖縄のレストラン・ホテル・体験から、全国対応のギフトまで。",
   tagline: "あなたの時間を、もっと自由に。",
   philosophy: ["あなたが選ぶ。", "その前を、RELYが。"],
   signature: "探すことなら、RELY。",

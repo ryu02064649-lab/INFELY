@@ -15,7 +15,6 @@ describe("services", () => {
       "STAY",
       "EXPERIENCE",
       "GIFT",
-      "RESEARCH",
       "OTHER",
     ]);
   });
@@ -42,7 +41,6 @@ describe("pricing", () => {
       "ONE REQUEST": "¥10,000〜",
       "DEEP RESEARCH": "¥25,000〜",
       "RELY CONCIERGE": "¥48,000〜 / MONTH",
-      "BUSINESS RESEARCH": "¥30,000〜",
       "RESERVATION / ARRANGEMENT SUPPORT": "¥2,000〜",
     });
   });

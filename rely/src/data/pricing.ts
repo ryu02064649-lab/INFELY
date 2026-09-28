@@ -67,22 +67,6 @@ export const plans: Plan[] = [
     emphasis: true,
     items: ["レストラン", "ホテル", "ギフト", "体験", "各種リサーチ"],
   },
-  {
-    id: "business",
-    name: "BUSINESS RESEARCH",
-    price: "¥30,000",
-    suffix: "〜",
-    lead: "判断の前にある調査を、整理して届ける。",
-    scene: "市場、競合、新規事業。意思決定に必要な材料を、任せたいときに。",
-    items: [
-      "市場調査",
-      "競合調査",
-      "商品調査",
-      "新規事業調査",
-      "その他カスタムリサーチ",
-    ],
-    note: "内容により個別見積もり。",
-  },
 ];
 
 export const option: Plan = {

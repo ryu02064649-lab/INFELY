@@ -8,7 +8,6 @@ export type ServiceId =
   | "stay"
   | "experience"
   | "gift"
-  | "research"
   | "other";
 
 export type Service = {
@@ -117,27 +116,8 @@ export const services: Service[] = [
     },
   },
   {
-    id: "research",
-    number: "05",
-    name: "RESEARCH",
-    scope: "FOR BUSINESS",
-    lead: "企業・店舗・事業者のためのリサーチ。",
-    keywords: [
-      "市場調査",
-      "競合調査",
-      "商品調査",
-      "店舗調査",
-      "SNS調査",
-      "新規事業調査",
-    ],
-    image: {
-      src: "/images/research.webp",
-      alt: "夕暮れの高層ビル群を望むデスク。ノートPCと革の手帳、ペン、眼鏡とコーヒー",
-    },
-  },
-  {
     id: "other",
-    number: "06",
+    number: "05",
     name: "OTHER",
     scope: "ANYTHING",
     lead: "「こんなことも調べられる？」",

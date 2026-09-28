@@ -38,7 +38,8 @@ export default function Services() {
 
         <ServiceRail count={services.length}>
           {services.map((service, i) => (
-            <ServiceCard key={service.id} service={service} index={i} />
+            // the last card spans two columns so the 2- and 3-column grids end on a full row
+            <ServiceCard key={service.id} service={service} index={i} wide={i === services.length - 1} />
           ))}
         </ServiceRail>
 
@@ -53,17 +54,17 @@ export default function Services() {
   );
 }
 
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+function ServiceCard({ service, index, wide = false }: { service: Service; index: number; wide?: boolean }) {
   const { id, number, name, scope, lead, keywords, checkpoints, note, image } = service;
   return (
     <li
-      className="service-card group relative flex w-[80vw] max-w-[22rem] shrink-0 snap-start flex-col overflow-hidden border border-white/10 bg-ink md:w-auto md:max-w-none md:border-0 md:border-b md:border-r lg:min-h-[36rem]"
+      className={`service-card group relative flex w-[80vw] max-w-[22rem] shrink-0 snap-start flex-col overflow-hidden border border-white/10 bg-ink md:w-auto md:max-w-none md:border-0 md:border-b md:border-r lg:min-h-[36rem] ${wide ? "md:col-span-2" : ""}`}
       data-reveal
       style={{ "--reveal-delay": `${(index % 3) * 0.12}s` } as React.CSSProperties}
     >
       {image ? (
         <div
-          className="service-media relative aspect-square overflow-hidden bg-ink-soft sm:aspect-[4/3]"
+          className={`service-media relative aspect-square overflow-hidden bg-ink-soft sm:aspect-[4/3] ${wide ? "md:aspect-[8/3]" : ""}`}
           style={{ "--reveal-delay": `${0.1 + index * 0.14}s` } as React.CSSProperties}
         >
           {/* layers: swipe parallax → slow breathing → the photo itself (focus-in / hover) */}
