@@ -41,8 +41,17 @@ describe("pricing", () => {
       "ONE REQUEST": "¥10,000〜",
       "DEEP RESEARCH": "¥25,000〜",
       "RELY CONCIERGE": "¥48,000〜 / MONTH",
-      "RESERVATION / ARRANGEMENT SUPPORT": "¥2,000〜",
+      "RESERVATION SUPPORT": "¥2,000〜",
     });
+  });
+
+  it("caps RELY CONCIERGE at four requests a month", () => {
+    expect(plans.find((p) => p.id === "concierge")?.note).toContain("月4件まで");
+  });
+
+  it("keeps hotel and experience bookings with the client (reservations are for restaurants only)", () => {
+    expect(option.lead).toContain("レストラン");
+    expect(pricingNotes.join("")).toContain("お客様ご自身");
   });
 
   it("states that actual goods/venue costs are separate", () => {

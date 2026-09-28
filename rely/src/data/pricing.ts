@@ -43,7 +43,7 @@ export const plans: Plan[] = [
     price: "¥25,000",
     suffix: "〜",
     lead: "重なる条件を、ひとつの計画に。",
-    scene: "滞在、食事、体験。いくつもの手配を、一度に考えたいときに。",
+    scene: "滞在、食事、体験。いくつもの予定を、一度に考えたいときに。",
     items: [
       "複数条件のリサーチ",
       "詳細ヒアリング",
@@ -66,15 +66,16 @@ export const plans: Plan[] = [
     scene: "会食、出張、贈り物。繰り返し訪れる「探す」を、継続して任せたいときに。",
     emphasis: true,
     items: ["レストラン", "ホテル", "ギフト", "体験", "各種リサーチ"],
+    note: "ご依頼は月4件まで。5件目以降は、1件ごとに ONE REQUEST の料金で承ります。",
   },
 ];
 
 export const option: Plan = {
   id: "arrangement",
-  name: "RESERVATION / ARRANGEMENT SUPPORT",
+  name: "RESERVATION SUPPORT",
   price: "¥2,000",
   suffix: "〜",
-  lead: "予約・手配サポート。",
+  lead: "レストランの予約代行。ホテル・体験は、予約先のご案内までとなります。",
   items: [],
 };
 
@@ -84,7 +85,8 @@ export const pricingNotes = [
     : "※ 表示価格はすべて税込です。",
   "※ 最終的な料金は、ご依頼内容を伺ったうえで個別にお見積もりします。",
   "※ 実際の商品・飲食・宿泊・体験などの料金は別途。",
-  "※ 予約・手配は、先方の空き状況や条件により承れない場合があります。",
+  "※ 予約代行は、先方の空き状況や条件により承れない場合があります。",
+  "※ ホテル・宿泊施設・体験のご予約は、お客様ご自身でお願いしております（予約先をご案内します）。",
 ];
 
 /** What the fee pays for — shown above the plans to set the frame. */

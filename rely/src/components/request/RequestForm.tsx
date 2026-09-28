@@ -208,7 +208,7 @@ export default function RequestForm() {
             <Link href="/privacy/" className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink" target="_blank">
               プライバシーポリシー
             </Link>
-            に同意します（予約・手配の際に、予約先へ必要な範囲でお名前などを伝えることを含みます）。
+            に同意します（レストランの予約を代行する際に、予約先へ必要な範囲でお名前などを伝えることを含みます）。
             <RequiredMark />
             <span className="sr-only">（必須）</span>
           </span>
