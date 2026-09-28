@@ -22,6 +22,14 @@ describe("特定商取引法に基づく表記", () => {
     }
   });
 
+  it("offers one re-proposal within 3 days instead of a refund for taste", () => {
+    const refund = tokushoho.find((r) => r.label === "キャンセル・返金")!.body.join("");
+    expect(refund).toContain("納品から3日以内");
+    expect(refund).toContain("再提案を1回");
+    // the business's own mistakes are still put right
+    expect(refund).toContain("当方の誤り");
+  });
+
   it("never promises that a reservation will succeed", () => {
     expect(JSON.stringify(tokushoho)).not.toContain("必ず予約");
   });
