@@ -2,6 +2,7 @@ import Link from "next/link";
 import { footerNav, legalNav } from "@/data/navigation";
 import { site } from "@/config/site";
 import { business } from "@/config/business";
+import InstagramIcon from "@/components/ui/InstagramIcon";
 
 export default function Footer() {
   return (
@@ -18,9 +19,14 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram @rely_1001（新しいタブで開きます）"
-                  className="label text-link text-ivory/75 hover:text-ivory"
+                  className="group inline-flex min-h-11 items-center gap-4 text-ivory/80 transition-colors duration-500 hover:text-ivory"
                 >
-                  INSTAGRAM<span className="ml-4 normal-case tracking-[0.12em] text-mist">@rely_1001</span>
+                  <span className="flex size-11 items-center justify-center rounded-full border border-white/25 transition-colors duration-500 group-hover:border-white/60">
+                    <InstagramIcon className="size-[1.125rem]" />
+                  </span>
+                  <span className="label">
+                    INSTAGRAM<span className="ml-3 normal-case tracking-[0.12em] text-mist">@rely_1001</span>
+                  </span>
                 </a>
               </p>
             ) : null}

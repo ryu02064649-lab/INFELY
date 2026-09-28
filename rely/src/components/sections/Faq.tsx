@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SectionHeading from "@/components/ui/SectionHeading";
+import InstagramIcon from "@/components/ui/InstagramIcon";
 import { business } from "@/config/business";
 import { faqs } from "@/data/faq";
 
@@ -57,16 +58,18 @@ export default function Faq() {
                   </p>
                 ))}
                 {item.showChannels && channelLinks.length > 0 ? (
-                  <p className="mt-4 flex gap-6">
+                  <p className="mt-5 flex flex-wrap gap-3">
                     {channelLinks.map((c) => (
                       <a
                         key={c.label}
                         href={c.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="label text-link text-ink"
+                        aria-label={`${c.label}（新しいタブで開きます）`}
+                        className="inline-flex min-h-11 items-center gap-3 border border-ink/25 px-5 text-ink transition-colors duration-500 hover:border-ink hover:bg-ink hover:text-ivory"
                       >
-                        {c.label}
+                        {c.label === "Instagram" ? <InstagramIcon className="size-[1.125rem]" /> : null}
+                        <span className="label">{c.label}</span>
                       </a>
                     ))}
                   </p>
