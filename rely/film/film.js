@@ -1,9 +1,10 @@
 /**
- * RELY — 15-second brand film.
+ * RELY — 20-second brand film.
  *
- * Every frame is drawn by code on a 2D canvas: no footage, no templates.
- * The only borrowed asset is the site's own emblem (public/images/emblem.webp)
- * and the site's own typefaces (film/fonts, copied from the site build).
+ * Every frame is drawn by code on a 2D canvas. The three scene plates
+ * (research, a toast at dinner, a gift) are rendered from code in Blender
+ * (film/scenes); the people in them are fictional. The emblem and the
+ * typefaces are the website's own.
  *
  * The film is a pure function of time: `film.draw(t)` always produces the
  * same frame for the same t, so the preview and the exported video match.
@@ -11,18 +12,33 @@
  * Logical frame: 1080 × 1920 (9:16). All layout below is in those units.
  */
 
-export const FILM = { width: 1080, height: 1920, fps: 30, duration: 15 };
+export const FILM = { width: 1080, height: 1920, fps: 30, duration: 20 };
 
-/** Scene cues, in seconds. Use these to cut music to picture. */
+/** Scene starts, in seconds. The score (film/score.mjs) is cut to these. */
+export const T = {
+  open: 0.0,
+  research: 1.9,
+  fragments: 4.8,
+  select: 7.3,
+  toast: 10.0,
+  gift: 12.2,
+  quiet: 14.5,
+  mark: 17.0,
+  tagline: 18.95,
+  end: 20.0,
+};
+
 export const CUES = [
-  { t: 0.0, id: "dark", label: "暗闇 — ロゴに一筋の光" },
-  { t: 2.0, id: "space", label: "空間 — 探す。" },
-  { t: 4.5, id: "fragments", label: "情報の断片 — 比較する。" },
-  { t: 7.0, id: "select", label: "整理 — 多数から、ひとつへ" },
-  { t: 9.5, id: "quiet", label: "静寂 — あなたが選ぶ。その前を、RELYが。" },
-  { t: 12.0, id: "mark", label: "ロゴ — RELY" },
-  { t: 14.0, id: "tagline", label: "あなたの時間を、もっと自由に。" },
-  { t: 15.0, id: "end", label: "黒" },
+  { t: T.open, id: "open", label: "暗闇 — ロゴに一筋の光" },
+  { t: T.research, id: "research", label: "RESEARCH — 深夜のデスク。探す。" },
+  { t: T.fragments, id: "fragments", label: "情報の断片 — 比較する。" },
+  { t: T.select, id: "select", label: "整理 — 多数から、ひとつへ" },
+  { t: T.toast, id: "toast", label: "DINING — 一本の線が開き、乾杯" },
+  { t: T.gift, id: "gift", label: "GIFT — 贈り物を渡す" },
+  { t: T.quiet, id: "quiet", label: "あなたが選ぶ。その前を、RELYが。" },
+  { t: T.mark, id: "mark", label: "ロゴ — RELY" },
+  { t: T.tagline, id: "tagline", label: "あなたの時間を、もっと自由に。" },
+  { t: T.end, id: "end", label: "黒" },
 ];
 
 const W = FILM.width;
@@ -96,80 +112,6 @@ function canvas(w, h) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Procedural black marble                                             */
-/* ------------------------------------------------------------------ */
-
-function valueNoise(seed) {
-  const r = rng(seed);
-  const p = new Uint8Array(512);
-  const v = new Float32Array(256);
-  for (let i = 0; i < 256; i++) {
-    p[i] = i;
-    v[i] = r();
-  }
-  for (let i = 255; i > 0; i--) {
-    const j = Math.floor(r() * (i + 1));
-    [p[i], p[j]] = [p[j], p[i]];
-  }
-  for (let i = 0; i < 256; i++) p[i + 256] = p[i];
-  const h = (x, y) => v[p[(p[x & 255] + y) & 255]];
-  return (x, y) => {
-    const xi = Math.floor(x), yi = Math.floor(y);
-    const xf = x - xi, yf = y - yi;
-    const u = xf * xf * (3 - 2 * xf), w = yf * yf * (3 - 2 * yf);
-    const a = h(xi, yi), b = h(xi + 1, yi), c = h(xi, yi + 1), d = h(xi + 1, yi + 1);
-    return a + (b - a) * u + (c - a) * w + (a - b - c + d) * u * w;
-  };
-}
-
-function makeMarble(w, h, seed) {
-  const n = valueNoise(seed);
-  const fbm = (x, y) => {
-    let s = 0, a = 0.5, f = 1;
-    for (let o = 0; o < 5; o++) {
-      s += a * n(x * f + o * 17.3, y * f - o * 9.1);
-      f *= 2.03;
-      a *= 0.5;
-    }
-    return s / 0.97;
-  };
-  const smooth = (e0, e1, x) => {
-    const t = clamp01((x - e0) / (e1 - e0));
-    return t * t * (3 - 2 * t);
-  };
-  const c = canvas(w, h);
-  const ctx = c.getContext("2d");
-  const img = ctx.createImageData(w, h);
-  const d = img.data;
-  // Nero Marquina: long, thin, branching veins running on a diagonal
-  const ca = Math.cos(0.62), sa = Math.sin(0.62);
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      const u = (x / w) * 2.4, v = (y / h) * 4.27;
-      // rotate, then stretch along the grain
-      const ru = (u * ca - v * sa) * 0.42, rv = u * sa + v * ca;
-      const wx = fbm(ru * 1.5 + 3.3, rv * 1.5 - 1.7), wy = fbm(ru * 1.5 - 7.9, rv * 1.5 + 2.2);
-      const n1 = fbm(ru + 0.55 * wx, rv + 0.55 * wy);
-      const r1 = 1 - Math.abs(n1 - 0.5) * 2;
-      let vein = Math.pow(r1, 46);
-      const n2 = fbm(ru * 2.6 + 0.4 * wy + 5.5, rv * 2.1 + 0.4 * wx - 3.1);
-      vein += 0.45 * Math.pow(1 - Math.abs(n2 - 0.5) * 2, 110);
-      const n3 = fbm(u * 5.5 + 21, v * 5.5 - 8);
-      vein += 0.12 * Math.pow(1 - Math.abs(n3 - 0.5) * 2, 60);
-      vein *= 0.2 + 0.8 * smooth(0.36, 0.66, fbm(u * 0.8 + 11, v * 0.8 + 4));
-      const cloud = 0.045 + 0.075 * fbm(u * 1.3 - 4, v * 1.3 + 9) + 0.02 * wx;
-      const i = (y * w + x) * 4;
-      d[i] = 255 * Math.min(1, cloud + vein * 0.78);
-      d[i + 1] = 255 * Math.min(1, cloud * 0.99 + vein * 0.77);
-      d[i + 2] = 255 * Math.min(1, cloud * 0.97 + vein * 0.74);
-      d[i + 3] = 255;
-    }
-  }
-  ctx.putImageData(img, 0, 0);
-  return c;
-}
-
-/* ------------------------------------------------------------------ */
 /* Typography                                                          */
 /* ------------------------------------------------------------------ */
 
@@ -190,6 +132,10 @@ const LINE_BEFORE = "その前を、RELYが。";
 const WORDMARK = "RELY";
 const CATEGORY = "PRIVATE RESEARCH & CONCIERGE";
 const TAGLINE = "あなたの時間を、もっと自由に。";
+const LABEL_RESEARCH = "RESEARCH";
+const LABEL_DINING = "DINING";
+const LABEL_GIFT = "GIFT";
+const PLATES = ["research", "toast", "gift"];
 
 /** The five that survive the sorting. Order = final list order. */
 const KEY_WORDS = ["Restaurant", "Hotel", "Experience", "Gift", "Research"];
@@ -234,12 +180,16 @@ export class Film {
     this.textCache.clear();
   }
 
-  async load(base = "..") {
-    const emblem = new Image();
-    emblem.src = `${base}/public/images/emblem.webp`;
-    await emblem.decode();
-    this.buildEmblem(emblem);
-    this.marble = makeMarble(720, 1280, 7);
+  async load() {
+    const image = async (url) => {
+      const img = new Image();
+      img.src = url;
+      await img.decode();
+      return img;
+    };
+    this.buildEmblem(await image(new URL("../public/images/emblem.webp", import.meta.url)));
+    this.plates = {};
+    for (const name of PLATES) this.plates[name] = await image(new URL(`./assets/${name}.webp`, import.meta.url));
     this.buildGrain();
     this.buildLayout();
     const loads = [];
@@ -247,7 +197,7 @@ export class Film {
     loads.push(document.fonts.load(TYPE.jp(40), jpText));
     loads.push(document.fonts.load(TYPE.jp(40, 400), jpText));
     loads.push(document.fonts.load(TYPE.display(40), WORDMARK + KEY_WORDS.join("") + FRAGMENTS.map((f) => f[0]).join("")));
-    loads.push(document.fonts.load(TYPE.label(20), CATEGORY + FRAGMENTS.map((f) => f[0]).join("")));
+    loads.push(document.fonts.load(TYPE.label(20), CATEGORY + LABEL_RESEARCH + LABEL_DINING + LABEL_GIFT + FRAGMENTS.map((f) => f[0]).join("")));
     await Promise.all(loads);
     await document.fonts.ready;
   }
@@ -317,9 +267,9 @@ export class Film {
       }
       placed.push([x, y]);
       const depth = 0.72 + r() * 0.85;
-      const start = 4.5 + r() * 1.5;
+      const start = T.fragments + r() * 1.5;
       const life = 0.9 + r() * 0.9;
-      this.fragments.push({ text, kind, x, y, depth, start, end: Math.min(7.25, start + life) });
+      this.fragments.push({ text, kind, x, y, depth, start, end: Math.min(T.select + 0.25, start + life) });
     }
   }
 
@@ -449,142 +399,76 @@ export class Film {
     ctx.restore();
   }
 
-  /* ---------- the marble room ---------- */
+  /* ---------- scene plates ---------- */
 
   /**
-   * A black marble wall and a polished floor, seen from eye level.
-   * dist: camera distance to the wall. light: x of the vertical slit of light.
+   * A rendered scene, drawn to cover the frame. zoom ≥ 1 pushes in toward
+   * the focal point (fx, fy) without ever enlarging past the plate's pixels.
    */
-  room(t, { dist, light, ambient, beam }) {
-    const s = this.s, pw = this.pw, ph = this.ph;
-    const f = 1100, eye = 1, vpx = W / 2, vpy = H * 0.44;
-    const texPerUnit = 172;
-    const tex = this.marble;
-    const baseY = vpy + (f * eye) / dist;
-
-    // A: the room fully lit (albedo)
-    const A = this.layerA.getContext("2d");
-    A.setTransform(1, 0, 0, 1, 0, 0);
-    A.globalCompositeOperation = "source-over";
-    A.globalAlpha = 1;
-    A.fillStyle = "#000";
-    A.fillRect(0, 0, pw, ph);
-    const dw = (f * (tex.width / texPerUnit)) / dist;
-    const dh = (f * (tex.height / texPerUnit)) / dist;
-    A.drawImage(tex, (vpx - dw / 2) * s, (baseY - dh) * s, dw * s, dh * s);
-    // floor, row by row in perspective
-    A.globalAlpha = 0.5;
-    for (let py = Math.ceil(baseY * s); py < ph; py++) {
-      const dy = py / s - vpy;
-      const z = (f * eye) / dy;
-      const sw = Math.min(tex.width, (W * z * texPerUnit) / f);
-      const worldFromWall = dist - z;
-      const sy = ((worldFromWall * texPerUnit * 1.4) % tex.height + tex.height) % tex.height;
-      A.drawImage(tex, tex.width / 2 - sw / 2, sy, sw, 1, 0, py, pw, 1);
+  plate(name, { alpha = 1, zoom = 1, fx = 0.5, fy = 0.5, blur = 0, bright = 1, clip = null }) {
+    if (alpha <= 0.002) return;
+    const ctx = this.ctx, pw = this.pw, ph = this.ph, s = this.s;
+    const img = this.plates[name];
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (clip) {
+      ctx.beginPath();
+      ctx.rect(0, clip[0] * s, pw, (clip[1] - clip[0]) * s);
+      ctx.clip();
     }
-    A.globalAlpha = 1;
+    const filters = [];
+    if (blur > 0.05) filters.push(`blur(${blur * s}px)`);
+    if (Math.abs(bright - 1) > 0.005) filters.push(`brightness(${bright})`);
+    ctx.filter = filters.length ? filters.join(" ") : "none";
+    ctx.globalAlpha = clamp01(alpha);
+    const w = pw * zoom, h = ph * zoom;
+    ctx.drawImage(img, fx * pw * (1 - zoom), fy * ph * (1 - zoom), w, h);
+    ctx.restore();
+  }
 
-    // B: only what the slit of light touches
-    const B = this.layerB.getContext("2d");
-    B.setTransform(1, 0, 0, 1, 0, 0);
-    B.globalCompositeOperation = "copy";
-    B.drawImage(this.layerA, 0, 0);
-    B.globalCompositeOperation = "destination-in";
-    const lx = light * s, bw = 330 * s;
-    const g = B.createLinearGradient(lx - bw, 0, lx + bw, 0);
-    g.addColorStop(0, "rgba(0,0,0,0)");
-    g.addColorStop(0.3, "rgba(0,0,0,0.1)");
-    g.addColorStop(0.44, "rgba(0,0,0,0.55)");
-    g.addColorStop(0.5, "rgba(0,0,0,1)");
-    g.addColorStop(0.56, "rgba(0,0,0,0.55)");
-    g.addColorStop(0.7, "rgba(0,0,0,0.1)");
-    g.addColorStop(1, "rgba(0,0,0,0)");
-    B.fillStyle = g;
-    B.fillRect(0, 0, pw, ph);
-    const v = B.createLinearGradient(0, 0, 0, ph);
-    v.addColorStop(0, "rgba(0,0,0,0.25)");
-    v.addColorStop(0.42, "rgba(0,0,0,1)");
-    v.addColorStop((baseY / H) * 0.999, "rgba(0,0,0,0.85)");
-    v.addColorStop(1, "rgba(0,0,0,0.2)");
-    B.fillStyle = v;
-    B.fillRect(0, 0, pw, ph);
-    B.globalCompositeOperation = "source-over";
+  /** Darken the top and bottom of a plate so type sits on quiet ground (a graduated filter). */
+  shade(alpha, top = 0.62, bottom = 0.55) {
+    if (alpha <= 0.002) return;
+    const ctx = this.ctx, pw = this.pw, ph = this.ph;
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = clamp01(alpha);
+    const g = ctx.createLinearGradient(0, 0, 0, ph);
+    g.addColorStop(0, `rgba(0,0,0,${top})`);
+    g.addColorStop(0.28, "rgba(0,0,0,0)");
+    g.addColorStop(0.74, "rgba(0,0,0,0)");
+    g.addColorStop(1, `rgba(0,0,0,${bottom})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, pw, ph);
+    ctx.restore();
+  }
 
-    const ctx = this.ctx;
+  /** A small service label, as on the website: a hairline and spaced capitals. */
+  label(text, t, a, b) {
+    const k = win(t, a, a + 0.7, b - 0.5, b);
+    if (k <= 0.002) return;
+    const y = H * 0.885;
+    this.hairline(W / 2, y - 58, 44 * k, k * 0.9);
+    this.text(text, {
+      x: W / 2, y, font: TYPE.label(18), size: 18, tracking: 0.42, color: SILVER,
+      alpha: k * 0.95, blur: (1 - k) * 4, rise: (1 - k) * 6,
+    });
+  }
+
+  /** A soft point of light — the moment two rims touch. No flare, no star. */
+  glint(x, y, radius, alpha) {
+    if (alpha <= 0.002) return;
+    const ctx = this.ctx, s = this.s;
     ctx.save();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalCompositeOperation = "lighter";
-    ctx.globalAlpha = clamp01(ambient);
-    ctx.drawImage(this.layerA, 0, 0);
-    ctx.globalAlpha = clamp01(beam);
-    ctx.drawImage(this.layerB, 0, 0);
-
-    // polished floor: a faint, fading reflection of the lit wall
-    const C = this.layerC.getContext("2d");
-    C.setTransform(1, 0, 0, 1, 0, 0);
-    C.globalCompositeOperation = "copy";
-    C.globalAlpha = 1;
-    C.save();
-    C.translate(0, 2 * baseY * s);
-    C.scale(1, -1);
-    C.drawImage(this.layerB, 0, 0);
-    C.restore();
-    C.globalCompositeOperation = "destination-in";
-    const r = C.createLinearGradient(0, baseY * s, 0, (baseY + 520) * s);
-    r.addColorStop(0, "rgba(0,0,0,0.55)");
-    r.addColorStop(1, "rgba(0,0,0,0)");
-    C.fillStyle = r;
-    C.fillRect(0, 0, pw, ph);
-    C.fillStyle = "#000";
-    C.globalCompositeOperation = "destination-out";
-    C.fillRect(0, 0, pw, baseY * s);
-    C.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = clamp01(beam) * 0.6;
-    ctx.filter = `blur(${2.5 * s}px)`;
-    ctx.drawImage(this.layerC, 0, 0);
-    ctx.filter = "none";
-
-    // the seam where wall meets floor: a silver hairline that glints under the light
-    const seam = ctx.createLinearGradient(lx - bw * 1.2, 0, lx + bw * 1.2, 0);
-    seam.addColorStop(0, `rgba(${SILVER},0)`);
-    seam.addColorStop(0.5, `rgba(${SILVER},0.55)`);
-    seam.addColorStop(1, `rgba(${SILVER},0)`);
-    ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = clamp01(beam);
-    ctx.fillStyle = seam;
-    ctx.fillRect(0, baseY * s - s * 0.6, pw, Math.max(1, 1.2 * s));
-    ctx.globalAlpha = clamp01(ambient) * 0.5 * (1 - seg(t, 4.3, 4.9, EASE.leave));
-    ctx.fillStyle = `rgba(${SILVER},0.35)`;
-    ctx.fillRect(0, baseY * s - s * 0.6, pw, Math.max(1, 1.2 * s));
-
-    // the air inside the beam, barely there
-    ctx.globalCompositeOperation = "lighter";
-    const hz = ctx.createLinearGradient(lx - 150 * s, 0, lx + 150 * s, 0);
-    hz.addColorStop(0, `rgba(${IVORY},0)`);
-    hz.addColorStop(0.5, `rgba(${IVORY},0.045)`);
-    hz.addColorStop(1, `rgba(${IVORY},0)`);
-    ctx.globalAlpha = clamp01(beam);
-    ctx.fillStyle = hz;
-    ctx.fillRect(lx - 150 * s, 0, 300 * s, baseY * s);
-
-    // dust, visible only inside the beam
-    const r2 = rng(5);
-    for (let i = 0; i < 8; i++) {
-      const mx = r2() * W;
-      const my = H * (0.12 + r2() * 0.5) - t * (6 + r2() * 10);
-      const ms = 2 + r2() * 1.6;
-      const inBeam = Math.exp(-Math.pow((mx - light) / 110, 2));
-      const a = inBeam * beam * 0.22;
-      if (a < 0.01) continue;
-      const rg = ctx.createRadialGradient(mx * s, my * s, 0, mx * s, my * s, ms * 3 * s);
-      rg.addColorStop(0, `rgba(${IVORY},${a})`);
-      rg.addColorStop(1, `rgba(${IVORY},0)`);
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = rg;
-      ctx.fillRect((mx - ms * 3) * s, (my - ms * 3) * s, ms * 6 * s, ms * 6 * s);
-    }
+    const g = ctx.createRadialGradient(x * s, y * s, 0, x * s, y * s, radius * s);
+    g.addColorStop(0, `rgba(${IVORY},${0.85 * alpha})`);
+    g.addColorStop(0.18, `rgba(${IVORY},${0.25 * alpha})`);
+    g.addColorStop(1, `rgba(${IVORY},0)`);
+    ctx.fillStyle = g;
+    ctx.fillRect((x - radius) * s, (y - radius) * s, radius * 2 * s, radius * 2 * s);
     ctx.restore();
-    return baseY;
   }
 
   /* ---------- hairline ---------- */
@@ -625,62 +509,64 @@ export class Film {
     ctx.fillRect(0, 0, this.pw, this.ph);
     ctx.restore();
 
+    this.sceneResearch(t);
     this.sceneOpening(t);
-    this.sceneRoom(t);
     this.sceneFragments(t);
     this.sceneSelection(t);
+    this.sceneMoments(t);
     this.sceneQuiet(t);
     this.sceneMark(t);
     this.finish(t);
   }
 
-  /* 0.0 – 2.0  darkness; light slides across the emblem once */
+  /* 0.0 – 1.9  darkness; light slides across the emblem once */
   sceneOpening(t) {
     if (t > 2.6) return;
     const out = 1 - seg(t, 1.75, 2.5, EASE.leave);
     const body = 0.1 * seg(t, 0.25, 1.4, EASE.reveal) * out;
     const sweep = seg(t, 0.45, 1.95, EASE.door);
     const gain = win(t, 0.45, 0.9, 1.6, 2.05) * 1.45 * out;
-    // the camera already leans in, barely
     const size = lerp(420, 432, seg(t, 0, 2.5, EASE.travel));
     this.emblem({ cx: W / 2, cy: H * 0.47, size, body, sweep, width: 0.085, gain });
   }
 
-  /* 2.0 – 4.5  the room; a slit of light crosses; 探す。 */
-  sceneRoom(t) {
-    if (t < 1.85 || t > 9.6) return;
-    const dist = lerp(3.5, 2.55, seg(t, 1.85, 9.5, EASE.travel));
-    const light = lerp(-260, 1360, seg(t, 1.95, 5.1, EASE.door));
-    const fadeIn = seg(t, 1.9, 3.1, EASE.reveal);
-    const dim = lerp(1, 0.42, seg(t, 4.3, 5.4, EASE.leave)) * (1 - seg(t, 6.9, 9.3, EASE.leave));
-    const ambient = 0.13 * fadeIn * dim;
-    const beam = 1.25 * fadeIn * (1 - seg(t, 4.7, 5.3, EASE.leave));
-    this.room(t, { dist, light, ambient, beam });
-
-    // 探す。 — revealed by the same light that crosses the wall
-    const tx = W / 2, ty = H * 0.335;
-    const img = this.textImage(WORD_SEARCH, TYPE.jp(46), 0.22, 46);
-    const reach = clamp01((light - (tx - img.tw / (2 * this.s)) + 60) / (img.tw / this.s + 160));
-    const appear = seg(t, 2.6, 3.5, EASE.reveal);
-    const leave = 1 - seg(t, 4.15, 4.8, EASE.leave);
-    this.text(WORD_SEARCH, {
-      x: tx, y: ty, font: TYPE.jp(46), size: 46, tracking: 0.22,
-      alpha: appear * leave, blur: (1 - appear) * 7 + (1 - leave) * 5,
-      rise: (1 - appear) * 12 - (1 - leave) * 6, wipe: EASE.reveal(reach), soft: 0.5,
+  /* 1.9 – 4.8  late at night, someone is already looking; 探す。 */
+  sceneResearch(t) {
+    const R = T.research;
+    if (t < R || t > T.select + 0.8) return;
+    const appear = seg(t, R, R + 1.1, EASE.reveal);
+    const recede = seg(t, T.fragments - 0.2, T.fragments + 0.8, EASE.door);
+    const gone = seg(t, T.select - 0.3, T.select + 0.7, EASE.leave);
+    this.plate("research", {
+      alpha: appear * (1 - gone),
+      zoom: lerp(1, 1.075, seg(t, R, T.select, EASE.travel)),
+      fx: 0.7, fy: 0.46,
+      blur: recede * 11,
+      bright: lerp(1, 0.32, recede),
     });
+    this.shade(appear * (1 - recede) * (1 - gone), 0.78, 0.6);
+    const a = seg(t, R + 0.8, R + 1.65, EASE.reveal);
+    const leave = 1 - seg(t, T.fragments - 0.45, T.fragments + 0.1, EASE.leave);
+    this.text(WORD_SEARCH, {
+      x: W / 2, y: H * 0.165, font: TYPE.jp(46), size: 46, tracking: 0.22,
+      alpha: a * leave, blur: (1 - a) * 8 + (1 - leave) * 5,
+      rise: (1 - a) * 12 - (1 - leave) * 6, wipe: a, soft: 0.5,
+    });
+    this.label(LABEL_RESEARCH, t, R + 1.1, T.fragments - 0.1);
   }
 
-  /* 4.5 – 7.0  a world full of information, glimpsed; 比較する。 */
+  /* 4.8 – 7.3  a world full of information, glimpsed; 比較する。 */
   sceneFragments(t) {
-    if (t < 4.4 || t > 7.4) return;
-    const zoom = lerp(1, 1.07, seg(t, 4.4, 7.4, EASE.travel));
+    const F = T.fragments, S = T.select;
+    if (t < F - 0.1 || t > S + 0.4) return;
+    const zoom = lerp(1, 1.07, seg(t, F - 0.1, S + 0.1, EASE.travel));
     const cx = W / 2, cy = H / 2;
     for (const fr of this.fragments) {
       const a = win(t, fr.start, fr.start + 0.45, fr.end - 0.4, fr.end);
       if (a <= 0.003) continue;
       const k = zoom * (1 + (1 - fr.depth) * 0.08 * seg(t, fr.start, fr.end, EASE.travel));
-      const x = cx + (fr.x - cx) * k / fr.depth ** 0.25;
-      const y = cy + (fr.y - cy) * k / fr.depth ** 0.25;
+      const x = cx + ((fr.x - cx) * k) / fr.depth ** 0.25;
+      const y = cy + ((fr.y - cy) * k) / fr.depth ** 0.25;
       const focus = Math.abs(fr.depth - 1);
       const size = fr.kind === "d" ? 44 / fr.depth : 17 / fr.depth ** 0.5;
       const font = fr.kind === "d" ? TYPE.display(size) : TYPE.label(size);
@@ -692,11 +578,10 @@ export class Film {
         rise: (1 - a) * 8,
       });
     }
-    // the five that will survive
-    if (t < 7.0) {
+    if (t < S) {
       KEY_WORDS.forEach((word, i) => {
         const [fx, fy] = KEY_START[i];
-        const start = 4.55 + i * 0.22;
+        const start = F + 0.05 + i * 0.22;
         const a = seg(t, start, start + 0.7, EASE.reveal);
         const x = cx + (fx * W - cx) * zoom, y = cy + (fy * H - cy) * zoom;
         this.text(word, {
@@ -705,9 +590,8 @@ export class Film {
         });
       });
     }
-    // 比較する。
-    const appear = seg(t, 5.25, 6.1, EASE.reveal);
-    const leave = 1 - seg(t, 6.55, 7.1, EASE.leave);
+    const appear = seg(t, F + 0.75, F + 1.6, EASE.reveal);
+    const leave = 1 - seg(t, S - 0.45, S + 0.1, EASE.leave);
     this.text(WORD_COMPARE, {
       x: W / 2, y: H * 0.5 + 16, font: TYPE.jp(46), size: 46, tracking: 0.22,
       alpha: appear * leave, blur: (1 - appear) * 8 + (1 - leave) * 6,
@@ -715,12 +599,13 @@ export class Film {
     });
   }
 
-  /* 7.0 – 9.5  many → a few → one; the one becomes a single line */
+  /* 7.3 – 10.0  many → a few → one; the one becomes a line, and the line opens */
   sceneSelection(t) {
-    if (t < 6.95 || t > 12.8) return;
-    const zoom = lerp(1, 1.07, seg(t, 4.4, 7.4, EASE.travel));
+    const F = T.fragments, S = T.select;
+    if (t < S - 0.05 || t > T.toast + 1.0) return;
+    const zoom = lerp(1, 1.07, seg(t, F - 0.1, S + 0.1, EASE.travel));
     const cx = W / 2, cy = H / 2;
-    const gather = seg(t, 7.0, 8.05, EASE.door);
+    const gather = seg(t, S, S + 1.05, EASE.door);
     const slotGap = 104;
     const lineW = 210;
     KEY_WORDS.forEach((word, i) => {
@@ -729,21 +614,15 @@ export class Film {
       const x1 = cx, y1 = cy + (i - 2) * slotGap;
       const x = lerp(x0, x1, gather), y = lerp(y0, y1, gather);
       const size = lerp(50, 40, gather);
-      let a = 0.86;
-      let blur = 0;
-      let rise = 0;
       const outer = i === 0 || i === 4;
       const inner = i === 1 || i === 3;
-      if (outer) {
-        const o = seg(t, 8.1, 8.7, EASE.leave);
-        a *= 1 - o; blur = o * 6; rise = -o * 8;
-      } else if (inner) {
-        const o = seg(t, 8.6, 9.2, EASE.leave);
+      let a = 0.86, blur = 0, rise = 0;
+      if (outer || inner) {
+        const o = outer ? seg(t, S + 1.1, S + 1.7, EASE.leave) : seg(t, S + 1.6, S + 2.2, EASE.leave);
         a *= 1 - o; blur = o * 6; rise = -o * 8;
       } else {
-        // the chosen one: brightens, then gives its place to the line
-        const lift = seg(t, 8.8, 9.25, EASE.reveal);
-        const go = seg(t, 9.25, 9.85, EASE.leave);
+        const lift = seg(t, S + 1.8, S + 2.25, EASE.reveal);
+        const go = seg(t, S + 2.25, S + 2.85, EASE.leave);
         a = lerp(0.86, 1, lift) * (1 - go);
         blur = go * 7;
         rise = -go * 10;
@@ -752,37 +631,74 @@ export class Film {
         x, y: y + 14, font: TYPE.display(size), size, tracking: lerp(0.06, 0.16, gather),
         alpha: a, blur, rise,
       });
-      // hairlines under each option
-      const draw = seg(t, 7.55, 8.25, EASE.door);
-      let lw = lineW * draw;
-      let la = 1;
-      if (outer) la = 1 - seg(t, 8.1, 8.7, EASE.leave);
-      else if (inner) la = 1 - seg(t, 8.6, 9.2, EASE.leave);
-      if (!outer && !inner) {
-        // the chosen line widens, a glint passes, then it settles as the divider
-        lw = lerp(lw, 400, seg(t, 8.85, 9.45, EASE.door));
-        lw = lerp(lw, 132, seg(t, 9.6, 10.5, EASE.door));
-        la *= 1 - seg(t, 12.0, 12.5, EASE.leave);
-        const ly = lerp(y1 + 44, cy, seg(t, 9.6, 10.5, EASE.door));
-        const glint = seg(t, 8.95, 9.75, EASE.door);
-        this.hairline(cx, ly, lw, la, glint > 0 && glint < 1 ? glint : null);
-      } else {
-        this.hairline(x, y + 44, lw, la);
+      const draw = seg(t, S + 0.55, S + 1.25, EASE.door);
+      if (outer || inner) {
+        const la = outer ? 1 - seg(t, S + 1.1, S + 1.7, EASE.leave) : 1 - seg(t, S + 1.6, S + 2.2, EASE.leave);
+        this.hairline(x, y + 44, lineW * draw, la);
       }
     });
+    // the chosen line: widens, a glint passes, it spans the frame, then opens like a door
+    const ly = lerp(cy + 44, cy, seg(t, S + 2.2, S + 2.8, EASE.door));
+    let lw = lerp(lineW * seg(t, S + 0.55, S + 1.25, EASE.door), 400, seg(t, S + 1.85, S + 2.45, EASE.door));
+    lw = lerp(lw, W + 40, seg(t, S + 2.5, S + 3.1, EASE.door));
+    const open = seg(t, S + 2.75, S + 3.65, EASE.door);
+    const half = (H / 2 + 20) * open;
+    const glint = seg(t, S + 1.95, S + 2.75, EASE.door);
+    const la = 1 - seg(t, S + 3.2, S + 3.7, EASE.leave);
+    if (open > 0.001) {
+      this.plate("toast", {
+        alpha: 1, zoom: lerp(1.0, 1.06, seg(t, S + 2.75, T.gift + 0.6, EASE.travel)),
+        fx: 0.5, fy: 0.4, clip: [ly - half, ly + half],
+        bright: lerp(0.55, 1, open),
+      });
+      this.hairline(cx, ly - half, lw, la);
+      this.hairline(cx, ly + half, lw, la);
+    } else {
+      this.hairline(cx, ly, lw, 1, glint > 0 && glint < 1 ? glint : null);
+    }
   }
 
-  /* 9.5 – 12.0  silence; あなたが選ぶ。 / その前を、RELYが。 */
+  /* 10.0 – 14.5  what the time is for: a toast at dinner, a gift across the table */
+  sceneMoments(t) {
+    const G = T.gift;
+    if (t < T.toast + 0.9 || t > T.quiet + 0.3) return;
+    const toastOut = seg(t, G - 0.2, G + 0.5, EASE.leave);
+    this.plate("toast", {
+      alpha: 1 - toastOut,
+      zoom: lerp(1.0, 1.06, seg(t, T.select + 2.75, G + 0.6, EASE.travel)),
+      fx: 0.5, fy: 0.4,
+    });
+    this.shade(seg(t, T.toast + 0.9, T.toast + 1.8, EASE.reveal) * (1 - toastOut), 0.45, 0.6);
+    // the rims touch
+    const clink = T.toast + 1.05;
+    const k = win(t, clink - 0.12, clink + 0.08, clink + 0.25, clink + 0.9, EASE.reveal, EASE.leave);
+    this.glint(W * 0.502, H * 0.355, 70, k * (1 - toastOut));
+    this.label(LABEL_DINING, t, T.toast + 1.0, G - 0.05);
+
+    const giftIn = seg(t, G, G + 0.75, EASE.reveal);
+    const giftOut = seg(t, T.quiet - 0.55, T.quiet + 0.1, EASE.leave);
+    this.plate("gift", {
+      alpha: giftIn * (1 - giftOut),
+      zoom: lerp(1.0, 1.065, seg(t, G, T.quiet, EASE.travel)),
+      fx: 0.48, fy: 0.5,
+    });
+    this.shade(giftIn * (1 - giftOut), 0.45, 0.6);
+    this.label(LABEL_GIFT, t, G + 0.7, T.quiet - 0.4);
+  }
+
+  /* 14.5 – 17.0  silence; あなたが選ぶ。 / その前を、RELYが。 */
   sceneQuiet(t) {
-    if (t < 9.6 || t > 12.7) return;
-    const leave = 1 - seg(t, 12.0, 12.6, EASE.leave);
-    const a1 = seg(t, 9.75, 10.75, EASE.reveal);
+    const Q = T.quiet;
+    if (t < Q - 0.1 || t > T.mark + 0.7) return;
+    const leave = 1 - seg(t, T.mark - 0.1, T.mark + 0.5, EASE.leave);
+    this.hairline(W / 2, H / 2, 132 * seg(t, Q, Q + 0.8, EASE.door), leave);
+    const a1 = seg(t, Q + 0.15, Q + 1.15, EASE.reveal);
     this.text(LINE_CHOOSE, {
       x: W / 2, y: H / 2 - 62, font: TYPE.jp(52), size: 52, tracking: 0.24,
       alpha: a1 * leave, blur: (1 - a1) * 10 + (1 - leave) * 6,
       rise: (1 - a1) * 14 - (1 - leave) * 6, wipe: a1, soft: 0.6,
     });
-    const a2 = seg(t, 10.7, 11.7, EASE.reveal);
+    const a2 = seg(t, Q + 1.05, Q + 2.05, EASE.reveal);
     this.text(LINE_BEFORE, {
       x: W / 2, y: H / 2 + 100, font: TYPE.jp(52), size: 52, tracking: 0.24,
       alpha: a2 * leave, blur: (1 - a2) * 10 + (1 - leave) * 6,
@@ -790,29 +706,30 @@ export class Film {
     });
   }
 
-  /* 12.0 – 15.0  the mark, the name, the promise; then black */
+  /* 17.0 – 20.0  the mark, the name, the promise; then black */
   sceneMark(t) {
-    if (t < 12.1) return;
-    const end = 1 - seg(t, 14.72, 14.93, EASE.leave);
-    const endName = 1 - seg(t, 14.78, 14.96, EASE.leave);
+    const M = T.mark, E = T.end;
+    if (t < M + 0.1) return;
+    const end = 1 - seg(t, E - 0.28, E - 0.07, EASE.leave);
+    const endName = 1 - seg(t, E - 0.22, E - 0.04, EASE.leave);
     const cy = H * 0.395;
-    const body = 0.3 * seg(t, 12.15, 13.3, EASE.reveal) * end;
-    const sweep = seg(t, 12.35, 14.3, EASE.door);
-    const gain = win(t, 12.4, 12.95, 13.8, 14.4) * 0.9 * end;
-    const size = lerp(424, 432, seg(t, 12.1, 15, EASE.travel));
+    const body = 0.3 * seg(t, M + 0.15, M + 1.3, EASE.reveal) * end;
+    const sweep = seg(t, M + 0.35, M + 2.3, EASE.door);
+    const gain = win(t, M + 0.4, M + 0.95, M + 1.8, M + 2.4) * 0.9 * end;
+    const size = lerp(424, 432, seg(t, M + 0.1, E, EASE.travel));
     this.emblem({ cx: W / 2, cy, size, body, sweep, width: 0.11, gain, angle: -0.5 });
 
-    const aName = seg(t, 12.85, 13.75, EASE.reveal);
+    const aName = seg(t, M + 0.85, M + 1.75, EASE.reveal);
     this.text(WORDMARK, {
       x: W / 2, y: H * 0.6, font: TYPE.display(96), size: 96, tracking: 0.3,
       alpha: aName * endName, blur: (1 - aName) * 9, rise: (1 - aName) * 12,
     });
-    const aCat = seg(t, 13.2, 13.95, EASE.reveal);
+    const aCat = seg(t, M + 1.2, M + 1.95, EASE.reveal);
     this.text(CATEGORY, {
       x: W / 2, y: H * 0.6 + 64, font: TYPE.label(19), size: 19, tracking: 0.36,
       color: SILVER, alpha: aCat * 0.9 * end, blur: (1 - aCat) * 5, rise: (1 - aCat) * 8,
     });
-    const aTag = seg(t, 13.95, 14.35, EASE.reveal);
+    const aTag = seg(t, T.tagline, T.tagline + 0.4, EASE.reveal);
     this.text(TAGLINE, {
       x: W / 2, y: H * 0.735, font: TYPE.jp(34, 400), size: 34, tracking: 0.2,
       alpha: aTag * 0.92 * end, blur: (1 - aTag) * 6, rise: (1 - aTag) * 8, wipe: aTag, soft: 0.6,

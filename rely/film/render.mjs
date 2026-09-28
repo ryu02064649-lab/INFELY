@@ -1,12 +1,13 @@
 /**
  * Renders the RELY brand film to an MP4 for Instagram Reels / Stories.
  *
- *   npm run rely:film                  → film/out/rely-film.mp4 (1080×1920, 30fps, 15s)
+ *   npm run rely:film                  → film/out/rely-film.mp4 (1080×1920, 30fps, 20s, with sound)
  *   npm run rely:film -- --stills 1,3.2,10.5   → PNG stills only (for checking frames)
  *
  * How it works: film/index.html draws each frame with code (film/film.js).
  * A headless Chromium steps through time frame by frame — not in real time,
- * so no frame is ever dropped — and every frame is piped into ffmpeg.
+ * so no frame is ever dropped — and every frame is piped into ffmpeg together
+ * with the score synthesised by film/score.mjs.
  */
 import http from "node:http";
 import fs from "node:fs";
@@ -68,18 +69,19 @@ if (stills) {
   }
 } else {
   const out = path.resolve(opt("out") ?? path.join(outDir, "rely-film.mp4"));
+  await import("./score.mjs"); // writes film/out/score.wav
+  const score = path.join(outDir, "score.wav");
   const total = Math.round(FILM.duration * FILM.fps);
   const enc = spawn(ffmpeg.path, [
     "-y", "-loglevel", "error",
     "-f", "image2pipe", "-framerate", String(FILM.fps), "-c:v", "png", "-i", "-",
-    // a silent stereo track: some apps expect audio; music is added later in Instagram
-    "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=48000",
+    "-i", score,
     "-map", "0:v", "-map", "1:a", "-t", String(FILM.duration),
     "-c:v", "libx264", "-preset", "slow", "-crf", "14", "-tune", "film",
     "-profile:v", "high", "-pix_fmt", "yuv420p",
     "-vf", "scale=out_color_matrix=bt709:out_range=tv",
     "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv",
-    "-r", String(FILM.fps), "-c:a", "aac", "-b:a", "128k",
+    "-r", String(FILM.fps), "-c:a", "aac", "-b:a", "192k",
     "-movflags", "+faststart", out,
   ], { stdio: ["pipe", "inherit", "inherit"] });
   const done = new Promise((resolve, reject) => enc.on("close", (c) => (c === 0 ? resolve() : reject(new Error(`ffmpeg exited ${c}`)))));
@@ -93,7 +95,7 @@ if (stills) {
   }
   enc.stdin.end();
   await done;
-  fs.writeFileSync(path.join(outDir, "poster.png"), await frame(page, 13.9));
+  fs.writeFileSync(path.join(outDir, "poster.png"), await frame(page, 18.8));
   fs.writeFileSync(path.join(outDir, "timeline.json"), JSON.stringify({ ...FILM, cues: CUES }, null, 2) + "\n");
   console.log(`\n${out}`);
 }
