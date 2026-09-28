@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RELY — Brand Film</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #000; color: #b8b8b8; }
+  body { display: grid; place-items: center; font: 12px/1.6 "Jost", system-ui, sans-serif; letter-spacing: .2em; }
+  .stage { display: grid; gap: 14px; justify-items: center; padding: 16px; }
+  canvas { display: block; background: #090909; height: min(80vh, calc((100vw - 32px) * 16 / 9)); aspect-ratio: 9 / 16; }
+  .bar { display: flex; align-items: center; gap: 14px; width: 100%; }
+  button { all: unset; cursor: pointer; padding: 6px 12px; border: 1px solid #333; color: #f4f1ea; text-transform: uppercase; }
+  button:focus-visible { outline: 1px solid #f4f1ea; outline-offset: 2px; }
+  input[type=range] { flex: 1; accent-color: #b8b8b8; }
+  .time { font-variant-numeric: tabular-nums; min-width: 5.5em; text-align: right; }
+  .cues { font-size: 11px; color: #777; letter-spacing: .08em; max-width: 34em; }
+  body.render { display: block; background: #090909; }
+  body.render canvas { height: auto; width: 1080px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <canvas id="film" width="1080" height="1920" aria-label="RELY ブランドフィルム"></canvas>
+  <div class="bar" id="ui" hidden>
+    <button id="play" type="button">Play</button>
+    <input id="scrub" type="range" min="0" max="15" step="0.0333" value="0" aria-label="再生位置">
+    <span class="time" id="time">0.00s</span>
+  </div>
+  <p class="cues" id="note" hidden></p>
+</div>
+<script type="module">
+import { Film, FILM, CUES } from "./film.js";
+
+const params = new URLSearchParams(location.search);
+const render = params.has("render");
+const cv = document.getElementById("film");
+const film = new Film(cv);
+
+if (render) {
+  document.body.classList.add("render");
+  window.__film = { ready: film.load(".."), draw: (t) => film.draw(t), FILM, CUES };
+} else {
+  // preview: draw at the size it is shown, not at full 1080p
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const rect = cv.getBoundingClientRect();
+  film.setSize(Math.round(rect.width * dpr), Math.round(rect.width * dpr * 16 / 9));
+  await film.load("..");
+  const ui = document.getElementById("ui");
+  const play = document.getElementById("play");
+  const scrub = document.getElementById("scrub");
+  const time = document.getElementById("time");
+  const note = document.getElementById("note");
+  ui.hidden = false;
+  let t = 0, playing = false, last = 0;
+  const show = () => { film.draw(t); scrub.value = t; time.textContent = t.toFixed(2) + "s"; };
+  const loop = (now) => {
+    if (!playing) return;
+    t += (now - last) / 1000; last = now;
+    if (t >= FILM.duration) { t = FILM.duration; playing = false; play.textContent = "Replay"; }
+    show();
+    if (playing) requestAnimationFrame(loop);
+  };
+  const start = () => {
+    if (t >= FILM.duration) t = 0;
+    playing = true; play.textContent = "Pause"; last = performance.now(); requestAnimationFrame(loop);
+  };
+  play.onclick = () => (playing ? ((playing = false), (play.textContent = "Play")) : start());
+  scrub.oninput = () => { playing = false; play.textContent = "Play"; t = +scrub.value; show(); };
+  addEventListener("keydown", (e) => { if (e.code === "Space") { e.preventDefault(); play.click(); } });
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // no autoplay: show the closing frame, play only on request
+    t = 13.9; show();
+    note.hidden = false;
+    note.textContent = "動きを減らす設定のため、自動再生していません。Play で再生できます。";
+  } else {
+    show(); start();
+  }
+}
+</script>
+</body>
+</html>
