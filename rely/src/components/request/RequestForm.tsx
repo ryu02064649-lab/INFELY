@@ -174,7 +174,7 @@ export default function RequestForm() {
       </Field>
 
       <div className="grid gap-14 sm:grid-cols-2 sm:gap-10">
-        <Field id={id("budget")} label="予算" en="BUDGET" hint="例：1人 30,000円程度">
+        <Field id={id("budget")} label="予算" en="BUDGET" hint="例：1人 10,000円程度">
           <input id={id("budget")} name="budget" type="text" className="field" aria-describedby={`${id("budget")}-hint`} />
         </Field>
         <Field id={id("date")} label="希望日時" en="DATE" hint="例：来月の週末、夜">
