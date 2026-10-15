@@ -9,7 +9,7 @@ export default function Scene() {
   return (
     <section id="scene" aria-labelledby="scene-title" className="relative overflow-hidden bg-yellow py-24 md:py-32">
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6">
-        <SectionHeading en="SCENE" title={["こんな日は、", "焼肉にしよう。"]} id="scene-title">
+        <SectionHeading en="SCENE" title={["こんな日は、", "焼肉にしよう。"]} variant="label" id="scene-title">
           <p className="text-ink/80">気の合う仲間とも、大切な人とも。いろんな「いいね」の日に。</p>
         </SectionHeading>
 

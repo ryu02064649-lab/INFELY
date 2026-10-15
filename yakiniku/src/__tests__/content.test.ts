@@ -69,3 +69,18 @@ describe("shop", () => {
     expect(mapHref({ ...shop, mapUrl: "" }, false)).toMatch(/^https:\/\/www\.google\.com\/maps\/search\//);
   });
 });
+
+describe("gallery", () => {
+  it("does not repeat images shown elsewhere on the top page", () => {
+    const elsewhere = new Set([
+      "/images/hero.webp",
+      "/images/hero-sp.webp",
+      about.image.src,
+      ...recommends.map((r) => r.image.src),
+      ...menu.filter((m) => m.featured).map((m) => m.image),
+    ]);
+    const srcs = gallery.map((g) => g.src);
+    expect(new Set(srcs).size).toBe(srcs.length);
+    srcs.forEach((s) => expect(elsewhere.has(s)).toBe(false));
+  });
+});

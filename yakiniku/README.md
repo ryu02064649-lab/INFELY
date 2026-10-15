@@ -24,6 +24,8 @@ npm run typecheck  # build 後に実行（Next.js が型を生成するため）
 | メニュー（料理名・価格・説明・写真・おすすめ） | `src/data/menu.ts` |
 | ABOUT / RECOMMEND / PRICE / GALLERY / SCENE の文言・写真 | `src/data/content.ts` |
 | ナビゲーション | `src/data/navigation.ts` |
+| Instagram のURL | `src/config/site.ts` の `sns.instagram` |
+| お客様の声（VOICE。空なら非表示） | `src/data/content.ts` の `voices` |
 
 ### 「仮」「サンプル」「イメージ」表記を外す
 

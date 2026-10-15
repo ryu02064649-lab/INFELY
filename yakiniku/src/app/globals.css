@@ -79,7 +79,8 @@
   text-transform: uppercase;
 }
 @utility text-outline {
-  color: transparent;
+  /* fill-color wins over any text-* colour utility, which still sets the stroke */
+  -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 2px currentColor;
 }
 

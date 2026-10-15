@@ -34,6 +34,14 @@ export const site = {
  */
 export const photosArePlaceholder = true;
 
+/**
+ * SNS。URLを入れると「フォローする」ボタンが有効になります（空なら「準備中」表示）。
+ * 例: instagram: "https://www.instagram.com/xxxxx/"
+ */
+export const sns = {
+  instagram: "",
+} as const;
+
 /** Section anchors on the top page. */
 export const RESERVE_PATH = "/#reserve";
 export const MENU_PATH = "/menu/";

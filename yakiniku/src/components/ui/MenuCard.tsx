@@ -29,7 +29,9 @@ export default function MenuCard({ item, size = "md", delay = 0 }: Props) {
         />
         {item.recommended && (
           <span
-            className="absolute left-3 top-3 grid size-[4.25rem] rotate-[-12deg] place-items-center rounded-full border-[2.5px] border-ink bg-yellow text-center font-display text-[0.8rem] leading-tight text-ink shadow-[0_3px_0_var(--color-ink)] md:size-[4.75rem] md:text-[0.9rem]"
+            className={`absolute left-2 top-2 grid rotate-[-12deg] place-items-center rounded-full border-[2.5px] border-ink bg-yellow text-center font-display leading-tight text-ink shadow-[0_3px_0_var(--color-ink)] sm:left-3 sm:top-3 ${
+              lg ? "size-[4.25rem] text-[0.8rem] md:size-[4.75rem] md:text-[0.9rem]" : "size-[3.25rem] text-[0.65rem] sm:size-[4.25rem] sm:text-[0.8rem]"
+            }`}
           >
             <span>
               おすすめ
@@ -38,19 +40,19 @@ export default function MenuCard({ item, size = "md", delay = 0 }: Props) {
           </span>
         )}
       </div>
-      <div className={`flex flex-1 flex-col p-5 ${lg ? "md:justify-center md:p-8" : ""}`}>
-        <h3 className={`font-display ${lg ? "text-[1.6rem] md:text-[2rem]" : "text-[1.25rem]"}`}>{item.name}</h3>
-        <p className={`mt-2 flex-1 text-brown ${lg ? "text-[0.95rem] md:text-base" : "text-[0.875rem] leading-relaxed"}`}>
+      <div className={`flex flex-1 flex-col ${lg ? "p-5 md:justify-center md:p-8" : "p-3.5 sm:p-5"}`}>
+        <h3 className={`font-display ${lg ? "text-[1.6rem] md:text-[2rem]" : "text-[1.0625rem] leading-snug sm:text-[1.25rem]"}`}>{item.name}</h3>
+        <p className={`mt-2 flex-1 text-brown ${lg ? "text-[0.95rem] md:text-base" : "line-clamp-3 text-[0.78rem] leading-relaxed sm:line-clamp-none sm:text-[0.875rem]"}`}>
           {item.description}
         </p>
-        <p className="mt-4 flex flex-wrap items-end gap-x-2 gap-y-1">
-          <span className={`font-en text-red ${lg ? "text-[2.75rem] md:text-[3.25rem]" : "text-[2rem]"}`}>
+        <p className={`flex flex-wrap items-end gap-x-2 gap-y-1 ${lg ? "mt-4" : "mt-2.5 sm:mt-4"}`}>
+          <span className={`font-en text-red ${lg ? "text-[2.75rem] md:text-[3.25rem]" : "text-[1.6rem] sm:text-[2rem]"}`}>
             {formatPrice(item.price)}
           </span>
           {item.unit && <span className="pb-1 text-xs font-bold text-brown">／{item.unit}</span>}
           {menuIsSample && (
-            <span className="pb-1.5">
-              <DraftBadge>サンプル価格</DraftBadge>
+            <span className={lg ? "pb-1.5" : "pb-1 sm:pb-1.5"}>
+              <DraftBadge>{lg ? "サンプル価格" : "サンプル"}</DraftBadge>
             </span>
           )}
         </p>

@@ -10,6 +10,7 @@ import Gallery from "@/components/sections/Gallery";
 import Scene from "@/components/sections/Scene";
 import Access from "@/components/sections/Access";
 import Reservation from "@/components/sections/Reservation";
+import Voice from "@/components/sections/Voice";
 import Marquee from "@/components/ui/Marquee";
 import JsonLd from "@/components/ui/JsonLd";
 
@@ -27,6 +28,7 @@ export default function Home() {
         <Gallery />
         <Marquee tone="yellow" />
         <Scene />
+        <Voice />
         <Access />
         <Reservation />
       </main>

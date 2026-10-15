@@ -21,7 +21,7 @@ export default function Gallery() {
   return (
     <section id="gallery" aria-labelledby="gallery-title" className="bg-paper py-24 md:py-32">
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6">
-        <SectionHeading en="GALLERY" title="焼ける音まで、おいしい。" id="gallery-title">
+        <SectionHeading en="GALLERY" title="焼ける音まで、おいしい。" variant="outline" align="center" id="gallery-title">
           <p>
             網の上でじゅわっと焼ける肉、テーブルいっぱいの料理、乾杯の音。お店の雰囲気をのぞいてみてください。
             {photosArePlaceholder && <span className="mt-1 block text-[0.8125rem] font-bold text-red">※現在の写真はすべてイメージです。</span>}

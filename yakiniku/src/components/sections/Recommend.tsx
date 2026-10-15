@@ -14,7 +14,7 @@ export default function Recommend() {
       className="relative overflow-hidden bg-char py-24 text-ivory md:py-32"
     >
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6">
-        <SectionHeading en="RECOMMEND" title={["まずはコレ、", "食べてみて！"]} tone="light" id="recommend-title">
+        <SectionHeading en="RECOMMEND" title={["まずはコレ、", "食べてみて！"]} tone="light" variant="outline" id="recommend-title">
           <p>はじめての方に食べてほしい、お店のおすすめ。</p>
         </SectionHeading>
 

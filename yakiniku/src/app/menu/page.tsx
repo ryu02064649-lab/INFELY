@@ -78,7 +78,7 @@ export default function MenuPage() {
                     {g.en}
                   </span>
                 </div>
-                <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
                   {g.items.map((item, i) => (
                     <MenuCard key={item.id} item={item} delay={(i % 3) * 0.06} />
                   ))}

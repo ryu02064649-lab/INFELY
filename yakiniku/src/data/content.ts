@@ -70,13 +70,13 @@ export type GalleryItem = {
  * On phones (2 columns) tall / square tiles pair up side by side.
  */
 export const gallery: GalleryItem[] = [
-  { src: "/images/hero.webp", alt: "網の上に並ぶカルビとタンのイメージ", caption: "じゅわっと焼けたら食べごろ", shape: "big" },
+  { src: "/images/gallery/grill-mix.webp", alt: "ハラミ・豚カルビ・カルビ・タン・ホルモンが網の上で焼けるイメージ", caption: "いろんな部位を、網いっぱいに", shape: "big" },
   { src: "/images/horumon-grill.webp", alt: "網の上で焼かれるホルモンのイメージ", caption: "ぷりっとホルモン", shape: "tall" },
   { src: "/images/drinks.webp", alt: "生ビールとレモンサワーのイメージ", caption: "まずは乾杯！", shape: "square" },
   { src: "/images/menu/kimchi.webp", alt: "キムチのイメージ", caption: "箸休めのキムチ", shape: "square" },
-  { src: "/images/platter.webp", alt: "肉の盛り合わせのイメージ", caption: "盛り合わせでシェア", shape: "wide" },
+  { src: "/images/gallery/sides.webp", alt: "カルビスープ・ライス・キムチが並ぶテーブルのイメージ", caption: "ごはん・スープと一緒に", shape: "wide" },
   { src: "/images/lantern.webp", alt: "赤ちょうちんが灯る店内の雰囲気のイメージ", caption: "活気ある店内", shape: "tall" },
-  { src: "/images/kalbi-grill.webp", alt: "焼き色のついたカルビのイメージ", caption: "焼きたてカルビ", shape: "square" },
+  { src: "/images/gallery/tan-grill.webp", alt: "ネギをのせて焼くタン塩のイメージ", caption: "ネギをのせて片面焼き", shape: "square" },
   { src: "/images/table.webp", alt: "焼き網とご飯・キムチ・ビールが並ぶテーブルのイメージ", caption: "テーブルいっぱいに", shape: "wide" },
   { src: "/images/menu/reimen.webp", alt: "冷麺のイメージ", caption: "〆は冷麺で", shape: "square" },
 ];
@@ -97,3 +97,10 @@ export const scenes: { icon: SceneIcon; title: string; text: string }[] = [
 ];
 
 export const marquee = ["うまい肉、食べようぜ。", "YAKINIKU", "焼いて、食べて、笑おう。", "TAISHU YAKINIKU", "腹いっぱい、幸せいっぱい。"];
+
+/**
+ * お客様の声。実際にいただいた声（掲載の許可を得たもの）だけを入れてください。
+ * 空のあいだは VOICE セクション自体が表示されません。
+ * 例: { text: "タン塩が最高でした！また来ます。", name: "20代・会社員" }
+ */
+export const voices: { text: string; name: string }[] = [];

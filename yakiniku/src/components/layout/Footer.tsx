@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 import { navigation } from "@/data/navigation";
-import { MENU_PATH, photosArePlaceholder, RESERVE_PATH, site } from "@/config/site";
+import { MENU_PATH, photosArePlaceholder, RESERVE_PATH, site, sns } from "@/config/site";
+import { InstagramIcon } from "@/components/ui/InstagramFollow";
 
 export default function Footer() {
   return (
@@ -11,6 +12,18 @@ export default function Footer() {
           <div>
             <Logo tone="light" />
             <p className="mt-5 text-sm text-ivory/75">{site.description}</p>
+            {/^https?:\/\//.test(sns.instagram) && (
+              <a
+                href={sns.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 rounded-full border-2 border-ivory/40 px-4 py-2 text-sm font-bold hover:border-yellow hover:text-yellow"
+              >
+                <InstagramIcon className="size-5" />
+                Instagram
+                <span className="sr-only">（新しいタブで開きます）</span>
+              </a>
+            )}
           </div>
           <nav aria-label="フッターメニュー">
             <ul className="grid grid-cols-2 gap-x-8 gap-y-2 sm:grid-cols-3">

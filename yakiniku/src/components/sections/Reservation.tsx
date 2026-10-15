@@ -1,6 +1,7 @@
 import { reservation, reserveChannels, hasReserveChannel } from "@/config/reservation";
 import { Burst, Sizzle, Star } from "@/components/ui/Doodles";
 import { DraftNotice } from "@/components/ui/Notice";
+import InstagramFollow from "@/components/ui/InstagramFollow";
 
 export default function Reservation() {
   const channels = reserveChannels();
@@ -85,6 +86,10 @@ export default function Reservation() {
             </li>
           ))}
         </ul>
+
+        <div data-reveal className="mx-auto mt-14 max-w-[40rem]">
+          <InstagramFollow />
+        </div>
       </div>
     </section>
   );
