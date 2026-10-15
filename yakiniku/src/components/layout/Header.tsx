@@ -39,12 +39,12 @@ export default function Header({ solid = false }: { solid?: boolean }) {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,padding] duration-300 ${
         isSolid
-          ? "bg-ivory/95 py-2 shadow-[0_2px_0_var(--color-ink)] backdrop-blur-md"
+          ? "bg-ivory py-2 shadow-[0_2px_0_var(--color-ink)]"
           : "bg-transparent py-3 md:py-5"
       }`}
     >
       <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-4 sm:px-6">
-        <Logo tone={isSolid ? "dark" : "light"} />
+        <Logo tone={isSolid && !open ? "dark" : "light"} />
 
         <nav aria-label="メインメニュー" className="hidden lg:block">
           <ul className="flex items-center gap-7">

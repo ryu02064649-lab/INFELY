@@ -66,10 +66,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
-        {/* Enables reveal styles only when JS runs, so content never stays hidden. */}
+        {/*
+          Enables reveal styles only when JS runs. If the app never starts
+          (blocked scripts, sandboxed preview…), the class is removed again so
+          content can never stay hidden.
+        */}
         <script
           dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
+            __html:
+              "document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.remove('js')},3000)",
           }}
         />
       </head>

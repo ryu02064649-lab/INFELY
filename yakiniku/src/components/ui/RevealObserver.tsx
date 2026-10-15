@@ -12,6 +12,7 @@ export default function RevealObserver() {
   const pathname = usePathname();
 
   useEffect(() => {
+    (window as Window & { __revealReady?: boolean }).__revealReady = true;
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(
         "[data-reveal]:not([data-visible='true'])",
