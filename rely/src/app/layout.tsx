@@ -40,10 +40,11 @@ const gothic = Zen_Kaku_Gothic_New({
 });
 
 /**
- * Runs before first paint. Marks JS as available, and plays the opening
- * only on the home page, once per tab session, when motion is allowed.
+ * Runs before first paint. Marks JS as available; on a reload, drops any
+ * #section from the URL and starts at the very top; and plays the opening
+ * on every visit to the home page when motion is allowed.
  */
-const OPENING_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');try{var p=location.pathname;if((p==='/'||p==='/index.html')&&!sessionStorage.getItem('rely-opening')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('with-opening');sessionStorage.setItem('rely-opening','1');}}catch(e){}})();`;
+const OPENING_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');try{var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='reload'){history.scrollRestoration='manual';if(location.hash){history.replaceState(history.state,'',location.pathname+location.search);}window.scrollTo(0,0);addEventListener('load',function(){window.scrollTo(0,0);});}}catch(e){}try{var p=location.pathname;if((p==='/'||p==='/index.html')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('with-opening');}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
