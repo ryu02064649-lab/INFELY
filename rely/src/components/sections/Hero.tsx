@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="absolute inset-0" data-parallax="0.35">
         <div className="hero-media absolute inset-0">
           <Image
-            src="/images/hero.webp"
+            src="/images/hero-emblem.webp"
             alt="黒い大理石のロビーに浮かぶ、RELYのシルバーのエンブレム"
             fill
             priority
