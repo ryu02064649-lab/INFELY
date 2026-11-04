@@ -24,8 +24,8 @@ export const about = {
     ["まずは、生まれ育った沖縄から。"],
   ],
   closing: "選ぶまでの手間を、RELYが。",
-  signature: {
-    role: business.entity === "corporation" ? "代表" : "運営責任者",
-    name: business.operatorName,
-  },
+  /** Shown after the trade name only when the operator's name is published. */
+  signature: business.publishOperatorName
+    ? { role: business.entity === "corporation" ? "代表" : "運営責任者", name: business.operatorName }
+    : null,
 };

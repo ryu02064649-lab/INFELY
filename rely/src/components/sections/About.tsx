@@ -31,8 +31,12 @@ export default function About() {
             <p className="jp-heading text-[1.375rem] leading-[1.8] sm:text-[1.625rem]">{about.closing}</p>
             <p className="mt-8 flex flex-wrap items-baseline gap-x-5 gap-y-2">
               <span className="display text-[1.125rem] tracking-[0.3em]">{site.name}</span>
-              <span className="label text-mist">{about.signature.role}</span>
-              <span className="text-[0.9375rem] tracking-[0.2em]">{about.signature.name}</span>
+              {about.signature ? (
+                <>
+                  <span className="label text-mist">{about.signature.role}</span>
+                  <span className="text-[0.9375rem] tracking-[0.2em]">{about.signature.name}</span>
+                </>
+              ) : null}
             </p>
           </div>
         </div>

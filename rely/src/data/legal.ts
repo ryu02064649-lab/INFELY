@@ -18,7 +18,9 @@ export const tokushoho: LegalRow[] = [
   { label: "販売事業者", body: [business.tradeName] },
   {
     label: business.entity === "corporation" ? "代表者" : "運営責任者",
-    body: [filled(business.operatorName)],
+    body: business.publishOperatorName
+      ? [filled(business.operatorName)]
+      : ["ご請求があった場合、遅滞なく開示いたします。"],
   },
   {
     label: "所在地",
@@ -158,7 +160,9 @@ export const privacyPolicy: PolicySection[] = [
   {
     title: "お問い合わせ窓口",
     body: [
-      `${business.tradeName}　${business.entity === "corporation" ? "代表者" : "運営責任者"}：${filled(business.operatorName)}`,
+      business.publishOperatorName
+        ? `${business.tradeName}　${business.entity === "corporation" ? "代表者" : "運営責任者"}：${filled(business.operatorName)}`
+        : business.tradeName,
       `メールアドレス：${filled(business.email)}`,
     ],
   },

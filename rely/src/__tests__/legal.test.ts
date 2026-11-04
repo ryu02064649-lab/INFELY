@@ -30,6 +30,14 @@ describe("特定商取引法に基づく表記", () => {
     expect(refund).toContain("当方の誤り");
   });
 
+  it("keeps the operator's name off the site while publishOperatorName is false", async () => {
+    const { business } = await import("@/config/business");
+    const { about } = await import("@/data/about");
+    if (business.publishOperatorName) return;
+    const everything = JSON.stringify([tokushoho, privacyPolicy, about]);
+    expect(everything).not.toContain(business.operatorName);
+  });
+
   it("never promises that a reservation will succeed", () => {
     expect(JSON.stringify(tokushoho)).not.toContain("必ず予約");
   });

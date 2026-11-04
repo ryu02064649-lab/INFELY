@@ -10,6 +10,12 @@ export const business = {
   tradeName: "RELY",
   /** 運営責任者の氏名 (or 代表者名 for a company). */
   operatorName: "宮城龍優",
+  /**
+   * Whether the operator's name appears on the site. When false, the legal
+   * page says it is disclosed on request (as with the address and phone),
+   * and the ABOUT signature shows only the trade name.
+   */
+  publishOperatorName: false,
   /** Contact address shown on the legal pages. */
   email: "",
   /** "individual" (個人：フリーランス・個人事業主) or "corporation" (法人). */
