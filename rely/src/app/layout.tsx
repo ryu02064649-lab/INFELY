@@ -40,11 +40,17 @@ const gothic = Zen_Kaku_Gothic_New({
 });
 
 /**
- * Runs before first paint. Marks JS as available; on a reload, drops any
- * #section from the URL and starts at the very top; and plays the opening
- * on every visit to the home page when motion is allowed.
+ * Runs before first paint.
+ * - Marks JS as available.
+ * - Turns off the browser's own scroll memory on every load, so that by the
+ *   time someone reloads, Safari already knows not to restore the old spot
+ *   (setting it during the reload itself is too late on iOS).
+ * - On a reload: drops any #section and keeps the page at the very top.
+ * - When Safari shows the home page from its back/forward memory without
+ *   loading it, reloads it so the opening plays and it starts at the top.
+ * - Plays the opening on every visit to the home page when motion is allowed.
  */
-const OPENING_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');try{var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='reload'){history.scrollRestoration='manual';if(location.hash){history.replaceState(history.state,'',location.pathname+location.search);}window.scrollTo(0,0);addEventListener('load',function(){window.scrollTo(0,0);});}}catch(e){}try{var p=location.pathname;if((p==='/'||p==='/index.html')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('with-opening');}}catch(e){}})();`;
+const OPENING_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');var home=function(){var p=location.pathname;return p==='/'||p==='/index.html';};try{if('scrollRestoration' in history){history.scrollRestoration='manual';}var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='reload'){if(location.hash){history.replaceState(history.state,'',location.pathname+location.search);}var top=function(){window.scrollTo(0,0);};top();addEventListener('DOMContentLoaded',top);addEventListener('load',function(){top();setTimeout(top,0);setTimeout(top,150);});}addEventListener('pageshow',function(e){if(e.persisted&&home()){location.reload();}});}catch(e){}try{if(home()&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('with-opening');}}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
