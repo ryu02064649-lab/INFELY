@@ -9,20 +9,24 @@ function form(entries: [string, string][]) {
 }
 
 describe("validateRequest", () => {
-  it("requires name, email and at least one category", () => {
+  it("requires name, email, at least one category and consent", () => {
     const errors = validateRequest(form([]));
-    expect(Object.keys(errors).sort()).toEqual(["category", "email", "name"]);
+    expect(Object.keys(errors).sort()).toEqual(["category", "consent", "email", "name"]);
   });
 
   it("rejects a malformed email", () => {
-    const errors = validateRequest(form([["name", "A"], ["email", "not-an-email"], ["category", "OTHER"]]));
+    const errors = validateRequest(
+      form([["name", "A"], ["email", "not-an-email"], ["category", "OTHER"], ["consent", "yes"]]),
+    );
     expect(errors.email).toBeDefined();
     expect(errors.name).toBeUndefined();
   });
 
   it("accepts a minimal valid request", () => {
     expect(
-      validateRequest(form([["name", "山田"], ["email", "a@example.com"], ["category", "DINING"]])),
+      validateRequest(
+        form([["name", "山田"], ["email", "a@example.com"], ["category", "DINING"], ["consent", "yes"]]),
+      ),
     ).toEqual({});
   });
 });

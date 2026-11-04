@@ -15,5 +15,12 @@ export const footerNav: NavItem[] = [
   { label: "SERVICE", href: "/#service" },
   { label: "CONCEPT", href: "/#concept" },
   { label: "PRICE", href: "/#price" },
+  { label: "ABOUT", href: "/#about" },
+  { label: "FAQ", href: "/#faq" },
   { label: "REQUEST", href: REQUEST_PATH },
+];
+
+export const legalNav: NavItem[] = [
+  { label: "特定商取引法に基づく表記", href: "/legal/" },
+  { label: "プライバシーポリシー", href: "/privacy/" },
 ];

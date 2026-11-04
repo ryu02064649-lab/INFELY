@@ -39,6 +39,12 @@ const gothic = Zen_Kaku_Gothic_New({
   preload: false,
 });
 
+/**
+ * Runs before first paint. Marks JS as available, and plays the opening
+ * only on the home page, once per tab session, when motion is allowed.
+ */
+const OPENING_SCRIPT = `(function(){var d=document.documentElement;d.classList.add('js');try{var p=location.pathname;if((p==='/'||p==='/index.html')&&!sessionStorage.getItem('rely-opening')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('with-opening');sessionStorage.setItem('rely-opening','1');}}catch(e){}})();`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.title,
@@ -80,7 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Enables reveal styles only when JS runs, so content never stays hidden. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
+            __html: OPENING_SCRIPT,
           }}
         />
       </head>

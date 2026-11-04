@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "rely:film": "node film/render.mjs",
+    "rely:film:fonts": "node film/tools/extract-fonts.mjs"
   },
   "dependencies": {
     "next": "16.3.6",
@@ -16,12 +18,14 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22.20.4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
+    "playwright-core": "1.56.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.0.2"

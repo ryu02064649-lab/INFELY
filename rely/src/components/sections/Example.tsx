@@ -23,9 +23,9 @@ export default function Example() {
             <p className="label text-mist" data-reveal="fade">REQUEST — 依頼</p>
             <blockquote
               className="jp-heading mt-8 text-[1.5rem] leading-[1.9] sm:text-[1.875rem] lg:text-[2.125rem]"
-              data-reveal
+              data-reveal="mask"
             >
-              「{exampleRequest.quote}」
+              <span>「{exampleRequest.quote}」</span>
             </blockquote>
             <dl className="mt-12 grid grid-cols-2 border-t border-white/10" data-reveal>
               {exampleRequest.conditions.map((c, i) => (
@@ -58,8 +58,8 @@ export default function Example() {
                 </li>
               ))}
             </ol>
-            <p className="jp-heading mt-10 text-[1.125rem] sm:text-[1.25rem]" data-reveal>
-              {exampleRequest.closing}
+            <p className="jp-heading mt-10 text-[1.125rem] sm:text-[1.25rem]" data-reveal="mask">
+              <span>{exampleRequest.closing}</span>
             </p>
           </div>
         </div>
@@ -72,11 +72,11 @@ export default function Example() {
           </div>
 
           {/* Desktop / tablet: side-by-side table */}
-          <div className="hidden md:block" data-reveal>
+          <div className="hidden md:block">
             <table className="w-full table-fixed border-collapse text-left">
               <caption className="sr-only">3候補の比較（イメージ）</caption>
               <thead>
-                <tr>
+                <tr data-reveal>
                   <td className="w-[18%]" />
                   {candidates.map((c) => (
                     <th key={c.name} scope="col" className="px-6 pb-10 pt-12 align-bottom font-normal lg:px-8">
@@ -91,8 +91,13 @@ export default function Example() {
                 </tr>
               </thead>
               <tbody>
-                {candidateRows.map((row) => (
-                  <tr key={row.key} className="border-t border-white/10">
+                {candidateRows.map((row, i) => (
+                  <tr
+                    key={row.key}
+                    className="border-t border-white/10"
+                    data-reveal
+                    style={{ "--reveal-delay": `${0.1 + i * 0.07}s` } as React.CSSProperties}
+                  >
                     <th scope="row" className="label py-5 pr-4 align-top font-normal text-mist">
                       {row.label}
                     </th>
@@ -103,7 +108,11 @@ export default function Example() {
                     ))}
                   </tr>
                 ))}
-                <tr className="border-t border-white/25">
+                <tr
+                  className="border-t border-white/25"
+                  data-reveal
+                  style={{ "--reveal-delay": "0.3s" } as React.CSSProperties}
+                >
                   <th scope="row" className="label py-8 pr-4 align-top font-normal text-ivory">
                     なぜこの候補か
                   </th>

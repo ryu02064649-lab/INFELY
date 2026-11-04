@@ -15,7 +15,6 @@ describe("services", () => {
       "STAY",
       "EXPERIENCE",
       "GIFT",
-      "RESEARCH",
       "OTHER",
     ]);
   });
@@ -39,12 +38,20 @@ describe("pricing", () => {
   it("lists the agreed prices", () => {
     const table = Object.fromEntries([...plans, option].map((p) => [p.name, `${p.price}${p.suffix}`]));
     expect(table).toEqual({
-      "ONE REQUEST": "¥5,000〜",
-      "DEEP RESEARCH": "¥15,000〜",
-      "RELY CONCIERGE": "¥30,000〜 / MONTH",
-      "BUSINESS RESEARCH": "¥30,000〜",
-      "RESERVATION / ARRANGEMENT SUPPORT": "¥2,000〜",
+      "ONE REQUEST": "¥10,000〜",
+      "DEEP RESEARCH": "¥25,000〜",
+      "RELY CONCIERGE": "¥48,000〜 / MONTH",
+      "RESERVATION SUPPORT": "¥2,000〜",
     });
+  });
+
+  it("caps RELY CONCIERGE at four requests a month", () => {
+    expect(plans.find((p) => p.id === "concierge")?.note).toContain("月4件まで");
+  });
+
+  it("keeps hotel and experience bookings with the client (reservations are for restaurants only)", () => {
+    expect(option.lead).toContain("レストラン");
+    expect(pricingNotes.join("")).toContain("お客様ご自身");
   });
 
   it("states that actual goods/venue costs are separate", () => {

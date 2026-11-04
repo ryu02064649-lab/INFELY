@@ -12,12 +12,22 @@ type Props = {
 
 export default function Header({ variant = "overlay" }: Props) {
   const [scrolled, setScrolled] = useState(false);
+  // Header steps aside while reading downward and returns on the way up.
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      if (Math.abs(y - last) > 6) {
+        setHidden(y > last && y > window.innerHeight * 0.8);
+        last = y;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -77,7 +87,9 @@ export default function Header({ variant = "overlay" }: Props) {
   return (
     <>
     <header
-      className={`fixed inset-x-0 top-0 z-50 text-ivory transition-[background-color,border-color,backdrop-filter] duration-700 ease-[var(--ease-quiet)] ${
+      className={`fixed inset-x-0 top-0 z-50 text-ivory transition-[background-color,border-color,backdrop-filter,transform] duration-700 ease-[var(--ease-quiet)] ${
+        hidden && !open ? "-translate-y-full focus-within:translate-y-0" : "translate-y-0"
+      } ${
         filled
           ? "border-b border-white/[0.07] bg-ink/85 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"

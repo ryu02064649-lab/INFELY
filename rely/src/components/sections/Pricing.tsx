@@ -1,27 +1,61 @@
 import Link from "next/link";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { REQUEST_PATH } from "@/config/site";
-import { option, plans, pricingNotes, type Plan } from "@/data/pricing";
+import {
+  option,
+  plans,
+  pricingNotes,
+  pricingPrinciples,
+  type Plan,
+} from "@/data/pricing";
+
+const delay = (s: number) => ({ "--reveal-delay": `${s}s` }) as React.CSSProperties;
 
 export default function Pricing() {
   return (
     <section id="price" aria-labelledby="price-title" className="bg-ivory text-ink">
-      <div className="mx-auto max-w-[1440px] px-6 py-32 sm:px-8 md:py-44 lg:px-12 lg:py-56">
-        <SectionHeading
-          index="06"
-          title="PRICE"
-          id="price-title"
-          tone="light"
-          lead={
-            <>
-              依頼の大きさに、
-              <br className="sm:hidden" />
-              合わせて。
-            </>
-          }
-        />
+      <div className="mx-auto max-w-[1440px] px-6 py-32 sm:px-8 md:py-44 lg:px-12 lg:py-60">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-8">
+          <SectionHeading
+            className="lg:col-span-7"
+            index="06"
+            title="PRICE"
+            id="price-title"
+            tone="light"
+            lead={
+              <>
+                料金は、情報の対価ではなく、
+                <br />
+                あなたの時間の対価です。
+              </>
+            }
+          />
+          <p
+            className="max-w-md text-[0.9375rem] leading-[2.3] tracking-[0.08em] text-stone lg:col-span-4 lg:col-start-9"
+            data-reveal
+            style={delay(0.25)}
+          >
+            RELYが引き受けるのは、検索そのものではなく、その前後にある時間です。条件を伺い、調べ、比べ、選ぶ理由まで整理してお届けします。
+          </p>
+        </div>
 
-        <ul className="mt-20 border-t border-ink/20 lg:mt-28">
+        {/* What the fee pays for */}
+        <ul className="mt-24 grid gap-10 sm:grid-cols-3 sm:gap-8 lg:mt-36">
+          {pricingPrinciples.map((p, i) => (
+            <li key={p.en} className="relative pt-8" data-reveal style={delay(i * 0.12)}>
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-ink/20"
+                data-reveal="line"
+                style={delay(0.2 + i * 0.15)}
+              />
+              <p className="label text-stone">{p.en}</p>
+              <p className="jp-heading mt-4 text-[1.0625rem] lg:text-[1.1875rem]">{p.text}</p>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="mt-24 lg:mt-36">
           {plans.map((plan, i) => (
             <PlanRow key={plan.id} plan={plan} index={i} />
           ))}
@@ -29,7 +63,7 @@ export default function Pricing() {
 
         {/* Add-on */}
         <div
-          className="mt-16 grid gap-6 border border-ink/15 px-6 py-8 sm:px-8 md:grid-cols-12 md:items-center lg:mt-20 lg:px-12 lg:py-10"
+          className="mt-4 grid gap-6 border-b border-ink/15 py-10 md:grid-cols-12 md:items-center lg:py-12"
           data-reveal
         >
           <p className="label text-stone md:col-span-2">OPTION</p>
@@ -39,10 +73,9 @@ export default function Pricing() {
             </h3>
             <p className="mt-2 text-[0.875rem] tracking-[0.08em] text-stone">{option.lead}</p>
           </div>
-          <p className="md:col-span-4 md:text-right">
-            <span className="display text-[2rem] tracking-[0.04em]">{option.price}</span>
-            <PriceSuffix suffix={option.suffix} className="ml-2" />
-          </p>
+          <div className="md:col-span-4 md:text-right">
+            <PriceFigure plan={option} size="small" />
+          </div>
         </div>
 
         <div className="mt-10 space-y-1 text-[0.8125rem] leading-[2] tracking-[0.06em] text-stone">
@@ -51,16 +84,18 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="mt-20 flex flex-col items-start gap-8 border-t border-ink/15 pt-14 md:flex-row md:items-center md:justify-between lg:mt-28">
-          <p className="text-[0.9375rem] leading-[2.1] tracking-[0.08em]">
-            どのプランが合うか分からない場合も、
-            <br className="sm:hidden" />
-            そのままご相談ください。
+        <div className="mt-28 flex flex-col items-start gap-10 md:flex-row md:items-end md:justify-between lg:mt-40">
+          <p className="jp-heading text-[1.25rem] leading-[1.9] sm:text-[1.5rem]" data-reveal>
+            何を任せるか、まだ決まっていなくても。
+            <br />
+            まずはご相談ください。
           </p>
-          <Link href={REQUEST_PATH} className="btn btn-dark w-full sm:w-auto">
-            REQUEST A SERVICE
-            <span className="arrow" aria-hidden="true" />
-          </Link>
+          <div className="w-full sm:w-auto" data-reveal style={delay(0.15)}>
+            <Link href={REQUEST_PATH} className="btn btn-dark w-full sm:w-auto">
+              REQUEST A SERVICE
+              <span className="arrow" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -68,32 +103,63 @@ export default function Pricing() {
 }
 
 function PlanRow({ plan, index }: { plan: Plan; index: number }) {
+  const dark = !!plan.emphasis;
+  const muted = dark ? "text-mist" : "text-stone";
+  const rule = dark ? "bg-white/15" : "bg-ink/15";
+
   return (
     <li
-      className="grid gap-8 border-b border-ink/20 py-12 lg:grid-cols-12 lg:gap-8 lg:py-16"
+      className={`relative grid gap-12 py-20 lg:grid-cols-12 lg:gap-8 lg:py-28 ${
+        dark ? "-mx-6 my-6 bg-ink px-6 text-ivory sm:-mx-8 sm:px-8 lg:mx-0 lg:my-10 lg:px-14" : ""
+      }`}
       data-reveal
-      style={{ "--reveal-delay": `${index * 0.06}s` } as React.CSSProperties}
+      style={delay(index * 0.06)}
     >
-      <div className="lg:col-span-4">
-        <p className="label text-stone" aria-hidden="true">
-          {String(index + 1).padStart(2, "0")}
+      {!dark ? (
+        <span
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-px bg-ink/20"
+          data-reveal="line"
+          style={delay(0.3)}
+        />
+      ) : null}
+
+      {/* name and the moment it is for */}
+      <div className="lg:col-span-5">
+        <p className={`label ${muted}`}>
+          <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          {dark ? <span className="ml-5">MEMBERSHIP</span> : null}
         </p>
-        <h3 className="display mt-4 text-[1.75rem] tracking-[0.12em] lg:text-[2.125rem]">{plan.name}</h3>
-        <p className="mt-4 text-[0.9375rem] tracking-[0.08em] text-stone">{plan.lead}</p>
+        <h3 className="display mt-6 text-[1.875rem] leading-[1.2] tracking-[0.12em] lg:text-[2.5rem]">
+          {plan.name}
+        </h3>
+        <p className="jp-heading mt-6 text-[1.0625rem] lg:text-[1.1875rem]">{plan.lead}</p>
+        {plan.scene ? (
+          <p className={`mt-5 max-w-sm text-[0.875rem] leading-[2.2] tracking-[0.08em] ${muted}`}>{plan.scene}</p>
+        ) : null}
       </div>
 
-      <div className="lg:col-span-5">
-        <ul className="grid grid-cols-2 gap-x-6 gap-y-2 text-[0.875rem] tracking-[0.06em] sm:grid-cols-3 lg:grid-cols-2">
+      {/* price: its own quiet column */}
+      <div
+        className={`order-2 lg:order-none lg:col-span-3 lg:col-start-10 lg:row-start-1 lg:border-l lg:pl-10 lg:text-right ${
+          dark ? "lg:border-white/15" : "lg:border-ink/15"
+        }`}
+      >
+        <PriceFigure plan={plan} tone={dark ? "dark" : "light"} />
+      </div>
+
+      {/* what is included */}
+      <div className="order-3 lg:order-none lg:col-span-3 lg:col-start-6 lg:row-start-1">
+        <p className={`label ${muted}`}>INCLUDED</p>
+        <span aria-hidden="true" className={`mt-4 block h-px w-8 ${rule}`} />
+        <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-1.5 text-[0.875rem] leading-[2] tracking-[0.06em] sm:grid-cols-3 lg:grid-cols-1">
           {plan.items.map((item) => (
-            <li key={item} className="flex items-baseline gap-3">
-              <span aria-hidden="true" className="size-[3px] shrink-0 translate-y-[-0.3em] bg-ink/45" />
-              {item}
-            </li>
+            <li key={item}>{item}</li>
           ))}
         </ul>
         {plan.example ? (
-          <div className="mt-8 border-l border-ink/25 pl-5 text-[0.875rem] leading-[2] tracking-[0.08em]">
-            <p className="label text-stone">{plan.example.label}</p>
+          <div className={`mt-8 border-l pl-5 text-[0.8125rem] leading-[2] tracking-[0.08em] ${dark ? "border-white/25" : "border-ink/25"}`}>
+            <p className={`label ${muted}`}>{plan.example.label}</p>
             {plan.example.lines.map((l) => (
               <p key={l} className="mt-1">
                 {l}
@@ -101,26 +167,64 @@ function PlanRow({ plan, index }: { plan: Plan; index: number }) {
             ))}
           </div>
         ) : null}
-        {plan.note ? (
-          <p className="mt-6 text-[0.8125rem] tracking-[0.06em] text-stone">{plan.note}</p>
-        ) : null}
+        {plan.note ? <p className={`mt-6 text-[0.8125rem] tracking-[0.06em] ${muted}`}>{plan.note}</p> : null}
       </div>
-
-      <p className="flex items-baseline gap-2 lg:col-span-3 lg:flex-col lg:items-end lg:gap-1">
-        <span className="display text-[2.5rem] tracking-[0.04em] lg:text-[3.25rem]">{plan.price}</span>
-        <PriceSuffix suffix={plan.suffix} />
-      </p>
     </li>
   );
 }
 
-/** "〜" in the serif at a readable size, followed by an optional unit such as "/ MONTH". */
-function PriceSuffix({ suffix, className = "" }: { suffix: string; className?: string }) {
-  const [, from, unit] = suffix.match(/^(〜)?\s*(.*)$/) ?? [];
-  return (
-    <span className={`inline-flex items-baseline gap-2 text-stone ${className}`}>
-      {from ? <span className="font-mincho text-[1.125rem]">{from}</span> : null}
-      {unit ? <span className="label">{unit}</span> : null}
+/**
+ * "FROM" / amount / unit, set like a menu price rather than a sale tag.
+ * The visible "FROM" replaces "〜"; screen readers get the plain reading.
+ */
+function PriceFigure({
+  plan,
+  size = "large",
+  tone = "light",
+}: {
+  plan: Plan;
+  size?: "large" | "small";
+  tone?: "light" | "dark";
+}) {
+  const unit = plan.suffix.replace(/^〜\s*/, "");
+  const fromPrice = plan.suffix.startsWith("〜");
+  const muted = tone === "dark" ? "text-mist" : "text-stone";
+  const spoken = `${plan.price.replace("¥", "")}円${fromPrice ? "から" : ""}${unit ? `（${unit.replace("/ ", "")}）` : ""}`;
+
+  const amount = (
+    <span
+      className={`display inline-block tracking-[0.03em] ${
+        size === "large" ? "mt-4 text-[3rem] leading-none lg:mt-6 lg:text-[4rem]" : "text-[2rem] leading-none"
+      }`}
+      data-reveal="mask"
+      style={delay(0.35)}
+    >
+      <span>{plan.price}</span>
     </span>
+  );
+
+  if (size === "small") {
+    return (
+      <p className="inline-flex items-baseline gap-4">
+        <span className="sr-only">{spoken}</span>
+        {fromPrice ? (
+          <span aria-hidden="true" className={`label ${muted}`}>
+            FROM
+          </span>
+        ) : null}
+        <span aria-hidden="true">{amount}</span>
+      </p>
+    );
+  }
+
+  return (
+    <p>
+      <span className="sr-only">{spoken}</span>
+      <span aria-hidden="true" className="block">
+        {fromPrice ? <span className={`label block ${muted}`}>FROM</span> : null}
+        {amount}
+        {unit ? <span className={`label mt-4 block ${muted}`}>{unit}</span> : null}
+      </span>
+    </p>
   );
 }
