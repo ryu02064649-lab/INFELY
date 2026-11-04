@@ -21,7 +21,7 @@ def screen(w=1600, h=1000):
     thumbs = ["dining", "stay", "experience", "gift"]
     for i, name in enumerate(thumbs):
         y = 90 + i * 210
-        t = Image.open(os.path.join(SITE, f"{name}.webp")).convert("RGB")
+        t = Image.open(os.path.join(SITE, f"{name}-photo.webp")).convert("RGB")
         t = t.resize((250, 170))
         im.paste(t, (70, y))
         d.rectangle((70, y, 320, y + 170), outline=(60, 60, 58), width=1)

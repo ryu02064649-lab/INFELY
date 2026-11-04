@@ -1,7 +1,7 @@
 /**
  * Service catalogue. Order here is the display order.
- * Images live in /public/images — replace the files (keeping the names)
- * or change `image.src` to swap photography.
+ * Images live in /public/images. To swap a photo, add it under a new file
+ * name and point `image.src` at it, so phones don't keep showing the old one.
  */
 export type ServiceId =
   | "dining"
@@ -46,7 +46,7 @@ export const services: Service[] = [
       items: ["料理", "価格", "個室", "雰囲気", "場所", "口コミ", "予約情報"],
     },
     image: {
-      src: "/images/dining.webp",
+      src: "/images/dining-photo.webp",
       alt: "キャンドルとシャンデリアの灯るレストラン。白いクロスのテーブルに料理とワイングラス",
     },
   },
@@ -67,7 +67,7 @@ export const services: Service[] = [
     ],
     note: "目的や予算、希望条件から候補を選定します。",
     image: {
-      src: "/images/stay.webp",
+      src: "/images/stay-photo.webp",
       alt: "石とウッドに包まれた、夜のホテルロビー。レザーのベンチと柔らかな間接照明",
     },
   },
@@ -91,7 +91,7 @@ export const services: Service[] = [
     ],
     note: "「何をするか」からではなく、「どんな時間を過ごしたいか」を基準に提案します。",
     image: {
-      src: "/images/experience.webp",
+      src: "/images/experience-photo.webp",
       alt: "夕暮れのゴルフコース。芝の上に停まるカートと、染まりはじめた空",
     },
   },
@@ -111,7 +111,7 @@ export const services: Service[] = [
     ],
     note: "相手の年齢、関係性、趣味、予算などから調査します。",
     image: {
-      src: "/images/gift.webp",
+      src: "/images/gift-photo.webp",
       alt: "夜の車内、黒いレザーシートに置かれた深紅のバラの花束。赤いサテンのリボン",
     },
   },
